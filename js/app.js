@@ -670,4 +670,162 @@ document.addEventListener("DOMContentLoaded", () => {
       }[tag] || tag)
     );
   }
+
+  // 10. Khởi tạo Hiệu ứng Cuộn Hiện (Scroll Reveal)
+  function initScrollReveal() {
+    const revealEls = document.querySelectorAll(".reveal-on-scroll");
+    if (!revealEls.length) return;
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.08,
+        rootMargin: "0px 0px -30px 0px"
+      });
+
+      revealEls.forEach(el => observer.observe(el));
+    } else {
+      revealEls.forEach(el => el.classList.add("is-revealed"));
+    }
+  }
+
+  initScrollReveal();
+
+  // 11. Hiệu ứng Cánh hoa rơi & Bụi sao lấp lánh (Romantic Petals & Golden Starlight)
+  function initRomanticAtmosphere() {
+    const canvas = document.getElementById("fxCanvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    let resizeTimer = null;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }, 150);
+    }, { passive: true });
+
+    // Cánh hoa mềm mại (Petals)
+    const petals = [];
+    const petalColors = [
+      "rgba(255, 192, 203, 0.65)",
+      "rgba(255, 182, 193, 0.55)",
+      "rgba(255, 228, 225, 0.7)",
+      "rgba(244, 143, 177, 0.45)"
+    ];
+    const isMobile = window.innerWidth < 768;
+    const petalCount = isMobile ? 12 : 20;
+
+    for (let i = 0; i < petalCount; i++) {
+      petals.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size: Math.random() * 8 + 6,
+        speedY: Math.random() * 0.7 + 0.4,
+        speedX: Math.random() * 0.6 - 0.3,
+        rotation: Math.random() * Math.PI * 2,
+        rotationSpeed: (Math.random() - 0.5) * 0.02,
+        color: petalColors[Math.floor(Math.random() * petalColors.length)],
+        flip: Math.random() * Math.PI,
+        flipSpeed: Math.random() * 0.03 + 0.01
+      });
+    }
+
+    // Hạt bụi sao vàng lấp lánh ("A little dream of me, glowing like a star")
+    const stars = [];
+    const starCount = isMobile ? 10 : 18;
+    for (let i = 0; i < starCount; i++) {
+      stars.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 1.6 + 0.8,
+        alpha: Math.random(),
+        alphaSpeed: (Math.random() * 0.02 + 0.008) * (Math.random() > 0.5 ? 1 : -1),
+        speedY: Math.random() * 0.2 + 0.08
+      });
+    }
+
+    let isRunning = true;
+    document.addEventListener("visibilitychange", () => {
+      isRunning = !document.hidden;
+      if (isRunning) requestAnimationFrame(animate);
+    });
+
+    function drawPetal(p) {
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rotation);
+      ctx.scale(Math.cos(p.flip), 1);
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(-p.size / 2, -p.size / 2, -p.size, p.size / 3, 0, p.size);
+      ctx.bezierCurveTo(p.size, p.size / 3, p.size / 2, -p.size / 2, 0, 0);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function animate() {
+      if (!isRunning) return;
+      ctx.clearRect(0, 0, width, height);
+
+      // Cánh hoa
+      for (let i = 0; i < petals.length; i++) {
+        const p = petals[i];
+        p.y += p.speedY;
+        p.x += Math.sin(p.y * 0.008) * 0.4 + p.speedX;
+        p.rotation += p.rotationSpeed;
+        p.flip += p.flipSpeed;
+
+        if (p.y > height + 20) {
+          p.y = -20;
+          p.x = Math.random() * width;
+        }
+        if (p.x > width + 20) p.x = -20;
+        if (p.x < -20) p.x = width + 20;
+
+        drawPetal(p);
+      }
+
+      // Hạt sao vàng
+      for (let i = 0; i < stars.length; i++) {
+        const s = stars[i];
+        s.y -= s.speedY;
+        s.alpha += s.alphaSpeed;
+        if (s.alpha >= 0.85 || s.alpha <= 0.15) {
+          s.alphaSpeed = -s.alphaSpeed;
+        }
+        if (s.y < -10) {
+          s.y = height + 10;
+          s.x = Math.random() * width;
+        }
+
+        ctx.save();
+        ctx.fillStyle = `rgba(246, 211, 101, ${Math.max(0, Math.min(1, s.alpha))})`;
+        ctx.shadowBlur = 6;
+        ctx.shadowColor = "rgba(255, 215, 0, 0.55)";
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  initRomanticAtmosphere();
 });

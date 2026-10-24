@@ -180,10 +180,20 @@ body {
   font-size: 26px;
   letter-spacing: 2.5px;
   text-transform: uppercase;
-  color: var(--text-dark);
   font-weight: 700;
   margin-bottom: 16px;
+  background: linear-gradient(110deg, #191817 20%, #c49a38 45%, #fff1b0 50%, #c49a38 55%, #191817 80%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldShimmer 5s ease-in-out infinite;
+  display: inline-block;
   text-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+
+@keyframes goldShimmer {
+  0%, 25% { background-position: 100% 0; }
+  65%, 100% { background-position: -100% 0; }
 }
 
 .invitation-to {
@@ -364,9 +374,11 @@ body {
 @keyframes heartPulse {
   0%, 100% {
     transform: translate(-50%, -50%) rotate(-6deg) scale(1);
+    filter: drop-shadow(0 2px 4px rgba(224, 76, 76, 0.35));
   }
   50% {
-    transform: translate(-50%, -50%) rotate(-6deg) scale(1.12);
+    transform: translate(-50%, -50%) rotate(-6deg) scale(1.16);
+    filter: drop-shadow(0 4px 12px rgba(224, 76, 76, 0.75));
   }
 }
 
@@ -1101,3 +1113,92 @@ textarea.input-field {
     padding-top: 20px;
   }
 }
+
+/* ==========================================================================
+   SCROLL REVEAL & LUXURY VISUAL EFFECTS
+   ========================================================================== */
+#fxCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.paper-container {
+  animation: cardFadeIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Nút bấm quét sáng ánh kim (Button Light Sweep) */
+.btn-submit-rsvp,
+.btn-black-pill,
+.add-calendar-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-submit-rsvp::after,
+.btn-black-pill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+  transform: skewX(-20deg);
+  animation: btnSweep 4.5s infinite;
+  pointer-events: none;
+}
+
+@keyframes btnSweep {
+  0%, 65% { left: -150%; }
+  100% { left: 150%; }
+}
+
+/* Hiệu ứng nổi bật ô đếm ngược */
+.timer-card {
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease;
+}
+
+.timer-card:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
+}
+
+/* Tên khách mời có hiệu ứng nhấn nhẹ */
+.guest-name-pill {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: inline-block;
+}
+
+.guest-name-pill:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+

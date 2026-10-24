@@ -16,7 +16,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=3">
+  <link rel="stylesheet" href="css/style.css?v=5">
 </head>
 <body>
 
@@ -32,6 +32,9 @@
     <source src="assets/audio/a_little_dream_of_me_full.mp3?v=4" type="audio/mpeg">
   </audio>
 
+  <!-- Canvas hạt bụi sao & cánh hoa bay lãng mạn -->
+  <canvas id="fxCanvas"></canvas>
+
   <!-- 2. Khung thiệp mời (Responsive: 1 cột trên Mobile, 2 cột sang trọng trên Desktop) -->
   <div class="phone-wrapper">
     <div class="paper-container">
@@ -46,7 +49,7 @@
           </div>
 
           <!-- Tiêu đề & Thông tin sự kiện -->
-          <div class="header-section">
+          <div class="header-section reveal-on-scroll">
             <div id="invitationTitle" class="title-sub">THƯ MỜI THAM DỰ</div>
             <div id="subtitle" class="title-main-prefix">LỄ TỐT NGHIỆP CỦA</div>
             <h1 id="graduateName" class="graduate-name">LÊ MINH THƯ</h1>
@@ -65,12 +68,12 @@
           </div>
 
           <!-- Hình vẽ cử nhân với hoa và bằng tốt nghiệp -->
-          <div class="illustration-container">
+          <div class="illustration-container reveal-on-scroll">
             <img id="graduateIllustration" class="illustration-img floating-elem" src="assets/images/graduate_illustration.png" alt="Cử nhân tốt nghiệp" />
           </div>
 
           <!-- Lời cảm ơn bế mạc trên Desktop -->
-          <div class="thank-you-section desktop-only">
+          <div class="thank-you-section desktop-only reveal-on-scroll">
             <div class="thank-you-title">Thank you!</div>
             <p class="thank-you-quote">
               " Những cố gắng của em/con/mình hôm nay cũng là nhờ sự đồng hành của mọi người. Mong được gặp thầy cô, bạn bè, anh chị trong ngày trọng đại này! "
@@ -85,7 +88,7 @@
         <div class="col-interactive-modules">
 
           <!-- 3. Lịch tháng sự kiện (Calendar) -->
-          <div class="calendar-section">
+          <div class="calendar-section reveal-on-scroll">
             <div class="calendar-header-bar">
               <span id="calMonthTitle" class="cal-month-title">THÁNG 11</span>
               <span id="calYearTitle" class="cal-year-title">2026</span>
@@ -105,7 +108,7 @@
           </div>
 
           <!-- 4. Đồng hồ đếm ngược thời gian (Countdown Timer) -->
-          <div class="countdown-section">
+          <div class="countdown-section reveal-on-scroll">
             <div class="countdown-title-wrap">
               <div class="countdown-line"></div>
               <div class="countdown-title">CÙNG ĐẾM NGƯỢC THỜI GIAN</div>
@@ -133,7 +136,7 @@
           </div>
 
           <!-- 5. Bản đồ & Dẫn đường -->
-          <div class="map-section">
+          <div class="map-section reveal-on-scroll">
             <div class="section-heading-serif">XEM DẪN ĐƯỜNG</div>
 
             <div class="map-container">
@@ -155,7 +158,7 @@
           </div>
 
           <!-- 6. Xác nhận tham dự (RSVP Form) -->
-          <div class="rsvp-section">
+          <div class="rsvp-section reveal-on-scroll">
             <h2 class="rsvp-title">Xác nhận tham dự</h2>
 
             <form id="rsvpForm" class="rsvp-form">
@@ -190,7 +193,7 @@
           </div>
 
           <!-- 7. Sổ lưu bút - Xem lời chúc của mọi người -->
-          <div id="wishesSection" class="wishes-section">
+          <div id="wishesSection" class="wishes-section reveal-on-scroll">
             <h3 class="wishes-title">Xem lời chúc của mọi người</h3>
 
             <div id="wishesContainer" class="wishes-card-container">
@@ -199,7 +202,7 @@
           </div>
 
           <!-- Lời cảm ơn bế mạc trên Mobile -->
-          <div class="thank-you-section mobile-only">
+          <div class="thank-you-section mobile-only reveal-on-scroll">
             <div class="thank-you-title">Thank you!</div>
             <p class="thank-you-quote">
               " Những cố gắng của em/con/mình hôm nay cũng là nhờ sự đồng hành của mọi người. Mong được gặp thầy cô, bạn bè, anh chị trong ngày trọng đại này! "
@@ -318,6 +321,6 @@
   <!-- Scripts -->
   <script src="js/confetti.browser.min.js"></script>
   <script src="js/config.js"></script>
-  <script src="js/app.js?v=4"></script>
+  <script src="js/app.js?v=5"></script>
 </body>
 </html>
