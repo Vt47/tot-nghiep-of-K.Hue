@@ -16,7 +16,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <link rel="stylesheet" href="css/style.css?v=7">
 </head>
 <body>
 
@@ -298,11 +298,23 @@
         <div id="generatedLinkOutput" class="result-box">...</div>
       </div>
 
-      <div style="display: flex; gap: 10px; margin-top: 16px;">
-        <button id="copyLinkBtn" class="btn-black-pill" style="flex: 1; padding: 10px;" type="button">
+      <!-- Khung hiển thị Mã QR Code để quét hoặc tải về -->
+      <div class="qr-code-section" id="qrCodeSection">
+        <label class="form-label">Mã QR thiệp mời:</label>
+        <div class="qr-code-card">
+          <img id="qrCodeImg" class="qr-code-img" src="" alt="Mã QR thiệp mời" />
+          <div id="qrGuestLabel" class="qr-guest-label">Mã QR cho: BẠN X</div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap;">
+        <button id="copyLinkBtn" class="btn-black-pill" style="flex: 1; min-width: 120px; padding: 10px;" type="button">
           📋 Sao chép link
         </button>
-        <a id="testLinkBtn" class="btn-black-pill" style="flex: 1; padding: 10px; background-color: #4a3e35;" href="#" target="_blank">
+        <button id="downloadQrBtn" class="btn-black-pill" style="flex: 1; min-width: 120px; padding: 10px; background-color: #8c252d;" type="button">
+          📥 Tải mã QR
+        </button>
+        <a id="testLinkBtn" class="btn-black-pill" style="flex: 1; min-width: 120px; padding: 10px; background-color: #4a3e35;" href="#" target="_blank">
           👀 Mở thử thiệp
         </a>
       </div>
@@ -358,6 +370,6 @@
   <!-- Scripts -->
   <script src="js/confetti.browser.min.js"></script>
   <script src="js/config.js"></script>
-  <script src="js/app.js?v=6"></script>
+  <script src="js/app.js?v=7"></script>
 </body>
 </html>

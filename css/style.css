@@ -972,6 +972,41 @@ textarea.input-field {
   color: #2b2521;
 }
 
+/* Khung hiển thị QR Code */
+.qr-code-section {
+  margin-top: 14px;
+  text-align: center;
+}
+
+.qr-code-card {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  background: #ffffff;
+  padding: 14px 16px 12px;
+  border-radius: 12px;
+  border: 1.5px solid #dfd3c3;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  margin-top: 6px;
+}
+
+.qr-code-img {
+  width: 175px;
+  height: 175px;
+  display: block;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+.qr-guest-label {
+  font-family: var(--font-serif);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #191817;
+  margin-top: 8px;
+  letter-spacing: 0.5px;
+}
+
 .toast-notice {
   position: fixed;
   top: 24px;

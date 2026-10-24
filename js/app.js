@@ -514,7 +514,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 3200);
   }
 
-  // 11. Modal Tạo Link Mời Riêng cho từng khách
+  // 11. Modal Tạo Link Mời Riêng cho từng khách & Mã QR
   const linkModal = document.getElementById("linkModal");
   const openLinkModalBtn = document.getElementById("openLinkModalBtn");
   const closeLinkModalBtn = document.getElementById("closeLinkModalBtn");
@@ -522,17 +522,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const generatedLinkOutput = document.getElementById("generatedLinkOutput");
   const copyLinkBtn = document.getElementById("copyLinkBtn");
   const testLinkBtn = document.getElementById("testLinkBtn");
+  const qrCodeImg = document.getElementById("qrCodeImg");
+  const qrGuestLabel = document.getElementById("qrGuestLabel");
+  const downloadQrBtn = document.getElementById("downloadQrBtn");
 
   function updateGeneratedLink() {
     const rawName = guestNameInput.value.trim();
     const baseUrl = window.location.origin + window.location.pathname;
+    let fullUrl = baseUrl;
     if (rawName) {
-      const fullUrl = `${baseUrl}?to=${encodeURIComponent(rawName)}`;
+      fullUrl = `${baseUrl}?to=${encodeURIComponent(rawName)}`;
       generatedLinkOutput.textContent = fullUrl;
       testLinkBtn.href = fullUrl;
+      if (qrGuestLabel) qrGuestLabel.textContent = `Mã QR cho: ${rawName}`;
     } else {
       generatedLinkOutput.textContent = baseUrl;
       testLinkBtn.href = baseUrl;
+      if (qrGuestLabel) qrGuestLabel.textContent = "Mã QR thiệp mời chung";
+    }
+
+    if (qrCodeImg) {
+      qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(fullUrl)}&margin=10`;
     }
   }
 
@@ -569,6 +579,31 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.removeChild(temp);
         showToast("Đã sao chép link mời! 📋");
       });
+    });
+  }
+
+  if (downloadQrBtn) {
+    downloadQrBtn.addEventListener("click", async () => {
+      if (!qrCodeImg || !qrCodeImg.src) return;
+      const rawName = guestNameInput.value.trim() || "khach-moi";
+      const fileName = `thiep-moi-${rawName.toLowerCase().replace(/\s+/g, "-")}-qr.png`;
+
+      showToast("Đang tải ảnh mã QR xuống... ⏳");
+      try {
+        const res = await fetch(qrCodeImg.src);
+        const blob = await res.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = blobUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(blobUrl);
+        showToast("Đã tải mã QR về máy thành công! 📥");
+      } catch (err) {
+        window.open(qrCodeImg.src, "_blank");
+      }
     });
   }
 
