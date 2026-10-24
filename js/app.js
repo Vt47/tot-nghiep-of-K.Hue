@@ -193,10 +193,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const bgMusic = document.getElementById("bgMusic");
   const musicToggleBtn = document.getElementById("musicToggleBtn");
   let isPlaying = false;
-  let playPromise = null;
 
   function setPlayingState(playing) {
     isPlaying = playing;
+    if (!musicToggleBtn) return;
     if (playing) {
       musicToggleBtn.classList.add("playing");
       musicToggleBtn.setAttribute("aria-label", "Tạm dừng nhạc");
@@ -210,44 +210,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function playMusic() {
+  function startAudio() {
     if (!bgMusic) return Promise.reject(new Error("No audio element"));
-    if (isPlaying) return Promise.resolve();
-    if (playPromise) return playPromise;
-
-    playPromise = bgMusic.play().then(() => {
-      playPromise = null;
+    return bgMusic.play().then(() => {
       setPlayingState(true);
-      removeInteractionListeners();
-    }).catch(err => {
-      playPromise = null;
-      setPlayingState(false);
-      throw err;
+      detachUnlockListeners();
     });
-
-    return playPromise;
   }
 
-  function pauseMusic() {
+  function stopAudio() {
     if (!bgMusic) return;
     bgMusic.pause();
     setPlayingState(false);
   }
 
-  if (musicToggleBtn) {
-    musicToggleBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      if (isPlaying) {
-        pauseMusic();
-      } else {
-        playMusic().catch(() => {});
-      }
-    });
-  }
-
-  // Cơ chế lặp nhạc liền mạch (seamless zero-latency loop)
-  // Xóa bỏ hoàn toàn khoảng lặng trễ giữa các lần lặp của trình duyệt
+  // Đồng bộ trạng thái trực tiếp từ sự kiện phát/dừng của thẻ audio
   if (bgMusic) {
+    bgMusic.addEventListener("play", () => {
+      setPlayingState(true);
+      detachUnlockListeners();
+    });
+
+    bgMusic.addEventListener("pause", () => {
+      setPlayingState(false);
+    });
+
+    // Cơ chế lặp nhạc liền mạch (seamless zero-latency loop)
     bgMusic.addEventListener("timeupdate", () => {
       if (bgMusic.duration && bgMusic.currentTime >= bgMusic.duration - 0.2) {
         bgMusic.currentTime = 0;
@@ -265,34 +253,59 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Tự động kích hoạt âm thanh ngay khi người dùng chạm vào bất kỳ đâu trên màn hình
-  const handleUserInteraction = () => {
-    if (isPlaying) return;
-    playMusic().catch(() => {
-      // Tiếp tục lắng nghe cho đến khi có cử chỉ hợp lệ được trình duyệt chấp thuận
+  // Nút tròn bật/tắt nhạc ở góc màn hình
+  if (musicToggleBtn) {
+    musicToggleBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!bgMusic) return;
+
+      if (bgMusic.paused) {
+        startAudio().catch(err => {
+          console.warn("Không thể phát nhạc:", err);
+        });
+      } else {
+        stopAudio();
+      }
     });
+  }
+
+  // Mở khóa âm thanh ở tương tác đầu tiên bất kỳ của người dùng (Click, Chạm, Cuộn trang, Phím)
+  const onFirstUserGesture = (e) => {
+    // Nếu chạm/click vào chính nút musicToggleBtn thì bỏ qua để nút tự xử lý
+    if (musicToggleBtn && (e.target === musicToggleBtn || musicToggleBtn.contains(e.target))) {
+      return;
+    }
+
+    if (bgMusic && bgMusic.paused) {
+      startAudio().catch(() => {
+        // Nếu cử chỉ này chưa đủ điều kiện (ví dụ scroll trên một số trình duyệt), tiếp tục đợi cử chỉ kế tiếp
+      });
+    }
   };
 
-  const interactionEvents = ["click", "touchend", "pointerdown"];
+  const gestureEvents = ["click", "touchend", "mouseup", "keydown", "scroll", "wheel"];
 
-  function addInteractionListeners() {
-    interactionEvents.forEach(evt => {
-      document.addEventListener(evt, handleUserInteraction, { passive: true });
+  function attachUnlockListeners() {
+    gestureEvents.forEach(evt => {
+      window.addEventListener(evt, onFirstUserGesture, { passive: true });
     });
   }
 
-  function removeInteractionListeners() {
-    interactionEvents.forEach(evt => {
-      document.removeEventListener(evt, handleUserInteraction);
+  function detachUnlockListeners() {
+    gestureEvents.forEach(evt => {
+      window.removeEventListener(evt, onFirstUserGesture);
     });
   }
 
-  addInteractionListeners();
+  attachUnlockListeners();
 
-  // Thử tự động phát ngay khi vừa load (hoạt động trên desktop hoặc trình duyệt đã cấp quyền)
-  playMusic().catch(() => {
-    // Trình duyệt điện thoại chặn autoplay ban đầu, đợi cú chạm đầu tiên của người dùng
-  });
+  // Thử tự động phát ngay khi vừa load (hoạt động tốt trên máy tính có MEI hoặc trình duyệt cho phép autoplay)
+  if (bgMusic) {
+    startAudio().catch(() => {
+      // Trình duyệt chặn autoplay khi mới vào trang, đợi tương tác đầu tiên từ người dùng
+    });
+  }
 
   // 7. Sổ lưu bút & Tích hợp Đồng bộ Google Sheets
   const WISHES_STORAGE_KEY = "graduation_invitation_wishes_list";
