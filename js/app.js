@@ -235,6 +235,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Cơ chế lặp nhạc liền mạch (seamless zero-latency loop)
+  // Xóa bỏ hoàn toàn khoảng lặng trễ giữa các lần lặp của trình duyệt
+  if (bgMusic) {
+    bgMusic.addEventListener("timeupdate", () => {
+      if (bgMusic.duration && bgMusic.currentTime >= bgMusic.duration - 0.2) {
+        bgMusic.currentTime = 0;
+        if (bgMusic.paused && isPlaying) {
+          bgMusic.play().catch(() => {});
+        }
+      }
+    });
+
+    bgMusic.addEventListener("ended", () => {
+      bgMusic.currentTime = 0;
+      if (isPlaying) {
+        bgMusic.play().catch(() => {});
+      }
+    });
+  }
+
   const triggerAutoPlay = () => {
     if (!isPlaying) {
       playMusic();
