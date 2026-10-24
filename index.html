@@ -16,7 +16,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=6">
 </head>
 <body>
 
@@ -24,6 +24,43 @@
   <div id="loadingScreen">
     <div class="spinner"></div>
     <div class="loading-text">Đang tải...</div>
+  </div>
+
+  <!-- MÀN HÌNH MỞ PHONG BÌ THIỆP (INTERACTIVE ENVELOPE OPENING) -->
+  <div id="envelopeOverlay" class="envelope-overlay">
+    <div class="envelope-scene">
+      <div id="envelopeCard" class="envelope-card">
+        <!-- Hoa văn góc vintage -->
+        <div class="envelope-corner-ornament top-left"></div>
+        <div class="envelope-corner-ornament top-right"></div>
+        <div class="envelope-corner-ornament bottom-left"></div>
+        <div class="envelope-corner-ornament bottom-right"></div>
+
+        <div class="envelope-inner-content">
+          <div class="envelope-subtitle">THƯ MỜI THAM DỰ LỄ TỐT NGHIỆP</div>
+          <div id="envelopeGraduateName" class="envelope-grad-name">LÊ MINH THƯ</div>
+
+          <div class="envelope-recipient-box">
+            <span class="envelope-to-tag">TRÂN TRỌNG KÍNH MỜI</span>
+            <span id="envelopeGuestName" class="envelope-guest-name">BẠN X</span>
+          </div>
+
+          <!-- Con dấu sáp hoàng gia chạm mở thiệp -->
+          <div class="wax-seal-wrapper">
+            <div class="wax-seal-outer">
+              <div class="wax-seal-inner">
+                <span class="wax-seal-icon">🎓</span>
+              </div>
+            </div>
+            <div class="wax-seal-pulse"></div>
+            <div class="wax-seal-label">
+              <span>💌 CHẠM ĐỂ MỞ THIỆP</span>
+              <span class="wax-seal-sublabel">♫ Tự động bật nhạc</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Nhạc nền sự kiện: A Little Dream Of Me (Cảm Ơn Người Đã Thức Cùng Tôi OST) -->
@@ -321,6 +358,6 @@
   <!-- Scripts -->
   <script src="js/confetti.browser.min.js"></script>
   <script src="js/config.js"></script>
-  <script src="js/app.js?v=5"></script>
+  <script src="js/app.js?v=6"></script>
 </body>
 </html>

@@ -64,6 +64,12 @@ document.addEventListener("DOMContentLoaded", () => {
       el.textContent = `"${config.thankYouMessage || ''}"`;
     });
 
+    // Cập nhật tên cử nhân và khách mời trên phong bì thư mở đầu
+    const envGrad = document.getElementById("envelopeGraduateName");
+    if (envGrad) envGrad.textContent = config.graduateName || "LÊ MINH THƯ";
+    const envGuest = document.getElementById("envelopeGuestName");
+    if (envGuest) envGuest.textContent = currentGuestName;
+
     // Pre-fill tên vào form RSVP nếu tên khác BẠN X
     const rsvpNameInput = document.getElementById("rsvpName");
     if (rsvpNameInput && currentGuestName !== "BẠN X") {
@@ -828,4 +834,43 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   initRomanticAtmosphere();
+
+  // 12. Xử lý mở phong bì thư (Interactive Luxury Envelope Opening)
+  function initEnvelopeOpening() {
+    const envelopeOverlay = document.getElementById("envelopeOverlay");
+    const envelopeCard = document.getElementById("envelopeCard");
+    if (!envelopeOverlay || !envelopeCard) return;
+
+    let isOpened = false;
+
+    const handleOpen = (e) => {
+      if (isOpened) return;
+      isOpened = true;
+
+      // Kích hoạt phát nhạc nền ngay lập tức
+      startAudio().catch(() => {});
+
+      // Bắn pháo hoa giấy rực rỡ khi mở phong bì
+      if (typeof confetti === "function") {
+        confetti({
+          particleCount: 55,
+          spread: 75,
+          origin: { y: 0.6 },
+          colors: ['#c49a38', '#dfd3c3', '#b2262b', '#fce4ec', '#191817']
+        });
+      }
+
+      // Kích hoạt hiệu ứng mở phong bì thư
+      envelopeOverlay.classList.add("opened");
+
+      // Sau khi hoàn thành chuyển động mở, ẩn hoàn toàn overlay
+      setTimeout(() => {
+        envelopeOverlay.style.display = "none";
+      }, 850);
+    };
+
+    envelopeCard.addEventListener("click", handleOpen);
+  }
+
+  initEnvelopeOpening();
 });
