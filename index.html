@@ -254,16 +254,6 @@
 
       </div>
 
-      <!-- 9. Thanh công cụ quản trị thiệp (Dành cho chủ nhân thiệp) -->
-      <div class="host-tools-bar">
-        <button id="openLinkModalBtn" class="host-tool-btn" type="button" title="Tạo link gửi riêng cho từng người">
-          <span>🔗</span> Tạo link mời riêng
-        </button>
-        <button id="openEditModalBtn" class="host-tool-btn" type="button" title="Chỉnh sửa nội dung thiệp">
-          <span>✏️</span> Chỉnh sửa thiệp
-        </button>
-      </div>
-
     </div>
   </div>
 
@@ -279,97 +269,12 @@
     </button>
   </div>
 
-  <!-- MODAL: Tạo link mời riêng cho từng khách -->
-  <div id="linkModal" class="modal-overlay">
-    <div class="modal-content">
-      <button id="closeLinkModalBtn" class="modal-close" type="button">&times;</button>
-      <h3 class="modal-title">Tạo Link Mời Riêng</h3>
-      <p class="modal-subtitle">
-        Nhập tên người bạn muốn mời (ví dụ: Lan Anh, Anh Hoàng, Bác Năm). Thiệp sẽ tự động hiển thị <b>"HÂN HẠNH MỜI: [TÊN]"</b> khi họ mở link!
-      </p>
-
-      <div class="form-group">
-        <label class="form-label" for="customGuestNameInput">Tên khách mời:</label>
-        <input id="customGuestNameInput" class="input-field" type="text" placeholder="Ví dụ: Bạn Lan Anh, Thầy Tuấn, Bác Năm..." />
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Link mời cá nhân hoá:</label>
-        <div id="generatedLinkOutput" class="result-box">...</div>
-      </div>
-
-      <!-- Khung hiển thị Mã QR Code để quét hoặc tải về -->
-      <div class="qr-code-section" id="qrCodeSection">
-        <label class="form-label">Mã QR thiệp mời:</label>
-        <div class="qr-code-card">
-          <img id="qrCodeImg" class="qr-code-img" src="" alt="Mã QR thiệp mời" />
-          <div id="qrGuestLabel" class="qr-guest-label">Mã QR cho: BẠN X</div>
-        </div>
-      </div>
-
-      <div style="display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap;">
-        <button id="copyLinkBtn" class="btn-black-pill" style="flex: 1; min-width: 120px; padding: 10px;" type="button">
-          📋 Sao chép link
-        </button>
-        <button id="downloadQrBtn" class="btn-black-pill" style="flex: 1; min-width: 120px; padding: 10px; background-color: #8c252d;" type="button">
-          📥 Tải mã QR
-        </button>
-        <a id="testLinkBtn" class="btn-black-pill" style="flex: 1; min-width: 120px; padding: 10px; background-color: #4a3e35;" href="#" target="_blank">
-          👀 Mở thử thiệp
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL: Chỉnh sửa nhanh thông tin thiệp -->
-  <div id="editModal" class="modal-overlay">
-    <div class="modal-content">
-      <button id="closeEditModalBtn" class="modal-close" type="button">&times;</button>
-      <h3 class="modal-title">Chỉnh Sửa Thông Tin Thiệp</h3>
-      <p class="modal-subtitle">Thay đổi tên cử nhân, ngày giờ, địa chỉ theo sự kiện của bạn:</p>
-
-      <form id="editCardForm">
-        <div class="form-group">
-          <label class="form-label" for="editGraduateName">Họ và tên cử nhân:</label>
-          <input id="editGraduateName" class="input-field" type="text" required />
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="editDateTime">Thời gian tổ chức:</label>
-          <input id="editDateTime" class="input-field" type="text" required />
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="editAddress">Địa điểm / Địa chỉ:</label>
-          <input id="editAddress" class="input-field" type="text" required />
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="editGoogleSheetUrl">📊 Link Google Apps Script (Lưu về Google Sheets):</label>
-          <input id="editGoogleSheetUrl" class="input-field" type="url" placeholder="https://script.google.com/macros/s/.../exec" />
-          <small style="font-size: 11px; color: #7a6e65; display: block; margin-top: 4px; line-height: 1.4;">
-            Dán link Web App của Google Trang Tính để tự động lưu khách mời và đồng bộ sổ lưu bút. (Xem tệp <b>google_apps_script.js</b>).
-          </small>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="editThankYou">Lời cảm ơn:</label>
-          <textarea id="editThankYou" class="input-field" rows="3"></textarea>
-        </div>
-
-        <button class="btn-black-pill" style="width: 100%; margin-top: 10px;" type="submit">
-          💾 Lưu thay đổi ngay
-        </button>
-      </form>
-    </div>
-  </div>
-
   <!-- Thông báo Toast -->
   <div id="toastNotice" class="toast-notice"></div>
 
   <!-- Scripts -->
   <script src="js/confetti.browser.min.js"></script>
   <script src="js/config.js"></script>
-  <script src="js/app.js?v=7"></script>
+  <script src="js/app.js?v=8"></script>
 </body>
 </html>

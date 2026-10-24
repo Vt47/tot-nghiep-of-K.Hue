@@ -514,181 +514,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 3200);
   }
 
-  // 11. Modal Tạo Link Mời Riêng cho từng khách & Mã QR
-  const linkModal = document.getElementById("linkModal");
-  const openLinkModalBtn = document.getElementById("openLinkModalBtn");
-  const closeLinkModalBtn = document.getElementById("closeLinkModalBtn");
-  const guestNameInput = document.getElementById("customGuestNameInput");
-  const generatedLinkOutput = document.getElementById("generatedLinkOutput");
-  const copyLinkBtn = document.getElementById("copyLinkBtn");
-  const testLinkBtn = document.getElementById("testLinkBtn");
-  const qrCodeImg = document.getElementById("qrCodeImg");
-  const qrGuestLabel = document.getElementById("qrGuestLabel");
-  const downloadQrBtn = document.getElementById("downloadQrBtn");
-
-  function updateGeneratedLink() {
-    const rawName = guestNameInput.value.trim();
-    const baseUrl = window.location.origin + window.location.pathname;
-    let fullUrl = baseUrl;
-    if (rawName) {
-      fullUrl = `${baseUrl}?to=${encodeURIComponent(rawName)}`;
-      generatedLinkOutput.textContent = fullUrl;
-      testLinkBtn.href = fullUrl;
-      if (qrGuestLabel) qrGuestLabel.textContent = `Mã QR cho: ${rawName}`;
-    } else {
-      generatedLinkOutput.textContent = baseUrl;
-      testLinkBtn.href = baseUrl;
-      if (qrGuestLabel) qrGuestLabel.textContent = "Mã QR thiệp mời chung";
-    }
-
-    if (qrCodeImg) {
-      qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(fullUrl)}&margin=10`;
-    }
-  }
-
-  if (openLinkModalBtn) {
-    openLinkModalBtn.addEventListener("click", () => {
-      linkModal.classList.add("active");
-      guestNameInput.value = "";
-      updateGeneratedLink();
-      guestNameInput.focus();
-    });
-  }
-
-  if (closeLinkModalBtn) {
-    closeLinkModalBtn.addEventListener("click", () => {
-      linkModal.classList.remove("active");
-    });
-  }
-
-  if (guestNameInput) {
-    guestNameInput.addEventListener("input", updateGeneratedLink);
-  }
-
-  if (copyLinkBtn) {
-    copyLinkBtn.addEventListener("click", () => {
-      const linkText = generatedLinkOutput.textContent;
-      navigator.clipboard.writeText(linkText).then(() => {
-        showToast("Đã sao chép link mời vào bộ nhớ tạm! 📋");
-      }).catch(() => {
-        const temp = document.createElement("textarea");
-        temp.value = linkText;
-        document.body.appendChild(temp);
-        temp.select();
-        document.execCommand("copy");
-        document.body.removeChild(temp);
-        showToast("Đã sao chép link mời! 📋");
-      });
-    });
-  }
-
-  if (downloadQrBtn) {
-    downloadQrBtn.addEventListener("click", async () => {
-      if (!qrCodeImg || !qrCodeImg.src) return;
-      const rawName = guestNameInput.value.trim() || "khach-moi";
-      const fileName = `thiep-moi-${rawName.toLowerCase().replace(/\s+/g, "-")}-qr.png`;
-
-      showToast("Đang tải ảnh mã QR xuống... ⏳");
-      try {
-        const res = await fetch(qrCodeImg.src);
-        const blob = await res.blob();
-        const blobUrl = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = blobUrl;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(blobUrl);
-        showToast("Đã tải mã QR về máy thành công! 📥");
-      } catch (err) {
-        window.open(qrCodeImg.src, "_blank");
-      }
-    });
-  }
-
-  // Đóng modal khi click ra ngoài overlay
-  window.addEventListener("click", (e) => {
-    if (e.target === linkModal) linkModal.classList.remove("active");
-    const editModal = document.getElementById("editModal");
-    if (e.target === editModal) editModal.classList.remove("active");
-  });
-
-  // 12. Modal Chỉnh sửa thông tin thiệp & Kết nối Google Sheets trực tiếp
-  const editModal = document.getElementById("editModal");
-  const openEditModalBtn = document.getElementById("openEditModalBtn");
-  const closeEditModalBtn = document.getElementById("closeEditModalBtn");
-  const editForm = document.getElementById("editCardForm");
-
-  if (openEditModalBtn) {
-    openEditModalBtn.addEventListener("click", () => {
-      document.getElementById("editGraduateName").value = config.graduateName || "";
-      document.getElementById("editDateTime").value = config.displayDateTime || "";
-      document.getElementById("editAddress").value = config.locationAddress || "";
-      document.getElementById("editGoogleSheetUrl").value = config.googleSheetScriptUrl || "";
-      document.getElementById("editThankYou").value = config.thankYouMessage || "";
-      editModal.classList.add("active");
-    });
-  }
-
-  if (closeEditModalBtn) {
-    closeEditModalBtn.addEventListener("click", () => {
-      editModal.classList.remove("active");
-    });
-  }
-
-  if (editForm) {
-    editForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      config.graduateName = document.getElementById("editGraduateName").value.trim() || config.graduateName;
-      config.displayDateTime = document.getElementById("editDateTime").value.trim() || config.displayDateTime;
-      config.locationAddress = document.getElementById("editAddress").value.trim() || config.locationAddress;
-      config.googleSheetScriptUrl = document.getElementById("editGoogleSheetUrl").value.trim();
-      config.thankYouMessage = document.getElementById("editThankYou").value.trim() || config.thankYouMessage;
-
-      localStorage.setItem("graduation_invitation_config", JSON.stringify(config));
-      applyConfigToUI();
-      editModal.classList.remove("active");
-
-      // Tải lại lời chúc từ Sheets nếu có URL mới
-      loadWishes();
-
-      showToast("Đã lưu thay đổi & kết nối Google Sheets! ✨");
-    });
-  }
-
-  // 13. Phân quyền hiển thị Thanh công cụ Chủ thiệp (Ẩn với khách mời)
-  const hostToolsBar = document.querySelector(".host-tools-bar");
-  const footerCredit = document.querySelector(".footer-credit");
+  // 11. Chuyển hướng Quản trị (/admin)
   const queryParams = new URLSearchParams(window.location.search);
-
-  // Kích hoạt quyền admin khi vào bằng link ?admin=true hoặc máy chủ nhà
   if (queryParams.get("admin") === "true") {
-    localStorage.setItem("is_invitation_host", "true");
+    window.location.href = "/admin";
   }
 
-  const isHost = localStorage.getItem("is_invitation_host") === "true";
-  if (isHost && hostToolsBar) {
-    hostToolsBar.classList.add("show");
-  }
-
-  // Mở bí mật: Nhấp 3 lần liên tiếp vào dòng "ktv © 2026"
+  // Mở bí mật: Nhấp 3 lần liên tiếp vào dòng "ktv © 2026" để vào trang Quản trị
   const footerCredits = document.querySelectorAll(".footer-credit");
-  if (footerCredits.length > 0 && hostToolsBar) {
+  if (footerCredits.length > 0) {
     let clickCount = 0;
     let clickTimer = null;
     footerCredits.forEach(fc => {
-      fc.title = "Dành cho chủ thiệp: Nhấp 3 lần để ẩn/hiện công cụ";
+      fc.title = "Dành cho chủ thiệp: Nhấp 3 lần để vào trang Quản trị";
       fc.style.cursor = "pointer";
       fc.addEventListener("click", () => {
         clickCount++;
         clearTimeout(clickTimer);
 
         if (clickCount >= 3) {
-          hostToolsBar.classList.toggle("show");
-          const isShown = hostToolsBar.classList.contains("show");
-          localStorage.setItem("is_invitation_host", isShown ? "true" : "false");
-          showToast(isShown ? "Đã bật thanh công cụ Chủ thiệp! ⚙️" : "Đã ẩn thanh công cụ với khách! 🔒");
+          window.location.href = "/admin";
           clickCount = 0;
         } else {
           clickTimer = setTimeout(() => {

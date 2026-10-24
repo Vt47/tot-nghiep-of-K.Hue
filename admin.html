@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản Trị Thiệp Mời - Bảng Điều Khiển</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚙️</text></svg>">
+  <link rel="stylesheet" href="css/admin.css?v=1">
+</head>
+<body>
+
+  <!-- 1. MÀN HÌNH ĐĂNG NHẬP MẬT KHẨU -->
+  <div id="loginScreen" class="admin-login-wrapper">
+    <div class="login-card">
+      <div class="login-icon">🎓</div>
+      <h1 class="login-title">Quản Trị Thiệp Mời</h1>
+      <p class="login-desc">Vui lòng nhập mật khẩu để truy cập bảng điều khiển tạo mã và chỉnh sửa thiệp:</p>
+      
+      <form id="loginForm" class="login-form">
+        <div class="input-wrap">
+          <input 
+            type="password" 
+            id="passwordInput" 
+            class="admin-input" 
+            placeholder="Nhập mật khẩu quản trị..." 
+            required 
+            autocomplete="current-password"
+            autofocus 
+          />
+          <button type="button" id="togglePasswordBtn" class="toggle-pwd-btn" title="Hiện/ẩn mật khẩu">👁️</button>
+        </div>
+        <div id="loginError" class="login-error">Mật khẩu không chính xác. Vui lòng thử lại!</div>
+        <button type="submit" class="admin-btn-primary">
+          ĐĂNG NHẬP
+        </button>
+      </form>
+      
+      <div class="login-hint">
+        Mật khẩu mặc định: <b>123456</b> (Bạn có thể đổi mật khẩu sau khi đăng nhập)
+      </div>
+
+      <div class="login-back">
+        <a href="/">← Quay lại trang thiệp mời</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. BẢNG ĐIỀU KHIỂN CHÍNH (Sau khi đăng nhập) -->
+  <div id="dashboardScreen" class="admin-dashboard-wrapper" style="display: none;">
+    
+    <!-- Header Admin -->
+    <header class="admin-header">
+      <div class="header-brand">
+        <span class="header-icon">🎓</span>
+        <div class="header-titles">
+          <h2>Quản Trị Thiệp Mời</h2>
+          <span class="header-subtitle" id="adminGradNameDisplay">Lễ Tốt Nghiệp</span>
+        </div>
+      </div>
+      
+      <div class="header-actions">
+        <a href="/" target="_blank" class="admin-btn-outline" title="Mở trang thiệp khách trong tab mới">
+          <span>👀</span> Xem trang thiệp
+        </a>
+        <button id="logoutBtn" class="admin-btn-outline logout-btn" type="button" title="Đăng xuất">
+          <span>🚪</span> Đăng xuất
+        </button>
+      </div>
+    </header>
+
+    <!-- Thanh Điều Hướng Tabs -->
+    <nav class="admin-nav">
+      <button class="nav-tab active" data-tab="tab-qr">
+        <span>🔗</span> Tạo Link & Mã QR
+      </button>
+      <button class="nav-tab" data-tab="tab-edit">
+        <span>✏️</span> Chỉnh Sửa Thiệp
+      </button>
+      <button class="nav-tab" data-tab="tab-wishes">
+        <span>💌</span> Xem Lời Chúc & RSVP
+      </button>
+      <button class="nav-tab" data-tab="tab-settings">
+        <span>🔑</span> Đổi Mật Khẩu
+      </button>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="admin-main">
+
+      <!-- TAB 1: TẠO LINK MỜI & MÃ QR -->
+      <section id="tab-qr" class="tab-pane active">
+        <div class="pane-header">
+          <h3>Tạo Link Cá Nhân Hóa & Mã QR Cho Từng Khách</h3>
+          <p>Mỗi vị khách khi mở link hoặc quét mã QR sẽ thấy đúng tên của mình trên phong bì thư và thiệp mời!</p>
+        </div>
+
+        <div class="qr-creator-grid">
+          <div class="qr-input-card">
+            <div class="form-group">
+              <label class="form-label" for="guestNameInput">Họ & Tên khách mời:</label>
+              <input 
+                id="guestNameInput" 
+                class="admin-input" 
+                type="text" 
+                placeholder="Ví dụ: Bạn Lan Anh, Thầy Tuấn, Bác Năm, Chị Mai..." 
+                autocomplete="off"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Link mời riêng tự động:</label>
+              <div id="fullLinkOutput" class="link-display-box">https://...</div>
+            </div>
+
+            <div class="btn-group">
+              <button id="copyLinkBtn" class="admin-btn-primary" type="button">
+                <span>📋</span> Sao chép link mời
+              </button>
+              <a id="previewLinkBtn" class="admin-btn-secondary" href="/" target="_blank">
+                <span>👀</span> Mở thử thiệp
+              </a>
+              <button id="saveGuestHistoryBtn" class="admin-btn-outline" type="button">
+                <span>💾</span> Lưu vào danh sách
+              </button>
+            </div>
+          </div>
+
+          <div class="qr-preview-card">
+            <h4 class="qr-card-title">Mã QR Thiệp Mời</h4>
+            <div class="qr-image-wrapper">
+              <img id="qrPreviewImg" src="" alt="Mã QR thiệp mời" />
+              <div id="qrNameCaption" class="qr-name-caption">Mã QR cho: Khách Mời</div>
+            </div>
+            
+            <button id="downloadQrBtn" class="admin-btn-gold" type="button">
+              <span>📥</span> Tải ảnh mã QR (.PNG)
+            </button>
+            <div class="qr-tip">
+              * Gợi ý: Bạn có thể tải mã QR về để gửi qua Zalo, Messenger, đăng story hoặc in kèm thiệp giấy!
+            </div>
+          </div>
+        </div>
+
+        <!-- Lịch sử danh sách khách đã tạo link -->
+        <div class="guest-history-section">
+          <div class="history-header">
+            <h4>Danh Sách Khách Đã Tạo Link (<span id="guestCount">0</span>)</h4>
+            <button id="clearHistoryBtn" class="clear-btn" type="button">Xóa tất cả</button>
+          </div>
+          <div id="guestHistoryList" class="guest-history-list">
+            <!-- Render danh sách khách tại đây -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: CHỈNH SỬA THÔNG TIN THIỆP -->
+      <section id="tab-edit" class="tab-pane">
+        <div class="pane-header">
+          <h3>Chỉnh Sửa Thông Tin Thiệp Mời</h3>
+          <p>Thay đổi tên cử nhân, ngày giờ, địa điểm tổ chức theo sự kiện thực tế của bạn:</p>
+        </div>
+
+        <form id="editInvitationForm" class="edit-invitation-form">
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label class="form-label" for="editGradName">Tên cử nhân (hiển thị trên thiệp):</label>
+              <input id="editGradName" class="admin-input" type="text" required />
+            </div>
+            <div class="form-group col-6">
+              <label class="form-label" for="editSubtitle">Tiêu đề phụ:</label>
+              <input id="editSubtitle" class="admin-input" type="text" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-4">
+              <label class="form-label" for="editEventDay">Ngày tổ chức (trên lịch):</label>
+              <input id="editEventDay" class="admin-input" type="number" min="1" max="31" required />
+            </div>
+            <div class="form-group col-4">
+              <label class="form-label" for="editEventMonth">Tháng tổ chức:</label>
+              <input id="editEventMonth" class="admin-input" type="number" min="1" max="12" required />
+            </div>
+            <div class="form-group col-4">
+              <label class="form-label" for="editEventYear">Năm tổ chức:</label>
+              <input id="editEventYear" class="admin-input" type="number" min="2024" max="2035" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="editDateTime">Thời gian hiển thị (dòng mô tả):</label>
+            <input id="editDateTime" class="admin-input" type="text" placeholder="Ví dụ: 17/11/2026 | Lúc 10h - 14h" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="editLocation">Địa chỉ tổ chức sự kiện:</label>
+            <input id="editLocation" class="admin-input" type="text" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="editMapsUrl">Link Google Maps (khi khách bấm vào để mở ứng dụng):</label>
+            <input id="editMapsUrl" class="admin-input" type="url" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="editThankYou">Lời cảm ơn bế mạc:</label>
+            <textarea id="editThankYou" class="admin-input" rows="3"></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="admin-btn-primary">
+              <span>💾</span> LƯU THAY ĐỔI VÀO THIỆP
+            </button>
+            <button type="button" id="resetDefaultBtn" class="admin-btn-outline">
+              Khôi phục mặc định ban đầu
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- TAB 3: XEM LỜI CHÚC & PHẢN HỒI RSVP -->
+      <section id="tab-wishes" class="tab-pane">
+        <div class="pane-header">
+          <h3>Danh Sách Lời Chúc & Xác Nhận Tham Dự</h3>
+          <p>Xem danh sách khách mời đã gửi phản hồi RSVP và lời chúc tốt nghiệp:</p>
+        </div>
+
+        <div class="rsvp-stats-grid">
+          <div class="stat-card">
+            <div class="stat-number" id="statTotal">0</div>
+            <div class="stat-label">Tổng phản hồi</div>
+          </div>
+          <div class="stat-card stat-yes">
+            <div class="stat-number" id="statYes">0</div>
+            <div class="stat-label">Chắc chắn tham dự</div>
+          </div>
+          <div class="stat-card stat-maybe">
+            <div class="stat-number" id="statMaybe">0</div>
+            <div class="stat-label">Sắp xếp tham dự</div>
+          </div>
+          <div class="stat-card stat-no">
+            <div class="stat-number" id="statNo">0</div>
+            <div class="stat-label">Bận gửi lời chúc</div>
+          </div>
+        </div>
+
+        <div class="sheets-integration-box">
+          <div class="sheets-info">
+            <h4>Google Sheets Đồng Bộ Tự Động</h4>
+            <p>Dữ liệu được lưu trữ trực tiếp vào bảng tính Google Sheets của bạn.</p>
+          </div>
+          <a id="openSheetsBtn" href="https://docs.google.com/spreadsheets" target="_blank" class="admin-btn-secondary">
+            <span>📊</span> Mở bảng tính Google Sheets
+          </a>
+        </div>
+
+        <div class="wishes-table-wrapper">
+          <table class="wishes-table">
+            <thead>
+              <tr>
+                <th>Khách mời</th>
+                <th>Phản hồi</th>
+                <th>Lời chúc</th>
+                <th>Thời gian</th>
+              </tr>
+            </thead>
+            <tbody id="wishesTableBody">
+              <tr>
+                <td colspan="4" class="empty-cell">Đang tải dữ liệu lời chúc...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 4: BẢO MẬT & ĐỔI MẬT KHẨU -->
+      <section id="tab-settings" class="tab-pane">
+        <div class="pane-header">
+          <h3>Bảo Mật & Đổi Mật Khẩu Quản Trị</h3>
+          <p>Đổi mật khẩu truy cập trang `/admin` để bảo vệ quyền chỉnh sửa thiệp của bạn:</p>
+        </div>
+
+        <form id="changePasswordForm" class="change-pwd-form">
+          <div class="form-group">
+            <label class="form-label" for="currentPwd">Mật khẩu hiện tại:</label>
+            <input id="currentPwd" class="admin-input" type="password" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="newPwd">Mật khẩu mới:</label>
+            <input id="newPwd" class="admin-input" type="password" minlength="4" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="confirmPwd">Xác nhận mật khẩu mới:</label>
+            <input id="confirmPwd" class="admin-input" type="password" minlength="4" required />
+          </div>
+
+          <button type="submit" class="admin-btn-primary">
+            <span>🔐</span> CẬP NHẬT MẬT KHẨU
+          </button>
+        </form>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Thông báo Toast -->
+  <div id="adminToast" class="admin-toast"></div>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/admin.js?v=1"></script>
+</body>
+</html>

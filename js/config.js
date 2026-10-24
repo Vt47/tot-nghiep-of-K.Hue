@@ -85,11 +85,11 @@ function getSavedConfig() {
       return {
         ...DEFAULT_CONFIG,
         ...parsed,
-        targetDate: DEFAULT_CONFIG.targetDate,
-        displayDateTime: DEFAULT_CONFIG.displayDateTime,
-        calendarMonth: DEFAULT_CONFIG.calendarMonth,
-        calendarYear: DEFAULT_CONFIG.calendarYear,
-        eventDay: DEFAULT_CONFIG.eventDay,
+        targetDate: parsed.targetDate || DEFAULT_CONFIG.targetDate,
+        displayDateTime: parsed.displayDateTime || DEFAULT_CONFIG.displayDateTime,
+        calendarMonth: parsed.calendarMonth || DEFAULT_CONFIG.calendarMonth,
+        calendarYear: parsed.calendarYear || DEFAULT_CONFIG.calendarYear,
+        eventDay: parsed.eventDay || DEFAULT_CONFIG.eventDay,
         musicSrc: DEFAULT_CONFIG.musicSrc,
         googleSheetScriptUrl: parsed.googleSheetScriptUrl || DEFAULT_CONFIG.googleSheetScriptUrl
       };
