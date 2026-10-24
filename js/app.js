@@ -193,6 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const bgMusic = document.getElementById("bgMusic");
   const musicToggleBtn = document.getElementById("musicToggleBtn");
   let isPlaying = false;
+  let playPromise = null;
 
   function setPlayingState(playing) {
     isPlaying = playing;
@@ -210,13 +211,21 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function playMusic() {
-    if (!bgMusic) return;
-    bgMusic.play().then(() => {
+    if (!bgMusic) return Promise.reject(new Error("No audio element"));
+    if (isPlaying) return Promise.resolve();
+    if (playPromise) return playPromise;
+
+    playPromise = bgMusic.play().then(() => {
+      playPromise = null;
       setPlayingState(true);
+      removeInteractionListeners();
     }).catch(err => {
-      console.log("Trình duyệt chặn autoplay tự động, đợi tương tác người dùng:", err);
+      playPromise = null;
       setPlayingState(false);
+      throw err;
     });
+
+    return playPromise;
   }
 
   function pauseMusic() {
@@ -226,11 +235,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (musicToggleBtn) {
-    musicToggleBtn.addEventListener("click", () => {
+    musicToggleBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
       if (isPlaying) {
         pauseMusic();
       } else {
-        playMusic();
+        playMusic().catch(() => {});
       }
     });
   }
@@ -255,18 +265,34 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const triggerAutoPlay = () => {
-    if (!isPlaying) {
-      playMusic();
-    }
-    document.removeEventListener("click", triggerAutoPlay);
-    document.removeEventListener("touchstart", triggerAutoPlay);
-    document.removeEventListener("scroll", triggerAutoPlay);
+  // Tự động kích hoạt âm thanh ngay khi người dùng chạm vào bất kỳ đâu trên màn hình
+  const handleUserInteraction = () => {
+    if (isPlaying) return;
+    playMusic().catch(() => {
+      // Tiếp tục lắng nghe cho đến khi có cử chỉ hợp lệ được trình duyệt chấp thuận
+    });
   };
 
-  document.addEventListener("click", triggerAutoPlay, { once: true });
-  document.addEventListener("touchstart", triggerAutoPlay, { once: true });
-  document.addEventListener("scroll", triggerAutoPlay, { once: true });
+  const interactionEvents = ["click", "touchend", "pointerdown"];
+
+  function addInteractionListeners() {
+    interactionEvents.forEach(evt => {
+      document.addEventListener(evt, handleUserInteraction, { passive: true });
+    });
+  }
+
+  function removeInteractionListeners() {
+    interactionEvents.forEach(evt => {
+      document.removeEventListener(evt, handleUserInteraction);
+    });
+  }
+
+  addInteractionListeners();
+
+  // Thử tự động phát ngay khi vừa load (hoạt động trên desktop hoặc trình duyệt đã cấp quyền)
+  playMusic().catch(() => {
+    // Trình duyệt điện thoại chặn autoplay ban đầu, đợi cú chạm đầu tiên của người dùng
+  });
 
   // 7. Sổ lưu bút & Tích hợp Đồng bộ Google Sheets
   const WISHES_STORAGE_KEY = "graduation_invitation_wishes_list";
