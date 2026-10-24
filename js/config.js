@@ -44,8 +44,8 @@ const DEFAULT_CONFIG = {
   thankYouTitle: "Thank you!",
   thankYouMessage: "Những cố gắng của em/con/mình hôm nay cũng là nhờ sự đồng hành của mọi người. Mong được gặp thầy cô, bạn bè, anh chị trong ngày trọng đại này!",
 
-  // Nhạc nền
-  musicSrc: "assets/audio/graduation_song.mp3",
+  // Nhạc nền: Dream a Little Dream of Me (Đoạn điệp khúc)
+  musicSrc: "assets/audio/dream_a_little_dream_chorus.mp3",
 
   // Lời chúc mẫu ban đầu (dùng khi chưa kết nối Google Sheets hoặc khi danh sách trống)
   initialWishes: [
@@ -90,6 +90,7 @@ function getSavedConfig() {
         calendarMonth: DEFAULT_CONFIG.calendarMonth,
         calendarYear: DEFAULT_CONFIG.calendarYear,
         eventDay: DEFAULT_CONFIG.eventDay,
+        musicSrc: DEFAULT_CONFIG.musicSrc,
         googleSheetScriptUrl: parsed.googleSheetScriptUrl || DEFAULT_CONFIG.googleSheetScriptUrl
       };
     }
