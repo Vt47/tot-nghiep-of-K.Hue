@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Thư mời tham dự lễ tốt nghiệp của Lê Minh Thư</title>
 
-  <!-- Open Graph Meta Tags (Hiển thị thẻ xem trước khi gửi qua Zalo, Messenger, iMessage, Facebook) -->
+  <!-- Open Graph Meta Tags (Hiển thị xem trước đẹp mắt khi gửi qua Zalo, Messenger, iMessage, Facebook) -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Thư mời tham dự lễ tốt nghiệp của Lê Minh Thư">
   <meta property="og:description" content="Trân trọng kính mời bạn trong ngày trọng đại này!">
@@ -32,163 +32,186 @@
     <source src="music.m4a" type="audio/mp4">
   </audio>
 
-  <!-- 2. Khung điện thoại (Phone Mockup) -->
+  <!-- 2. Khung thiệp mời (Responsive: 1 cột trên Mobile, 2 cột sang trọng trên Desktop) -->
   <div class="phone-wrapper">
     <div class="paper-container">
 
-      <!-- Dải cờ hoa trang trí trên cùng -->
-      <div class="garland-wrapper">
-        <img id="topGarland" class="garland-img" src="assets/images/top_garland.png" alt="Trang trí viền hoa và dải cờ" />
-      </div>
+      <div class="invitation-main-grid">
 
-      <!-- Tiêu đề & Thông tin sự kiện -->
-      <div class="header-section">
-        <div id="invitationTitle" class="title-sub">THƯ MỜI THAM DỰ</div>
-        <div id="subtitle" class="title-main-prefix">LỄ TỐT NGHIỆP CỦA</div>
-        <h1 id="graduateName" class="graduate-name">LÊ MINH THƯ</h1>
-
-        <div class="invitation-to">
-          <div id="guestPrefix" class="invite-prefix">HÂN HẠNH MỜI:</div>
-          <div id="guestNameDisplay" class="guest-name-pill">BẠN X</div>
-        </div>
-
-        <div class="dotted-divider"></div>
-
-        <div class="event-details">
-          <div id="eventDateTime" class="event-datetime">17/11/2026 | Lúc 10h - 14h</div>
-          <div id="eventLocation" class="event-location">Số 2 , Hoàng Văn Thụ, P 4, Q.Tân Bình, TP HCM</div>
-        </div>
-      </div>
-
-      <!-- Hình vẽ cử nhân với hoa và bằng tốt nghiệp -->
-      <div class="illustration-container">
-        <img id="graduateIllustration" class="illustration-img floating-elem" src="assets/images/graduate_illustration.png" alt="Cử nhân tốt nghiệp" />
-      </div>
-
-      <!-- 3. Lịch tháng sự kiện (Calendar) -->
-      <div class="calendar-section">
-        <div class="calendar-header-bar">
-          <span id="calMonthTitle" class="cal-month-title">THÁNG 11</span>
-          <span id="calYearTitle" class="cal-year-title">2026</span>
-        </div>
-
-        <div class="calendar-body">
-          <div id="calendarDaysGrid" class="calendar-grid">
-            <!-- Grid được render tự động bằng JS -->
+        <!-- CỘT 1: Bìa thiệp, thông tin cử nhân & Lời cảm ơn (trên máy tính) -->
+        <div class="col-main-showcase">
+          <!-- Dải cờ hoa trang trí trên cùng -->
+          <div class="garland-wrapper">
+            <img id="topGarland" class="garland-img" src="assets/images/top_garland.png" alt="Trang trí viền hoa và dải cờ" />
           </div>
 
-          <div class="add-calendar-btn-wrap">
-            <button id="addToCalendarBtn" class="add-calendar-btn" type="button">
-              <span>📅</span> Thêm vào Google Calendar
-            </button>
+          <!-- Tiêu đề & Thông tin sự kiện -->
+          <div class="header-section">
+            <div id="invitationTitle" class="title-sub">THƯ MỜI THAM DỰ</div>
+            <div id="subtitle" class="title-main-prefix">LỄ TỐT NGHIỆP CỦA</div>
+            <h1 id="graduateName" class="graduate-name">LÊ MINH THƯ</h1>
+
+            <div class="invitation-to">
+              <div id="guestPrefix" class="invite-prefix">HÂN HẠNH MỜI:</div>
+              <div id="guestNameDisplay" class="guest-name-pill">BẠN X</div>
+            </div>
+
+            <div class="dotted-divider"></div>
+
+            <div class="event-details">
+              <div id="eventDateTime" class="event-datetime">17/11/2026 | Lúc 10h - 14h</div>
+              <div id="eventLocation" class="event-location">Số 2 , Hoàng Văn Thụ, P 4, Q.Tân Bình, TP HCM</div>
+            </div>
+          </div>
+
+          <!-- Hình vẽ cử nhân với hoa và bằng tốt nghiệp -->
+          <div class="illustration-container">
+            <img id="graduateIllustration" class="illustration-img floating-elem" src="assets/images/graduate_illustration.png" alt="Cử nhân tốt nghiệp" />
+          </div>
+
+          <!-- Lời cảm ơn bế mạc trên Desktop -->
+          <div class="thank-you-section desktop-only">
+            <div class="thank-you-title">Thank you!</div>
+            <p class="thank-you-quote">
+              " Những cố gắng của em/con/mình hôm nay cũng là nhờ sự đồng hành của mọi người. Mong được gặp thầy cô, bạn bè, anh chị trong ngày trọng đại này! "
+            </p>
+            <div class="footer-credit">
+              ktv &copy; 2026
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- 4. Đồng hồ đếm ngược thời gian (Countdown Timer) -->
-      <div class="countdown-section">
-        <div class="countdown-title-wrap">
-          <div class="countdown-line"></div>
-          <div class="countdown-title">CÙNG ĐẾM NGƯỢC THỜI GIAN</div>
-          <div class="countdown-line"></div>
-        </div>
+        <!-- CỘT 2: Các tiện ích tương tác (Lịch, Đếm ngược, Bản đồ, RSVP, Lời chúc) -->
+        <div class="col-interactive-modules">
 
-        <div class="timer-boxes">
-          <div class="timer-unit">
-            <div id="timerDays" class="timer-card">00</div>
-            <div class="timer-label">Ngày</div>
+          <!-- 3. Lịch tháng sự kiện (Calendar) -->
+          <div class="calendar-section">
+            <div class="calendar-header-bar">
+              <span id="calMonthTitle" class="cal-month-title">THÁNG 11</span>
+              <span id="calYearTitle" class="cal-year-title">2026</span>
+            </div>
+
+            <div class="calendar-body">
+              <div id="calendarDaysGrid" class="calendar-grid">
+                <!-- Grid được render tự động bằng JS -->
+              </div>
+
+              <div class="add-calendar-btn-wrap">
+                <button id="addToCalendarBtn" class="add-calendar-btn" type="button">
+                  <span>📅</span> Thêm vào Google Calendar
+                </button>
+              </div>
+            </div>
           </div>
-          <div class="timer-unit">
-            <div id="timerHours" class="timer-card">00</div>
-            <div class="timer-label">Giờ</div>
+
+          <!-- 4. Đồng hồ đếm ngược thời gian (Countdown Timer) -->
+          <div class="countdown-section">
+            <div class="countdown-title-wrap">
+              <div class="countdown-line"></div>
+              <div class="countdown-title">CÙNG ĐẾM NGƯỢC THỜI GIAN</div>
+              <div class="countdown-line"></div>
+            </div>
+
+            <div class="timer-boxes">
+              <div class="timer-unit">
+                <div id="timerDays" class="timer-card">00</div>
+                <div class="timer-label">Ngày</div>
+              </div>
+              <div class="timer-unit">
+                <div id="timerHours" class="timer-card">00</div>
+                <div class="timer-label">Giờ</div>
+              </div>
+              <div class="timer-unit">
+                <div id="timerMins" class="timer-card">00</div>
+                <div class="timer-label">Phút</div>
+              </div>
+              <div class="timer-unit">
+                <div id="timerSecs" class="timer-card">00</div>
+                <div class="timer-label">Giây</div>
+              </div>
+            </div>
           </div>
-          <div class="timer-unit">
-            <div id="timerMins" class="timer-card">00</div>
-            <div class="timer-label">Phút</div>
+
+          <!-- 5. Bản đồ & Dẫn đường -->
+          <div class="map-section">
+            <div class="section-heading-serif">XEM DẪN ĐƯỜNG</div>
+
+            <div class="map-container">
+              <iframe
+                id="googleMapIframe"
+                src="https://maps.google.com/maps?q=2%20Ho%C3%A0ng%20V%C4%83n%20Th%E1%BB%A5,%20Ph%C6%B0%E1%BB%9Dng%204,%20T%C3%A2n%20B%C3%ACnh,%20TP%20HCM&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                loading="lazy"
+                allowfullscreen=""
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Google Maps Location">
+              </iframe>
+            </div>
+
+            <div>
+              <a id="googleMapLinkBtn" class="btn-black-pill" href="https://maps.google.com/?q=2+Ho%C3%A0ng+V%C4%83n+Th%E1%BB%A5,+Ph%C6%B0%E1%BB%9Dng+4,+T%C3%A2n+B%C3%ACnh,+TP+HCM" target="_blank" rel="noopener noreferrer">
+                ❤️ Xem Google map ❤️
+              </a>
+            </div>
           </div>
-          <div class="timer-unit">
-            <div id="timerSecs" class="timer-card">00</div>
-            <div class="timer-label">Giây</div>
+
+          <!-- 6. Xác nhận tham dự (RSVP Form) -->
+          <div class="rsvp-section">
+            <h2 class="rsvp-title">Xác nhận tham dự</h2>
+
+            <form id="rsvpForm" class="rsvp-form">
+              <input
+                id="rsvpName"
+                class="input-field"
+                type="text"
+                placeholder="Nhập họ và tên của bạn..."
+                required
+                autocomplete="off"
+              />
+
+              <select id="rsvpStatus" class="input-field">
+                <option value="Chắc chắn tham dự">Bạn sẽ tham dự chứ?</option>
+                <option value="Chắc chắn tham dự">Chắc chắn rồi! Mình sẽ đến tham dự 🎉</option>
+                <option value="Gửi lời chúc">Rất tiếc, mình bận việc mất rồi 😢</option>
+                <option value="Sẽ cố gắng tham dự">Mình sẽ cố gắng sắp xếp đến chung vui ✨</option>
+              </select>
+
+              <textarea
+                id="rsvpMessage"
+                class="input-field"
+                rows="3"
+                placeholder="Gửi lời chúc đến mình nhé"
+                required
+              ></textarea>
+
+              <button class="btn-submit-rsvp" type="submit">
+                ❤️ ẤN GỬI LỜI CHÚC CỦA BẠN ❤️
+              </button>
+            </form>
           </div>
+
+          <!-- 7. Sổ lưu bút - Xem lời chúc của mọi người -->
+          <div id="wishesSection" class="wishes-section">
+            <h3 class="wishes-title">Xem lời chúc của mọi người</h3>
+
+            <div id="wishesContainer" class="wishes-card-container">
+              <!-- Danh sách lời chúc hiển thị ở đây -->
+            </div>
+          </div>
+
+          <!-- Lời cảm ơn bế mạc trên Mobile -->
+          <div class="thank-you-section mobile-only">
+            <div class="thank-you-title">Thank you!</div>
+            <p class="thank-you-quote">
+              " Những cố gắng của em/con/mình hôm nay cũng là nhờ sự đồng hành của mọi người. Mong được gặp thầy cô, bạn bè, anh chị trong ngày trọng đại này! "
+            </p>
+
+            <div class="footer-credit">
+              ktv &copy; 2026
+            </div>
+          </div>
+
         </div>
-      </div>
 
-      <!-- 5. Bản đồ & Dẫn đường -->
-      <div class="map-section">
-        <div class="section-heading-serif">XEM DẪN ĐƯỜNG</div>
-
-        <div class="map-container">
-          <iframe
-            id="googleMapIframe"
-            src="https://maps.google.com/maps?q=2%20Ho%C3%A0ng%20V%C4%83n%20Th%E1%BB%A5,%20Ph%C6%B0%E1%BB%9Dng%204,%20T%C3%A2n%20B%C3%ACnh,%20TP%20HCM&t=&z=15&ie=UTF8&iwloc=&output=embed"
-            loading="lazy"
-            allowfullscreen=""
-            referrerpolicy="no-referrer-when-downgrade"
-            title="Google Maps Location">
-          </iframe>
-        </div>
-
-        <div>
-          <a id="googleMapLinkBtn" class="btn-black-pill" href="https://maps.google.com/?q=2+Ho%C3%A0ng+V%C4%83n+Th%E1%BB%A5,+Ph%C6%B0%E1%BB%9Dng+4,+T%C3%A2n+B%C3%ACnh,+TP+HCM" target="_blank" rel="noopener noreferrer">
-            ❤️ Xem Google map ❤️
-          </a>
-        </div>
-      </div>
-
-      <!-- 6. Xác nhận tham dự (RSVP Form) -->
-      <div class="rsvp-section">
-        <h2 class="rsvp-title">Xác nhận tham dự</h2>
-
-        <form id="rsvpForm" class="rsvp-form">
-          <input
-            id="rsvpName"
-            class="input-field"
-            type="text"
-            placeholder="Nhập họ và tên của bạn..."
-            required
-            autocomplete="off"
-          />
-
-          <select id="rsvpStatus" class="input-field">
-            <option value="Chắc chắn tham dự">Bạn sẽ tham dự chứ?</option>
-            <option value="Chắc chắn tham dự">Chắc chắn rồi! Mình sẽ đến tham dự 🎉</option>
-            <option value="Gửi lời chúc">Rất tiếc, mình bận việc mất rồi 😢</option>
-            <option value="Sẽ cố gắng tham dự">Mình sẽ cố gắng sắp xếp đến chung vui ✨</option>
-          </select>
-
-          <textarea
-            id="rsvpMessage"
-            class="input-field"
-            rows="3"
-            placeholder="Gửi lời chúc đến mình nhé"
-            required
-          ></textarea>
-
-          <button class="btn-submit-rsvp" type="submit">
-            ❤️ ẤN GỬI LỜI CHÚC CỦA BẠN ❤️
-          </button>
-        </form>
-      </div>
-
-      <!-- 7. Sổ lưu bút - Xem lời chúc của mọi người -->
-      <div id="wishesSection" class="wishes-section">
-        <h3 class="wishes-title">Xem lời chúc của mọi người</h3>
-
-        <div id="wishesContainer" class="wishes-card-container">
-          <!-- Danh sách lời chúc hiển thị ở đây -->
-        </div>
-      </div>
-
-      <!-- 8. Lời cảm ơn bế mạc (Thank you) -->
-      <div class="thank-you-section">
-        <div id="thankYouTitle" class="thank-you-title">Thank you!</div>
-        <p id="thankYouQuote" class="thank-you-quote">
-          " Những cố gắng của em/con/mình hôm nay cũng là nhờ sự đồng hành của mọi người. Mong được gặp thầy cô, bạn bè, anh chị trong ngày trọng đại này! "
-        </p>
-
-        <div class="footer-credit">
-          ktv &copy; 2026
-        </div>
       </div>
 
       <!-- 9. Thanh công cụ quản trị thiệp (Dành cho chủ nhân thiệp) -->
@@ -204,7 +227,7 @@
     </div>
   </div>
 
-  <!-- Nút bật/tắt nhạc nền nổi ở góc dưới bên phải (Giống hệt video TikTok) -->
+  <!-- Nút bật/tắt nhạc nền nổi ở góc dưới bên phải -->
   <div class="floating-actions">
     <button id="musicToggleBtn" class="music-toggle-btn" type="button" aria-label="Bật/Tắt nhạc nền" title="Bật/Tắt nhạc nền">
       <span class="music-note-icon">🎵</span>

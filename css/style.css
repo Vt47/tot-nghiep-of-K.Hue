@@ -1,6 +1,6 @@
 /* ==========================================================================
    THIỆP MỜI TỐT NGHIỆP - STYLESHEET
-   Aesthetic vintage paper, typography & interactive elements
+   Responsive: Mobile Native Flow & Luxury 2-Column Desktop Experience
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600;1,700&display=swap');
@@ -18,6 +18,7 @@
   --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-script: 'Great Vibes', 'Dancing Script', cursive;
   --container-max-width: 440px;
+  --desktop-max-width: 1040px;
   --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.08);
   --shadow-strong: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
@@ -86,7 +87,18 @@ body {
 }
 
 /* ==========================================================================
-   APP CONTAINER (Phone Mockup on Desktop, 100% on Mobile)
+   VISIBILITY HELPERS FOR DESKTOP / MOBILE SEPARATION
+   ========================================================================== */
+.desktop-only {
+  display: none !important;
+}
+
+.mobile-only {
+  display: block;
+}
+
+/* ==========================================================================
+   APP CONTAINER (Phone View by default)
    ========================================================================== */
 .phone-wrapper {
   width: 100%;
@@ -96,27 +108,28 @@ body {
   background-color: var(--bg-paper);
   min-height: 100vh;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.12);
+  transition: max-width 0.3s ease, margin 0.3s ease;
 }
 
-@media (min-width: 600px) {
-  .phone-wrapper {
-    margin: 24px auto;
-    border-radius: 36px;
-    overflow: hidden;
-    border: 8px solid #1f1f21;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
-  }
-}
-
-/* Texture overlay for realistic paper feel */
 .paper-container {
   position: relative;
   width: 100%;
-  padding-bottom: 40px;
+  padding-bottom: 30px;
   background-color: var(--bg-paper);
   background-image: radial-gradient(#d3cbbd 0.7px, transparent 0.7px);
   background-size: 24px 24px;
   overflow: hidden;
+}
+
+.invitation-main-grid {
+  display: block;
+  width: 100%;
+}
+
+.col-main-showcase,
+.col-interactive-modules {
+  display: block;
+  width: 100%;
 }
 
 /* ==========================================================================
@@ -246,7 +259,6 @@ body {
   display: block;
 }
 
-/* Floating animation for diplomas */
 @keyframes softFloat {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-5px); }
@@ -324,7 +336,6 @@ body {
   color: #a89e94;
 }
 
-/* Heart highlight on event date */
 .cal-cell.event-date {
   font-weight: 700;
   color: #222;
@@ -359,7 +370,6 @@ body {
   }
 }
 
-/* Add to Calendar button */
 .add-calendar-btn-wrap {
   text-align: center;
   margin-top: 14px;
@@ -701,7 +711,7 @@ textarea.input-field {
    ========================================================================== */
 .thank-you-section {
   text-align: center;
-  padding: 34px 24px 20px 24px;
+  padding: 30px 24px 20px 24px;
 }
 
 .thank-you-title {
@@ -772,7 +782,7 @@ textarea.input-field {
 }
 
 /* ==========================================================================
-   FLOATING MUSIC CONTROLLER (Matching Video Bottom-Right)
+   FLOATING MUSIC CONTROLLER
    ========================================================================== */
 .floating-actions {
   position: fixed;
@@ -864,7 +874,7 @@ textarea.input-field {
 .modal-content {
   background: #ffffff;
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
   border-radius: 16px;
   padding: 24px;
   box-shadow: var(--shadow-strong);
@@ -934,7 +944,6 @@ textarea.input-field {
   color: #2b2521;
 }
 
-/* Toast message */
 .toast-notice {
   position: fixed;
   top: 24px;
@@ -955,4 +964,124 @@ textarea.input-field {
 
 .toast-notice.show {
   transform: translateX(-50%) translateY(0);
+}
+
+/* ==========================================================================
+   DESKTOP DEDICATED LAYOUT (Screens >= 920px)
+   Luxury 2-Column Presentation Book / Brochure
+   ========================================================================== */
+@media (min-width: 920px) {
+  .desktop-only {
+    display: block !important;
+  }
+
+  .mobile-only {
+    display: none !important;
+  }
+
+  .phone-wrapper {
+    max-width: var(--desktop-max-width);
+    margin: 36px auto;
+    border-radius: 28px;
+    border: 1px solid rgba(200, 186, 172, 0.55);
+    box-shadow: 0 25px 75px rgba(0, 0, 0, 0.14);
+    background: #f8f3e8;
+    overflow: hidden;
+  }
+
+  .paper-container {
+    padding: 36px 36px 36px 36px;
+    background-image: 
+      radial-gradient(#cfc5b5 0.8px, transparent 0.8px),
+      linear-gradient(to bottom, #faf6ee 0%, #f7f0e2 100%);
+    background-size: 24px 24px, 100% 100%;
+  }
+
+  .invitation-main-grid {
+    display: flex;
+    gap: 36px;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  /* CỘT TRÁI TRÊN MÁY TÍNH: Bìa thiệp, Chân dung & Lời cảm ơn */
+  .col-main-showcase {
+    flex: 0 0 460px;
+    background: #ffffff;
+    border-radius: 22px;
+    border: 1px solid #e9dfd2;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .col-main-showcase .header-section {
+    padding: 20px 24px 0 24px;
+  }
+
+  .col-main-showcase .graduate-name {
+    font-size: 28px;
+  }
+
+  .col-main-showcase .thank-you-section {
+    margin-top: auto;
+    border-top: 1px dashed #dcd3c8;
+    background: #fdfbf7;
+    padding: 28px 24px 16px 24px;
+  }
+
+  /* CỘT PHẢI TRÊN MÁY TÍNH: Tiện ích tương tác */
+  .col-interactive-modules {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    background: #ffffff;
+    border-radius: 22px;
+    border: 1px solid #e9dfd2;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    padding: 28px 26px;
+    overflow: hidden;
+  }
+
+  .col-interactive-modules .calendar-section {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #e5ded2;
+  }
+
+  .col-interactive-modules .countdown-section {
+    background: #faf6ef;
+    border-radius: 14px;
+    padding: 20px 16px;
+    border: 1px solid #eae2d6;
+  }
+
+  .col-interactive-modules .map-section {
+    padding: 0;
+  }
+
+  .col-interactive-modules .map-container {
+    height: 230px;
+  }
+
+  .col-interactive-modules .rsvp-section {
+    padding: 10px 0 0 0;
+  }
+
+  .col-interactive-modules .wishes-section {
+    padding: 10px 0 0 0;
+  }
+
+  .col-interactive-modules .wishes-card-container {
+    max-height: 290px;
+  }
+
+  .host-tools-bar {
+    margin-top: 24px;
+    padding-top: 20px;
+  }
 }

@@ -56,9 +56,13 @@ document.addEventListener("DOMContentLoaded", () => {
       mapBtn.href = config.googleMapsUrl;
     }
 
-    // Lời cảm ơn
-    document.getElementById("thankYouTitle").textContent = config.thankYouTitle || "Thank you!";
-    document.getElementById("thankYouQuote").textContent = `"${config.thankYouMessage || ''}"`;
+    // Lời cảm ơn (cập nhật đồng thời cả trên Desktop và Mobile)
+    document.querySelectorAll(".thank-you-title").forEach(el => {
+      el.textContent = config.thankYouTitle || "Thank you!";
+    });
+    document.querySelectorAll(".thank-you-quote").forEach(el => {
+      el.textContent = `"${config.thankYouMessage || ''}"`;
+    });
 
     // Pre-fill tên vào form RSVP nếu tên khác BẠN X
     const rsvpNameInput = document.getElementById("rsvpName");
@@ -569,27 +573,29 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Mở bí mật: Nhấp 3 lần liên tiếp vào dòng "ktv © 2026"
-  if (footerCredit && hostToolsBar) {
+  const footerCredits = document.querySelectorAll(".footer-credit");
+  if (footerCredits.length > 0 && hostToolsBar) {
     let clickCount = 0;
     let clickTimer = null;
-    footerCredit.title = "Dành cho chủ thiệp: Nhấp 3 lần để ẩn/hiện công cụ";
-    footerCredit.style.cursor = "pointer";
+    footerCredits.forEach(fc => {
+      fc.title = "Dành cho chủ thiệp: Nhấp 3 lần để ẩn/hiện công cụ";
+      fc.style.cursor = "pointer";
+      fc.addEventListener("click", () => {
+        clickCount++;
+        clearTimeout(clickTimer);
 
-    footerCredit.addEventListener("click", () => {
-      clickCount++;
-      clearTimeout(clickTimer);
-
-      if (clickCount >= 3) {
-        hostToolsBar.classList.toggle("show");
-        const isShown = hostToolsBar.classList.contains("show");
-        localStorage.setItem("is_invitation_host", isShown ? "true" : "false");
-        showToast(isShown ? "Đã bật thanh công cụ Chủ thiệp! ⚙️" : "Đã ẩn thanh công cụ với khách! 🔒");
-        clickCount = 0;
-      } else {
-        clickTimer = setTimeout(() => {
+        if (clickCount >= 3) {
+          hostToolsBar.classList.toggle("show");
+          const isShown = hostToolsBar.classList.contains("show");
+          localStorage.setItem("is_invitation_host", isShown ? "true" : "false");
+          showToast(isShown ? "Đã bật thanh công cụ Chủ thiệp! ⚙️" : "Đã ẩn thanh công cụ với khách! 🔒");
           clickCount = 0;
-        }, 600);
-      }
+        } else {
+          clickTimer = setTimeout(() => {
+            clickCount = 0;
+          }, 600);
+        }
+      });
     });
   }
 
