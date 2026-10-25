@@ -1,17 +1,17 @@
 /**
  * ADMIN DASHBOARD SCRIPT
- * Handling Authentication, QR/Link Generation, Card Config & RSVP Wishes
+ * Handling Authentication, QR/Link Generation, Card Config và RSVP Wishes
  */
 
 document.addEventListener("DOMContentLoaded", () => {
   const PASSWORD_KEY = "graduation_admin_password";
   const SESSION_KEY = "graduation_admin_session";
   const GUEST_HISTORY_KEY = "graduation_guest_history";
-  const DEFAULT_PASSWORD = "123456";
+  const DEFAULT_PASSWORD = "2009";
 
   const config = window.APP_CONFIG || {};
 
-  // 1. Quản lý Đăng Nhập & Mật Khẩu
+  // 1. Quản lý Đăng Nhập và Mật Khẩu
   const loginScreen = document.getElementById("loginScreen");
   const dashboardScreen = document.getElementById("dashboardScreen");
   const loginForm = document.getElementById("loginForm");
@@ -21,7 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logoutBtn");
 
   function getStoredPassword() {
-    return localStorage.getItem(PASSWORD_KEY) || DEFAULT_PASSWORD;
+    const saved = localStorage.getItem(PASSWORD_KEY);
+    if (!saved || saved === "123456") {
+      return DEFAULT_PASSWORD;
+    }
+    return saved;
   }
 
   function checkSession() {
@@ -95,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentConfig = window.APP_CONFIG || {};
     const adminGradDisplay = document.getElementById("adminGradNameDisplay");
     if (adminGradDisplay) {
-      adminGradDisplay.textContent = `Lễ Tốt Nghiệp của ${currentConfig.graduateName || "Lê Minh Thư"}`;
+      adminGradDisplay.textContent = `Lễ Tốt Nghiệp của ${currentConfig.graduateName || "Phạm Thị Kim Huê"}`;
     }
 
     initQrGenerator();
@@ -105,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ==========================================================================
-  // TAB 1: TẠO LINK MỜI & MÃ QR
+  // TAB 1: TẠO LINK MỜI VÀ MÃ QR
   // ==========================================================================
   function initQrGenerator() {
     const guestInput = document.getElementById("guestNameInput");
@@ -298,7 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const editThank = document.getElementById("editThankYou");
     const resetBtn = document.getElementById("resetDefaultBtn");
 
-    if (editGrad) editGrad.value = cur.graduateName || "LÊ MINH THƯ";
+    if (editGrad) editGrad.value = cur.graduateName || "PHẠM THỊ KIM HUÊ";
     if (editSub) editSub.value = cur.subtitle || "LỄ TỐT NGHIỆP CỦA";
     if (editDay) editDay.value = cur.eventDay || 17;
     if (editMonth) editMonth.value = cur.calendarMonth || 11;
@@ -342,7 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ==========================================================================
-  // TAB 3: QUẢN LÝ LỜI CHÚC & RSVP
+  // TAB 3: QUẢN LÝ LỜI CHÚC VÀ RSVP
   // ==========================================================================
   function initWishesManager() {
     const WISHES_STORAGE_KEY = "graduation_invitation_wishes_list";

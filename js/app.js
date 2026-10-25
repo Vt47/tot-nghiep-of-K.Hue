@@ -1,6 +1,6 @@
 /**
  * THIỆP MỜI TỐT NGHIỆP - APPLICATION SCRIPT
- * Handling countdown, calendar, personalized links, music player, RSVP & Google Sheets sync
+ * Handling countdown, calendar, personalized links, music player, RSVP và Google Sheets sync
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function applyConfigToUI() {
     document.getElementById("invitationTitle").textContent = config.invitationTitle || "THƯ MỜI THAM DỰ";
     document.getElementById("subtitle").textContent = config.subtitle || "LỄ TỐT NGHIỆP CỦA";
-    document.getElementById("graduateName").textContent = config.graduateName || "LÊ MINH THƯ";
+    document.getElementById("graduateName").textContent = config.graduateName || "PHẠM THỊ KIM HUÊ";
     document.getElementById("guestPrefix").textContent = config.guestPrefix || "HÂN HẠNH MỜI:";
     document.getElementById("guestNameDisplay").textContent = currentGuestName;
     document.getElementById("eventDateTime").textContent = config.displayDateTime || "24/01/2026 | Lúc 10h - 14h";
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
       garlandImg.src = config.topGarlandSrc;
     }
 
-    // Google map link & embed
+    // Google map link và embed
     const mapIframe = document.getElementById("googleMapIframe");
     if (mapIframe && config.googleMapsEmbed) {
       mapIframe.src = config.googleMapsEmbed;
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Cập nhật tên cử nhân và khách mời trên phong bì thư mở đầu
     const envGrad = document.getElementById("envelopeGraduateName");
-    if (envGrad) envGrad.textContent = config.graduateName || "LÊ MINH THƯ";
+    if (envGrad) envGrad.textContent = config.graduateName || "PHẠM THỊ KIM HUÊ";
     const envGuest = document.getElementById("envelopeGuestName");
     if (envGuest) envGuest.textContent = currentGuestName;
 
@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const addToCalendarBtn = document.getElementById("addToCalendarBtn");
   if (addToCalendarBtn) {
     addToCalendarBtn.addEventListener("click", () => {
-      const title = encodeURIComponent(`Lễ Tốt Nghiệp của ${config.graduateName || "Lê Minh Thư"}`);
+      const title = encodeURIComponent(`Lễ Tốt Nghiệp của ${config.graduateName || "Phạm Thị Kim Huê"}`);
       const details = encodeURIComponent(`Trân trọng kính mời bạn đến tham dự và chung vui trong ngày tốt nghiệp trọng đại!`);
       const location = encodeURIComponent(config.locationAddress || "Số 2 Hoàng Văn Thụ, P.4, Q.Tân Bình, TP.HCM");
       
@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 6. Nhạc nền & Nút điều khiển âm thanh
+  // 6. Nhạc nền và Nút điều khiển âm thanh
   const bgMusic = document.getElementById("bgMusic");
   const musicToggleBtn = document.getElementById("musicToggleBtn");
   let isPlaying = false;
@@ -313,7 +313,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 7. Sổ lưu bút & Tích hợp Đồng bộ Google Sheets
+  // 7. Sổ lưu bút và Tích hợp Đồng bộ Google Sheets
   const WISHES_STORAGE_KEY = "graduation_invitation_wishes_list";
 
   function getLocalWishes() {
@@ -387,7 +387,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadWishes();
 
-  // 8. Xử lý gửi Form Xác nhận tham dự (RSVP) & Lưu về Google Sheets
+  // 8. Xử lý gửi Form Xác nhận tham dự (RSVP) và Lưu về Google Sheets
   const rsvpForm = document.getElementById("rsvpForm");
   if (rsvpForm) {
     rsvpForm.addEventListener("submit", async (e) => {
@@ -583,7 +583,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initScrollReveal();
 
-  // 11. Hiệu ứng Cánh hoa rơi & Bụi sao lấp lánh (Romantic Petals & Golden Starlight)
+  // 11. Hiệu ứng Cánh hoa rơi và Bụi sao lấp lánh (Romantic Petals and Golden Starlight)
   function initRomanticAtmosphere() {
     const canvas = document.getElementById("fxCanvas");
     if (!canvas) return;

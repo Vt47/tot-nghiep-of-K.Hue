@@ -11,7 +11,7 @@ function getDefaultTargetDate() {
 
 const DEFAULT_CONFIG = {
   // Thông tin cử nhân / sự kiện
-  graduateName: "LÊ MINH THƯ",
+  graduateName: "PHẠM THỊ KIM HUÊ",
   subtitle: "LỄ TỐT NGHIỆP CỦA",
   invitationTitle: "THƯ MỜI THAM DỰ",
   guestPrefix: "HÂN HẠNH MỜI:",
@@ -21,12 +21,12 @@ const DEFAULT_CONFIG = {
   targetDate: "2026-11-17T10:00:00",
   displayDateTime: "17/11/2026 | Lúc 10h - 14h",
   
-  // Tháng & Năm hiển thị trên lịch
+  // Tháng và Năm hiển thị trên lịch
   calendarMonth: 11, // Tháng 11
   calendarYear: 2026,
   eventDay: 17, // Ngày tổ chức có trái tim hồng (17/11/2026)
 
-  // Địa điểm & Google Map
+  // Địa điểm và Google Map
   locationAddress: "Số 2 , Hoàng Văn Thụ, P 4, Q.Tân Bình, TP HCM",
   googleMapsUrl: "https://maps.google.com/?q=2+Ho%C3%A0ng+V%C4%83n+Th%E1%BB%A5,+Ph%C6%B0%E1%BB%9Dng+4,+T%C3%A2n+B%C3%ACnh,+TP+HCM",
   googleMapsEmbed: "https://maps.google.com/maps?q=2%20Ho%C3%A0ng%20V%C4%83n%20Th%E1%BB%A5,%20Ph%C6%B0%E1%BB%9Dng%204,%20T%C3%A2n%20B%C3%ACnh,%20TP%20HCM&t=&z=15&ie=UTF8&iwloc=&output=embed",
@@ -52,11 +52,11 @@ const DEFAULT_CONFIG = {
     {
       name: "Mai Phương 🌸",
       status: "Chắc chắn tham dự",
-      message: "Chúc mừng Minh Thư xuất sắc tốt nghiệp nhé! Chúc bạn tương lai rộng mở, luôn rạng rỡ và thành công rực rỡ trên con đường sự nghiệp! 🎓💐",
+      message: "Chúc mừng Kim Huê xuất sắc tốt nghiệp nhé! Chúc bạn tương lai rộng mở, luôn rạng rỡ và thành công rực rỡ trên con đường sự nghiệp! 🎓💐",
       time: "Vừa xong"
     },
     {
-      name: "Anh Tuấn & Chị Hà ✨",
+      name: "Anh Tuấn và Chị Hà ✨",
       status: "Chắc chắn tham dự",
       message: "Tự hào về em gái lắm nha! Hẹn gặp em tại lễ tốt nghiệp để chụp thật nhiều ảnh xinh cùng cử nhân nha! 🎉📸",
       time: "15 phút trước"
@@ -82,9 +82,11 @@ function getSavedConfig() {
     const saved = localStorage.getItem("graduation_invitation_config");
     if (saved) {
       const parsed = JSON.parse(saved);
+      const graduateName = (parsed.graduateName && parsed.graduateName !== "LÊ MINH THƯ") ? parsed.graduateName : DEFAULT_CONFIG.graduateName;
       return {
         ...DEFAULT_CONFIG,
         ...parsed,
+        graduateName: graduateName,
         targetDate: parsed.targetDate || DEFAULT_CONFIG.targetDate,
         displayDateTime: parsed.displayDateTime || DEFAULT_CONFIG.displayDateTime,
         calendarMonth: parsed.calendarMonth || DEFAULT_CONFIG.calendarMonth,
