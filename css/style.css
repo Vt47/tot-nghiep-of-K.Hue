@@ -195,22 +195,280 @@ body {
   overflow: hidden;
 }
 
-/* Khi người dùng chưa thêm ảnh hoặc ảnh bị lỗi mạng */
-img.img-load-error {
-  opacity: 0 !important;
+/* Ẩn ảnh lỗi hoặc ảnh rỗng */
+img.img-load-error,
+.image-fallback-container.no-image img,
+.album-grid-item.no-image img,
+img:not([src]),
+img[src=""] {
+  display: none !important;
 }
 
-.image-fallback-container:has(img.img-load-error)::after {
-  content: "🎓";
-  position: absolute;
-  inset: 0;
+/* Ẩn placeholder khi đã có ảnh */
+.image-fallback-container.has-image .hero-placeholder-art,
+.image-fallback-container.has-image .calendar-polaroid-placeholder,
+.image-fallback-container.has-image .film-strip-placeholder,
+.image-fallback-container.has-image .letter-polaroid-placeholder,
+.album-grid-item.has-image .album-item-placeholder,
+.image-fallback-container.has-image .footer-placeholder-art {
+  display: none !important;
+}
+
+/* --- PLACEHOLDER CHO HERO BANNER --- */
+.hero-empty-state {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
-  color: var(--color-gold);
-  background: linear-gradient(135deg, #3d1b24 0%, #1a1215 100%);
-  opacity: 0.8;
+  background: radial-gradient(ellipse at 50% 45%, #46141e 0%, #2b0b13 55%, #140508 100%);
+}
+
+.hero-placeholder-art {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  position: relative;
+  z-index: 5;
+}
+
+.hero-placeholder-crest {
+  width: 86px;
+  height: 86px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 6px 18px rgba(223, 188, 109, 0.45));
+  animation: sealPulse 3s ease-in-out infinite;
+}
+
+.crest-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-placeholder-title {
+  font-family: var(--font-cinzel);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  margin-bottom: 6px;
+}
+
+.hero-placeholder-name {
+  font-family: var(--font-cinzel);
+  font-size: clamp(20px, 5.5vw, 26px);
+  font-weight: 700;
+  color: #fce6a8;
+  letter-spacing: 2px;
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9);
+  margin-bottom: 10px;
+}
+
+.hero-placeholder-note {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(223, 188, 109, 0.8);
+  letter-spacing: 1.5px;
+  border: 1px dashed rgba(223, 188, 109, 0.4);
+  padding: 5px 16px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
+}
+
+/* --- PLACEHOLDER CHO POLAROID LỊCH THÁNG --- */
+.calendar-polaroid-frame {
+  background: #ffffff;
+  padding: 12px 12px 28px;
+  border-radius: 4px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
+}
+
+.calendar-polaroid-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 180px;
+  background: linear-gradient(135deg, #2b1319 0%, #17090d 100%);
+  border-radius: 3px;
+  color: #dfbc6d;
+  border: 1px solid rgba(223, 188, 109, 0.2);
+}
+
+.placeholder-polaroid-icon {
+  font-size: 34px;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+}
+
+.placeholder-polaroid-text {
+  font-family: var(--font-cinzel);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #f7e2a4;
+}
+
+.placeholder-polaroid-date {
+  font-family: var(--font-cinzel);
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(247, 226, 164, 0.75);
+  margin-top: 4px;
+}
+
+/* --- PLACEHOLDER CHO THƯỚC PHIM --- */
+.film-strip-container {
+  background: #141014;
+  border: 3px solid #231c23;
+  border-radius: 6px;
+}
+
+.film-strip-placeholder {
+  display: flex;
+  gap: 8px;
+  padding: 14px 10px;
+  background: #19141a;
+  width: 100%;
+}
+
+.film-frame-item {
+  flex: 1;
+  min-height: 115px;
+  background: #251b22;
+  border: 1px solid rgba(223, 188, 109, 0.25);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 4px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.film-frame-item.highlight {
+  background: linear-gradient(135deg, #3d141e 0%, #290a12 100%);
+  border-color: rgba(223, 188, 109, 0.6);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.film-frame-icon {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.film-frame-label {
+  font-family: var(--font-cinzel);
+  font-size: 10px;
+  font-weight: 700;
+  color: #f5dc9e;
+  letter-spacing: 0.5px;
+}
+
+.film-frame-sub {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 3px;
+  line-height: 1.2;
+}
+
+/* --- PLACEHOLDER CHO POLAROID THƯ TÂM SỰ --- */
+.letter-polaroid-frame {
+  background: #ffffff;
+  padding: 5px 5px 12px;
+  border-radius: 3px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.letter-polaroid-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 68px;
+  background: linear-gradient(135deg, #38151e 0%, #1e090f 100%);
+  border-radius: 2px;
+}
+
+.letter-placeholder-cap {
+  font-size: 18px;
+  margin-bottom: 2px;
+}
+
+.letter-placeholder-sig {
+  font-family: var(--font-script);
+  font-size: 16px;
+  color: #f5dc9e;
+  line-height: 1;
+}
+
+/* --- PLACEHOLDER CHO ALBUM LƯỚI --- */
+.album-item-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 40%, #3a151f 0%, #1e0911 100%);
+  padding: 14px 8px;
+  text-align: center;
+  border: 1px solid rgba(223, 188, 109, 0.3);
+  border-radius: 8px;
+}
+
+.album-ph-num {
+  font-family: var(--font-cinzel);
+  font-size: 13px;
+  font-weight: 700;
+  color: #dfbc6d;
+  letter-spacing: 2px;
+  opacity: 0.75;
+  margin-bottom: 6px;
+}
+
+.album-ph-icon {
+  font-size: 26px;
+  margin-bottom: 8px;
+}
+
+.album-ph-title {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-weight: 600;
+  color: #f9e6a2;
+  letter-spacing: 0.5px;
+}
+
+/* --- PLACEHOLDER CHO FOOTER --- */
+.footer-empty-state {
+  height: 240px;
+  background: radial-gradient(ellipse at 50% 50%, #40131d 0%, #20080f 65%, #100307 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-placeholder-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.footer-crest-decor {
+  font-size: 24px;
+  letter-spacing: 14px;
+  color: #dfbc6d;
+  opacity: 0.5;
 }
 
 /* ==========================================================================

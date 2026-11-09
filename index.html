@@ -9,7 +9,7 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Thư Mời Tham Dự Lễ Tốt Nghiệp - Phạm Thị Kim Huê">
   <meta property="og:description" content="Trân trọng kính mời bạn đến tham dự và chung vui trong ngày lễ tốt nghiệp trọng đại của mình!">
-  <meta property="og:image" content="assets/images/hero_bg.jpg">
+  <meta property="og:image" content="">
   <meta name="description" content="Thiệp mời lễ tốt nghiệp trực tuyến phong cách Lami tone đỏ quý phái kèm âm nhạc, đếm ngược và sổ lưu bút">
 
   <!-- Favicon -->
@@ -90,8 +90,22 @@
 
       <!-- SECTION 1: HERO BANNER & RUY BĂNG ĐỎ -->
       <section class="hero-banner-section">
-        <div class="image-fallback-container">
-          <img id="heroBgImg" src="assets/images/hero_bg.jpg" alt="Cử nhân tốt nghiệp" class="hero-bg-photo" onerror="this.classList.add('img-load-error')" />
+        <div class="image-fallback-container hero-empty-state">
+          <img id="heroBgImg" src="" alt="Cử nhân tốt nghiệp" class="hero-bg-photo" onerror="this.classList.add('img-load-error')" />
+          <div class="hero-placeholder-art">
+            <div class="hero-placeholder-crest">
+              <svg viewBox="0 0 100 100" class="crest-svg" fill="none" stroke="currentColor">
+                <circle cx="50" cy="50" r="46" stroke-width="1.5" stroke="#dfbc6d" stroke-dasharray="4 2"/>
+                <circle cx="50" cy="50" r="41" stroke-width="0.8" stroke="#dfbc6d"/>
+                <path d="M50 25 L80 40 L50 55 L20 40 Z" fill="#dfbc6d" opacity="0.9"/>
+                <path d="M72 45 L72 65 C72 70 50 78 50 78 C50 78 28 70 28 65 L28 45" stroke="#dfbc6d" stroke-width="2" fill="none"/>
+                <path d="M78 41 L86 52 L86 68" stroke="#f7e096" stroke-width="1.5" fill="none"/>
+              </svg>
+            </div>
+            <div class="hero-placeholder-title gold-shimmer-text">LỄ TỐT NGHIỆP</div>
+            <div class="hero-placeholder-name">PHẠM THỊ KIM HUÊ</div>
+            <div class="hero-placeholder-note">KHUNG ẢNH CỬ NHÂN</div>
+          </div>
         </div>
 
         <!-- Dải ruy băng đỏ rượu vang treo góc trái -->
@@ -179,8 +193,13 @@
       <!-- SECTION 3: LỊCH THÁNG SỰ KIỆN & POLAROID CỬ NHÂN -->
       <section class="calendar-section-lami">
         <div class="polaroid-calendar-hero reveal-text">
-          <div class="image-fallback-container">
-            <img id="calendarPolaroidsImg" src="assets/images/calendar_polaroids.jpg" alt="Graduation Memories" class="calendar-polaroid-img" onerror="this.classList.add('img-load-error')" />
+          <div class="image-fallback-container calendar-polaroid-frame">
+            <img id="calendarPolaroidsImg" src="" alt="Graduation Memories" class="calendar-polaroid-img" onerror="this.classList.add('img-load-error')" />
+            <div class="calendar-polaroid-placeholder">
+              <div class="placeholder-polaroid-icon">🎓</div>
+              <div class="placeholder-polaroid-text">KỶ NIỆM NGÀY TỐT NGHIỆP</div>
+              <div class="placeholder-polaroid-date">17 . 11 . 2026</div>
+            </div>
           </div>
         </div>
 
@@ -200,8 +219,25 @@
       <!-- SECTION 4: THƯỚC PHIM & ĐỒNG HỒ ĐẾM NGƯỢC -->
       <section class="film-countdown-section">
         <div class="film-strip-card reveal-text">
-          <div class="image-fallback-container">
-            <img id="filmStripImg" src="assets/images/film_strip.jpg" class="film-strip-img" alt="One journey ends, another begins" onerror="this.classList.add('img-load-error')" />
+          <div class="image-fallback-container film-strip-container">
+            <img id="filmStripImg" src="" class="film-strip-img" alt="One journey ends, another begins" onerror="this.classList.add('img-load-error')" />
+            <div class="film-strip-placeholder">
+              <div class="film-frame-item">
+                <span class="film-frame-icon">🎓</span>
+                <span class="film-frame-label">2022 - 2026</span>
+                <span class="film-frame-sub">Chặng Đường Nỗ Lực</span>
+              </div>
+              <div class="film-frame-item highlight">
+                <span class="film-frame-icon">✨</span>
+                <span class="film-frame-label">TÂN CỬ NHÂN</span>
+                <span class="film-frame-sub">Phạm Thị Kim Huê</span>
+              </div>
+              <div class="film-frame-item">
+                <span class="film-frame-icon">🚀</span>
+                <span class="film-frame-label">TƯƠNG LAI</span>
+                <span class="film-frame-sub">Khởi Đầu Mới Rực Rỡ</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -248,8 +284,12 @@
           </div>
 
           <div class="letter-polaroid-pin reveal-text delay-4">
-            <div class="image-fallback-container">
-              <img id="letterPolaroidImg" src="assets/images/footer_photo.jpg" alt="Kim Huê Graduation" onerror="this.classList.add('img-load-error')" />
+            <div class="image-fallback-container letter-polaroid-frame">
+              <img id="letterPolaroidImg" src="" alt="Kim Huê Graduation" onerror="this.classList.add('img-load-error')" />
+              <div class="letter-polaroid-placeholder">
+                <span class="letter-placeholder-cap">🎓</span>
+                <span class="letter-placeholder-sig">Kim Huê</span>
+              </div>
             </div>
           </div>
         </div>
@@ -263,17 +303,37 @@
         </div>
 
         <div class="album-grid-collage reveal-text delay-1">
-          <div class="album-grid-item" data-full="assets/images/album_1.jpg">
-            <img id="albumImg1" src="assets/images/album_1.jpg" alt="Kỷ niệm tốt nghiệp 1" onerror="this.classList.add('img-load-error')" />
+          <div class="album-grid-item" data-full="">
+            <img id="albumImg1" src="" alt="Kỷ niệm tốt nghiệp 1" onerror="this.classList.add('img-load-error')" />
+            <div class="album-item-placeholder">
+              <span class="album-ph-num">01</span>
+              <span class="album-ph-icon">🌸</span>
+              <span class="album-ph-title">Khoảnh Khắc Rạng Rỡ</span>
+            </div>
           </div>
-          <div class="album-grid-item" data-full="assets/images/album_2.jpg">
-            <img id="albumImg2" src="assets/images/album_2.jpg" alt="Kỷ niệm tốt nghiệp 2" onerror="this.classList.add('img-load-error')" />
+          <div class="album-grid-item" data-full="">
+            <img id="albumImg2" src="" alt="Kỷ niệm tốt nghiệp 2" onerror="this.classList.add('img-load-error')" />
+            <div class="album-item-placeholder">
+              <span class="album-ph-num">02</span>
+              <span class="album-ph-icon">🏛️</span>
+              <span class="album-ph-title">Giảng Đường Yêu Dấu</span>
+            </div>
           </div>
-          <div class="album-grid-item" data-full="assets/images/album_3.jpg">
-            <img id="albumImg3" src="assets/images/album_3.jpg" alt="Kỷ niệm tốt nghiệp 3" onerror="this.classList.add('img-load-error')" />
+          <div class="album-grid-item" data-full="">
+            <img id="albumImg3" src="" alt="Kỷ niệm tốt nghiệp 3" onerror="this.classList.add('img-load-error')" />
+            <div class="album-item-placeholder">
+              <span class="album-ph-num">03</span>
+              <span class="album-ph-icon">🎓</span>
+              <span class="album-ph-title">Tân Cử Nhân</span>
+            </div>
           </div>
-          <div class="album-grid-item" data-full="assets/images/album_4.jpg">
-            <img id="albumImg4" src="assets/images/album_4.jpg" alt="Kỷ niệm tốt nghiệp 4" onerror="this.classList.add('img-load-error')" />
+          <div class="album-grid-item" data-full="">
+            <img id="albumImg4" src="" alt="Kỷ niệm tốt nghiệp 4" onerror="this.classList.add('img-load-error')" />
+            <div class="album-item-placeholder">
+              <span class="album-ph-num">04</span>
+              <span class="album-ph-icon">💖</span>
+              <span class="album-ph-title">Tri Ân và Tương Lai</span>
+            </div>
           </div>
         </div>
       </section>
@@ -333,8 +393,11 @@
 
       <!-- SECTION 9: BẾ MẠC & LỜI CẢM ƠN (THANK YOU FOOTER) -->
       <footer class="footer-photo-card reveal-text">
-        <div class="image-fallback-container">
-          <img id="footerPhotoImg" src="assets/images/footer_photo.jpg" alt="Thank You" class="footer-photo-img" onerror="this.classList.add('img-load-error')" />
+        <div class="image-fallback-container footer-empty-state">
+          <img id="footerPhotoImg" src="" alt="Thank You" class="footer-photo-img" onerror="this.classList.add('img-load-error')" />
+          <div class="footer-placeholder-art">
+            <div class="footer-crest-decor">✨ 🎓 ✨</div>
+          </div>
         </div>
         <div class="footer-photo-overlay">
           <p class="footer-quote-text reveal-text delay-1">

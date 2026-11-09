@@ -33,17 +33,12 @@ const DEFAULT_CONFIG = {
   // Kết nối Google Sheets tự động
   googleSheetScriptUrl: "https://script.google.com/macros/s/AKfycbyTNQzwT0g5SNDnphPAEqSzdi1UGKqKXmdk4zEV9gdK_hOnwbQSDxBtofYTpqs2ngQoHA/exec",
 
-  // Hình ảnh chuẩn mẫu Lami
-  heroBgSrc: "assets/images/hero_bg.jpg",
-  filmStripSrc: "assets/images/film_strip.jpg",
-  calendarPolaroidsSrc: "assets/images/calendar_polaroids.jpg",
-  footerPhotoSrc: "assets/images/footer_photo.jpg",
-  albumPhotos: [
-    "assets/images/album_1.jpg",
-    "assets/images/album_2.jpg",
-    "assets/images/album_3.jpg",
-    "assets/images/album_4.jpg"
-  ],
+  // Hình ảnh cử nhân (Mặc định để trống để bạn tự thêm ảnh sau trong trang Quản trị)
+  heroBgSrc: "",
+  filmStripSrc: "",
+  calendarPolaroidsSrc: "",
+  footerPhotoSrc: "",
+  albumPhotos: ["", "", "", ""],
 
   // Bức thư tâm sự
   letterParagraphs: [
@@ -97,6 +92,18 @@ function getSavedConfig() {
       const graduateName = (parsed.graduateName && parsed.graduateName !== "LÊ MINH THƯ" && parsed.graduateName !== "Nguyễn Tường Vi") 
         ? parsed.graduateName 
         : DEFAULT_CONFIG.graduateName;
+
+      // Xoá triệt để các đường dẫn ảnh mẫu cũ đã xoá khỏi hệ thống
+      const cleanImage = (url) => {
+        if (!url || typeof url !== "string") return "";
+        if (url.includes("assets/images/")) return "";
+        return url;
+      };
+
+      const cleanedAlbum = Array.isArray(parsed.albumPhotos)
+        ? parsed.albumPhotos.map(cleanImage)
+        : ["", "", "", ""];
+
       return {
         ...DEFAULT_CONFIG,
         ...parsed,
@@ -107,7 +114,12 @@ function getSavedConfig() {
         calendarYear: parsed.calendarYear || DEFAULT_CONFIG.calendarYear,
         eventDay: parsed.eventDay || DEFAULT_CONFIG.eventDay,
         musicSrc: DEFAULT_CONFIG.musicSrc,
-        googleSheetScriptUrl: parsed.googleSheetScriptUrl || DEFAULT_CONFIG.googleSheetScriptUrl
+        googleSheetScriptUrl: parsed.googleSheetScriptUrl || DEFAULT_CONFIG.googleSheetScriptUrl,
+        heroBgSrc: cleanImage(parsed.heroBgSrc),
+        filmStripSrc: cleanImage(parsed.filmStripSrc),
+        calendarPolaroidsSrc: cleanImage(parsed.calendarPolaroidsSrc),
+        footerPhotoSrc: cleanImage(parsed.footerPhotoSrc),
+        albumPhotos: cleanedAlbum
       };
     }
   } catch (e) {

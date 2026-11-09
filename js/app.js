@@ -99,30 +99,58 @@ document.addEventListener("DOMContentLoaded", () => {
       rsvpName.value = currentGuestName;
     }
 
-    // Cập nhật hình ảnh nếu có trong cấu hình (người dùng thêm sau)
-    if (config.heroBgSrc) {
-      const heroImg = document.getElementById("heroBgImg");
-      if (heroImg) heroImg.src = config.heroBgSrc;
-    }
-    if (config.filmStripSrc) {
-      const filmImg = document.getElementById("filmStripImg");
-      if (filmImg) filmImg.src = config.filmStripSrc;
-    }
-    if (config.calendarPolaroidsSrc) {
-      const calImg = document.getElementById("calendarPolaroidsImg");
-      if (calImg) calImg.src = config.calendarPolaroidsSrc;
-    }
-    if (config.footerPhotoSrc) {
-      const footerImg = document.getElementById("footerPhotoImg");
-      if (footerImg) footerImg.src = config.footerPhotoSrc;
-    }
+    // Cập nhật hình ảnh (Khi người dùng thêm ảnh sau trong /admin)
+    const updatePhotoSlot = (imgId, src) => {
+      const img = document.getElementById(imgId);
+      if (!img) return;
+      const container = img.closest(".image-fallback-container") || img.parentElement;
+      if (src && typeof src === "string" && src.trim() !== "" && !src.includes("assets/images/")) {
+        img.src = src.trim();
+        img.style.display = "block";
+        img.classList.remove("img-load-error");
+        if (container) {
+          container.classList.add("has-image");
+          container.classList.remove("no-image");
+        }
+      } else {
+        img.removeAttribute("src");
+        img.style.display = "none";
+        if (container) {
+          container.classList.remove("has-image");
+          container.classList.add("no-image");
+        }
+      }
+    };
+
+    updatePhotoSlot("heroBgImg", config.heroBgSrc);
+    updatePhotoSlot("filmStripImg", config.filmStripSrc);
+    updatePhotoSlot("calendarPolaroidsImg", config.calendarPolaroidsSrc);
+    updatePhotoSlot("letterPolaroidImg", config.footerPhotoSrc);
+    updatePhotoSlot("footerPhotoImg", config.footerPhotoSrc);
+
     if (config.albumPhotos && Array.isArray(config.albumPhotos)) {
       config.albumPhotos.forEach((src, idx) => {
         const albumImg = document.getElementById(`albumImg${idx + 1}`);
-        if (albumImg && src) {
-          albumImg.src = src;
-          const parentItem = albumImg.closest(".album-grid-item");
-          if (parentItem) parentItem.setAttribute("data-full", src);
+        const parentItem = albumImg ? albumImg.closest(".album-grid-item") : null;
+        if (albumImg) {
+          if (src && typeof src === "string" && src.trim() !== "" && !src.includes("assets/images/")) {
+            albumImg.src = src.trim();
+            albumImg.style.display = "block";
+            albumImg.classList.remove("img-load-error");
+            if (parentItem) {
+              parentItem.setAttribute("data-full", src.trim());
+              parentItem.classList.add("has-image");
+              parentItem.classList.remove("no-image");
+            }
+          } else {
+            albumImg.removeAttribute("src");
+            albumImg.style.display = "none";
+            if (parentItem) {
+              parentItem.removeAttribute("data-full");
+              parentItem.classList.remove("has-image");
+              parentItem.classList.add("no-image");
+            }
+          }
         }
       });
     }

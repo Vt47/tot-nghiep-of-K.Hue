@@ -336,10 +336,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const shortName = nameParts.length >= 2 ? nameParts.slice(-2).join(" ") : fullName;
 
         const albumPhotos = [
-          (editAlbum1 && editAlbum1.value.trim()) || (cur.albumPhotos && cur.albumPhotos[0]) || "assets/images/album_1.jpg",
-          (editAlbum2 && editAlbum2.value.trim()) || (cur.albumPhotos && cur.albumPhotos[1]) || "assets/images/album_2.jpg",
-          (editAlbum3 && editAlbum3.value.trim()) || (cur.albumPhotos && cur.albumPhotos[2]) || "assets/images/album_3.jpg",
-          (editAlbum4 && editAlbum4.value.trim()) || (cur.albumPhotos && cur.albumPhotos[3]) || "assets/images/album_4.jpg"
+          (editAlbum1 && editAlbum1.value.trim()) || "",
+          (editAlbum2 && editAlbum2.value.trim()) || "",
+          (editAlbum3 && editAlbum3.value.trim()) || "",
+          (editAlbum4 && editAlbum4.value.trim()) || ""
         ];
 
         const updated = {
@@ -355,9 +355,9 @@ document.addEventListener("DOMContentLoaded", () => {
           googleMapsUrl: editMaps.value.trim(),
           googleMapsEmbed: `https://maps.google.com/maps?q=${encodeURIComponent(editLocation.value.trim())}&t=&z=15&ie=UTF8&iwloc=&output=embed`,
           thankYouMessage: editThank.value.trim(),
-          heroBgSrc: (editHeroBg && editHeroBg.value.trim()) || cur.heroBgSrc || "assets/images/hero_bg.jpg",
-          filmStripSrc: (editFilmStrip && editFilmStrip.value.trim()) || cur.filmStripSrc || "assets/images/film_strip.jpg",
-          footerPhotoSrc: (editFooterPhoto && editFooterPhoto.value.trim()) || cur.footerPhotoSrc || "assets/images/footer_photo.jpg",
+          heroBgSrc: (editHeroBg && editHeroBg.value.trim()) || "",
+          filmStripSrc: (editFilmStrip && editFilmStrip.value.trim()) || "",
+          footerPhotoSrc: (editFooterPhoto && editFooterPhoto.value.trim()) || "",
           albumPhotos: albumPhotos
         };
 
