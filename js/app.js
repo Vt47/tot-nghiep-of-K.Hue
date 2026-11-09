@@ -1,10 +1,11 @@
 /**
  * THIỆP MỜI TỐT NGHIỆP - APPLICATION SCRIPT
- * Handling countdown, calendar, personalized links, music player, RSVP và Google Sheets sync
+ * Chuẩn phong cách Lami Luxury Red & Gold
+ * Quản lý mở thiệp 2 cánh, phát nhạc tự động, lịch trái tim, đếm ngược, RSVP và Google Sheets
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  const config = window.APP_CONFIG || {};
+  const config = (typeof getSavedConfig === "function") ? getSavedConfig() : (window.DEFAULT_CONFIG || {});
 
   // 1. Quản lý Màn hình Loading
   const loadingScreen = document.getElementById("loadingScreen");
@@ -12,12 +13,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (loadingScreen) {
       loadingScreen.classList.add("hidden");
     }
-  }, 400);
+  }, 350);
 
-  // 2. Phân tích tham số URL để cá nhân hoá tên khách mời (?to= hoặc ?guest=)
+  // 2. Phân tích tham số URL để cá nhân hóa tên khách mời (?to=, ?guest=, ?name=, ?u=)
   function getPersonalizedGuestName() {
     const urlParams = new URLSearchParams(window.location.search);
-    const guestParam = urlParams.get("to") || urlParams.get("guest") || urlParams.get("name");
+    const guestParam = urlParams.get("to") || urlParams.get("guest") || urlParams.get("name") || urlParams.get("u");
     if (guestParam && guestParam.trim()) {
       return guestParam.trim();
     }
@@ -26,103 +27,117 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const currentGuestName = getPersonalizedGuestName();
 
-  // Cập nhật giao diện với dữ liệu cấu hình
+  // 3. Cập nhật dữ liệu từ Cấu hình lên Giao diện
   function applyConfigToUI() {
-    document.getElementById("invitationTitle").textContent = config.invitationTitle || "THƯ MỜI THAM DỰ";
-    document.getElementById("subtitle").textContent = config.subtitle || "LỄ TỐT NGHIỆP CỦA";
-    document.getElementById("graduateName").textContent = config.graduateName || "PHẠM THỊ KIM HUÊ";
-    document.getElementById("guestPrefix").textContent = config.guestPrefix || "HÂN HẠNH MỜI:";
-    document.getElementById("guestNameDisplay").textContent = currentGuestName;
-    document.getElementById("eventDateTime").textContent = config.displayDateTime || "24/01/2026 | Lúc 10h - 14h";
-    document.getElementById("eventLocation").textContent = config.locationAddress || "Số 2 , Hoàng Văn Thụ, P 4, Q.Tân Bình, TP HCM";
-    
-    // Hình ảnh
-    const illustrationImg = document.getElementById("graduateIllustration");
-    if (illustrationImg && config.illustrationSrc) {
-      illustrationImg.src = config.illustrationSrc;
-    }
-    const garlandImg = document.getElementById("topGarland");
-    if (garlandImg && config.topGarlandSrc) {
-      garlandImg.src = config.topGarlandSrc;
+    // Tên cử nhân trên ruy băng đỏ
+    const ribbonGrad = document.getElementById("ribbonGradName");
+    if (ribbonGrad) ribbonGrad.textContent = config.graduateName || "PHẠM THỊ KIM HUÊ";
+
+    // Tên cử nhân thư pháp phần Thân Mời
+    const gradCalligraphy = document.getElementById("graduateCalligraphy");
+    if (gradCalligraphy) {
+      gradCalligraphy.textContent = config.graduateShortName || "Kim Huê";
     }
 
-    // Google map link và embed
-    const mapIframe = document.getElementById("googleMapIframe");
-    if (mapIframe && config.googleMapsEmbed) {
-      mapIframe.src = config.googleMapsEmbed;
-    }
-    const mapBtn = document.getElementById("googleMapLinkBtn");
-    if (mapBtn && config.googleMapsUrl) {
-      mapBtn.href = config.googleMapsUrl;
-    }
-
-    // Lời cảm ơn (cập nhật đồng thời cả trên Desktop và Mobile)
-    document.querySelectorAll(".thank-you-title").forEach(el => {
-      el.textContent = config.thankYouTitle || "Thank you!";
-    });
-    document.querySelectorAll(".thank-you-quote").forEach(el => {
-      el.textContent = `"${config.thankYouMessage || ''}"`;
-    });
-
-    // Cập nhật tên cử nhân và khách mời trên phong bì thư mở đầu
-    const envGrad = document.getElementById("envelopeGraduateName");
-    if (envGrad) envGrad.textContent = config.graduateName || "PHẠM THỊ KIM HUÊ";
+    // Tên khách mời trên con dấu và thư mời
     const envGuest = document.getElementById("envelopeGuestName");
     if (envGuest) envGuest.textContent = currentGuestName;
 
-    // Pre-fill tên vào form RSVP nếu tên khác BẠN X
-    const rsvpNameInput = document.getElementById("rsvpName");
-    if (rsvpNameInput && currentGuestName !== "BẠN X") {
-      rsvpNameInput.value = currentGuestName;
+    const guestDisplay = document.getElementById("guestNameDisplay");
+    if (guestDisplay) guestDisplay.textContent = currentGuestName;
+
+    // Thời gian sự kiện
+    const timeHighlight = document.getElementById("eventTimeHighlight");
+    if (timeHighlight) {
+      timeHighlight.textContent = config.displayDateTime || "10:00, THỨ BA";
+    }
+
+    // Ngày hiển thị dưới ảnh Hero: 17.11.2026
+    const heroDate = document.getElementById("heroDateDisplay");
+    if (heroDate) {
+      const d = String(config.eventDay || 17).padStart(2, "0");
+      const m = String(config.calendarMonth || 11).padStart(2, "0");
+      const y = config.calendarYear || 2026;
+      heroDate.textContent = `${d}.${m}.${y}`;
+    }
+
+    // Badge Ngày Tháng Năm
+    const badgeMonth = document.getElementById("badgeMonth");
+    if (badgeMonth) badgeMonth.textContent = String(config.calendarMonth || 11).padStart(2, "0");
+
+    const badgeDay = document.getElementById("badgeDay");
+    if (badgeDay) badgeDay.textContent = String(config.eventDay || 17).padStart(2, "0");
+
+    const badgeYear = document.getElementById("badgeYear");
+    if (badgeYear) badgeYear.textContent = config.calendarYear || 2026;
+
+    const calMonthScript = document.getElementById("calMonthScript");
+    if (calMonthScript) calMonthScript.textContent = String(config.calendarMonth || 11);
+
+    // Địa điểm
+    const venueAddress = document.getElementById("venueAddress");
+    if (venueAddress) venueAddress.textContent = config.locationAddress || "Số 2 Hoàng Văn Thụ, Phường 4, Quận Tân Bình, TP. HCM";
+
+    // Link chỉ đường và bản đồ nhúng
+    const mapBtn = document.getElementById("googleMapLinkBtn");
+    if (mapBtn && config.googleMapsUrl) mapBtn.href = config.googleMapsUrl;
+
+    const mapIframe = document.getElementById("googleMapIframe");
+    if (mapIframe && config.googleMapsEmbed) mapIframe.src = config.googleMapsEmbed;
+
+    // Chữ ký bức thư tâm sự
+    const letterSig = document.getElementById("letterSignature");
+    if (letterSig) letterSig.textContent = config.graduateName || "Phạm Thị Kim Huê";
+
+    // Pre-fill tên vào form RSVP nếu đã có tên khách riêng
+    const rsvpName = document.getElementById("rsvpName");
+    if (rsvpName && currentGuestName !== "BẠN X") {
+      rsvpName.value = currentGuestName;
     }
   }
 
   applyConfigToUI();
 
-  // 3. Khởi tạo Lịch sự kiện (Calendar)
+  // 4. Khởi tạo Lịch tháng 11 với Trái tim viền đỏ (Calendar)
   function renderCalendar() {
-    const month = config.calendarMonth || 1;
+    const month = config.calendarMonth || 11;
     const year = config.calendarYear || 2026;
-    const targetDay = config.eventDay || 24;
+    const targetDay = config.eventDay || 17;
 
-    const monthTitle = document.getElementById("calMonthTitle");
-    const yearTitle = document.getElementById("calYearTitle");
-    if (monthTitle) monthTitle.textContent = `THÁNG ${String(month).padStart(2, '0')}`;
-    if (yearTitle) yearTitle.textContent = `${year}`;
-
-    const grid = document.getElementById("calendarDaysGrid");
+    const grid = document.getElementById("calendarGrid");
     if (!grid) return;
     grid.innerHTML = "";
 
-    // Tiêu đề các thứ trong tuần
-    const daysOfWeek = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
+    // Tiêu đề các thứ tiếng Anh chuẩn mẫu Lami
+    const daysOfWeek = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
     daysOfWeek.forEach(d => {
-      const el = document.createElement("div");
-      el.className = "cal-day-header";
-      el.textContent = d;
-      grid.appendChild(el);
+      const cell = document.createElement("div");
+      cell.className = "cal-header-cell";
+      cell.textContent = d;
+      grid.appendChild(cell);
     });
 
     const firstDayIndex = new Date(year, month - 1, 1).getDay();
+    // Chuyển sang chuẩn MON = 0
     const shift = (firstDayIndex === 0) ? 6 : firstDayIndex - 1;
     const totalDaysInMonth = new Date(year, month, 0).getDate();
 
     for (let i = 0; i < shift; i++) {
       const cell = document.createElement("div");
-      cell.className = "cal-cell empty";
-      cell.textContent = "-";
+      cell.className = "cal-date-cell empty";
+      cell.textContent = "";
       grid.appendChild(cell);
     }
 
     for (let day = 1; day <= totalDaysInMonth; day++) {
       const cell = document.createElement("div");
-      cell.className = "cal-cell";
+      cell.className = "cal-date-cell";
 
       if (day === targetDay) {
         cell.classList.add("event-date");
         cell.innerHTML = `
-          <img src="assets/images/heart.svg" class="heart-marker" alt="Event Day Heart" />
-          <span class="date-number">${day}</span>
+          <img src="assets/images/heart.svg" class="heart-marker" alt="Event Date Heart" />
+          <span>${day}</span>
         `;
       } else {
         cell.textContent = day;
@@ -134,16 +149,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const remaining = (7 - (totalCells % 7)) % 7;
     for (let i = 0; i < remaining; i++) {
       const cell = document.createElement("div");
-      cell.className = "cal-cell empty";
-      cell.textContent = "-";
+      cell.className = "cal-date-cell empty";
+      cell.textContent = "";
       grid.appendChild(cell);
     }
   }
 
   renderCalendar();
 
-  // 4. Đồng hồ Đếm ngược Thời gian thực (Real-time Countdown)
-  const targetDateObj = new Date(config.targetDate || "2026-01-24T10:00:00").getTime();
+  // 5. Thêm sự kiện vào Google Calendar
+  const addToCalendarBtn = document.getElementById("addToCalendarBtn");
+  if (addToCalendarBtn) {
+    addToCalendarBtn.addEventListener("click", () => {
+      const title = encodeURIComponent(`Lễ Tốt Nghiệp của ${config.graduateName || "Phạm Thị Kim Huê"}`);
+      const details = encodeURIComponent(`Trân trọng kính mời bạn đến tham dự và chung vui trong ngày tốt nghiệp trọng đại!`);
+      const location = encodeURIComponent(config.locationAddress || "Số 2 Hoàng Văn Thụ, Phường 4, Quận Tân Bình, TP.HCM");
+
+      const startDate = new Date(config.targetDate || "2026-11-17T10:00:00");
+      const endDate = new Date(startDate.getTime() + (4 * 60 * 60 * 1000));
+
+      const formatGCalDate = (d) => d.toISOString().replace(/-|:|\.\d\d\d/g, "");
+      const dates = `${formatGCalDate(startDate)}/${formatGCalDate(endDate)}`;
+
+      const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
+      window.open(gcalUrl, "_blank");
+    });
+  }
+
+  // 6. Đồng hồ Đếm ngược Thời gian thực (Real-time Countdown)
+  const targetDateObj = new Date(config.targetDate || "2026-11-17T10:00:00").getTime();
 
   function updateCountdown() {
     const now = new Date().getTime();
@@ -176,26 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCountdown();
   setInterval(updateCountdown, 1000);
 
-  // 5. Thêm sự kiện vào Google Calendar
-  const addToCalendarBtn = document.getElementById("addToCalendarBtn");
-  if (addToCalendarBtn) {
-    addToCalendarBtn.addEventListener("click", () => {
-      const title = encodeURIComponent(`Lễ Tốt Nghiệp của ${config.graduateName || "Phạm Thị Kim Huê"}`);
-      const details = encodeURIComponent(`Trân trọng kính mời bạn đến tham dự và chung vui trong ngày tốt nghiệp trọng đại!`);
-      const location = encodeURIComponent(config.locationAddress || "Số 2 Hoàng Văn Thụ, P.4, Q.Tân Bình, TP.HCM");
-      
-      const startDate = new Date(config.targetDate || "2026-01-24T10:00:00");
-      const endDate = new Date(startDate.getTime() + (4 * 60 * 60 * 1000));
-
-      const formatGCalDate = (d) => d.toISOString().replace(/-|:|\.\d\d\d/g, "");
-      const dates = `${formatGCalDate(startDate)}/${formatGCalDate(endDate)}`;
-
-      const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
-      window.open(gcalUrl, "_blank");
-    });
-  }
-
-  // 6. Nhạc nền và Nút điều khiển âm thanh
+  // 7. Nhạc nền và Bộ điều khiển âm thanh
   const bgMusic = document.getElementById("bgMusic");
   const musicToggleBtn = document.getElementById("musicToggleBtn");
   let isPlaying = false;
@@ -230,18 +245,11 @@ document.addEventListener("DOMContentLoaded", () => {
     setPlayingState(false);
   }
 
-  // Đồng bộ trạng thái trực tiếp từ sự kiện phát/dừng của thẻ audio
   if (bgMusic) {
-    bgMusic.addEventListener("play", () => {
-      setPlayingState(true);
-      detachUnlockListeners();
-    });
+    bgMusic.addEventListener("play", () => setPlayingState(true));
+    bgMusic.addEventListener("pause", () => setPlayingState(false));
 
-    bgMusic.addEventListener("pause", () => {
-      setPlayingState(false);
-    });
-
-    // Cơ chế lặp nhạc liền mạch (seamless zero-latency loop)
+    // Lặp nhạc liền mạch
     bgMusic.addEventListener("timeupdate", () => {
       if (bgMusic.duration && bgMusic.currentTime >= bgMusic.duration - 0.2) {
         bgMusic.currentTime = 0;
@@ -253,77 +261,103 @@ document.addEventListener("DOMContentLoaded", () => {
 
     bgMusic.addEventListener("ended", () => {
       bgMusic.currentTime = 0;
-      if (isPlaying) {
-        bgMusic.play().catch(() => {});
-      }
+      if (isPlaying) bgMusic.play().catch(() => {});
     });
   }
 
-  // Nút tròn bật/tắt nhạc ở góc màn hình
   if (musicToggleBtn) {
     musicToggleBtn.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
       if (!bgMusic) return;
-
       if (bgMusic.paused) {
-        startAudio().catch(err => {
-          console.warn("Không thể phát nhạc:", err);
-        });
+        startAudio().catch(err => console.warn("Lỗi phát nhạc:", err));
       } else {
         stopAudio();
       }
     });
   }
 
-  // Mở khóa âm thanh ở tương tác đầu tiên bất kỳ của người dùng (Click, Chạm, Cuộn trang, Phím)
   const onFirstUserGesture = (e) => {
-    // Nếu chạm/click vào chính nút musicToggleBtn thì bỏ qua để nút tự xử lý
-    if (musicToggleBtn && (e.target === musicToggleBtn || musicToggleBtn.contains(e.target))) {
-      return;
-    }
-
+    if (musicToggleBtn && (e.target === musicToggleBtn || musicToggleBtn.contains(e.target))) return;
     if (bgMusic && bgMusic.paused) {
-      startAudio().catch(() => {
-        // Nếu cử chỉ này chưa đủ điều kiện (ví dụ scroll trên một số trình duyệt), tiếp tục đợi cử chỉ kế tiếp
-      });
+      startAudio().catch(() => {});
     }
   };
 
-  const gestureEvents = ["click", "touchend", "mouseup", "keydown", "scroll", "wheel"];
-
+  const gestureEvents = ["click", "touchend", "mouseup", "keydown"];
   function attachUnlockListeners() {
-    gestureEvents.forEach(evt => {
-      window.addEventListener(evt, onFirstUserGesture, { passive: true });
-    });
+    gestureEvents.forEach(evt => window.addEventListener(evt, onFirstUserGesture, { passive: true }));
   }
-
   function detachUnlockListeners() {
-    gestureEvents.forEach(evt => {
-      window.removeEventListener(evt, onFirstUserGesture);
-    });
+    gestureEvents.forEach(evt => window.removeEventListener(evt, onFirstUserGesture));
   }
-
   attachUnlockListeners();
 
-  // Thử tự động phát ngay khi vừa load (hoạt động tốt trên máy tính có MEI hoặc trình duyệt cho phép autoplay)
-  if (bgMusic) {
-    startAudio().catch(() => {
-      // Trình duyệt chặn autoplay khi mới vào trang, đợi tương tác đầu tiên từ người dùng
-    });
+  // 8. Xử lý mở thiệp 2 cánh kiểu cửa (Interactive Gatefold Opening)
+  function initGatefoldOpening() {
+    const envelopeOverlay = document.getElementById("envelopeOverlay");
+    const gatefoldSeal = document.getElementById("gatefoldSeal");
+    if (!envelopeOverlay) return;
+
+    let isOpened = false;
+
+    const handleOpen = () => {
+      if (isOpened) return;
+      isOpened = true;
+
+      // Phát nhạc ngay lập tức
+      startAudio().catch(() => {});
+
+      // Pháo hoa giấy rực rỡ tone Đỏ - Vàng hoàng gia
+      if (typeof confetti === "function") {
+        confetti({
+          particleCount: 60,
+          spread: 80,
+          origin: { y: 0.55 },
+          colors: ['#cba248', '#851c27', '#ffd700', '#fcebbb', '#ffffff']
+        });
+        setTimeout(() => {
+          confetti({
+            particleCount: 40,
+            angle: 60,
+            spread: 50,
+            origin: { x: 0 },
+            colors: ['#cba248', '#851c27', '#ffd700']
+          });
+          confetti({
+            particleCount: 40,
+            angle: 120,
+            spread: 50,
+            origin: { x: 1 },
+            colors: ['#cba248', '#851c27', '#ffd700']
+          });
+        }, 300);
+      }
+
+      envelopeOverlay.classList.add("opened");
+      setTimeout(() => {
+        envelopeOverlay.style.display = "none";
+      }, 1200);
+    };
+
+    if (gatefoldSeal) {
+      gatefoldSeal.addEventListener("click", handleOpen);
+    }
+    envelopeOverlay.addEventListener("click", handleOpen);
   }
 
-  // 7. Sổ lưu bút và Tích hợp Đồng bộ Google Sheets
+  initGatefoldOpening();
+
+  // 9. Sổ lưu bút và Kết nối Đồng bộ Google Sheets
   const WISHES_STORAGE_KEY = "graduation_invitation_wishes_list";
 
   function getLocalWishes() {
     try {
       const stored = localStorage.getItem(WISHES_STORAGE_KEY);
-      if (stored) {
-        return JSON.parse(stored);
-      }
+      if (stored) return JSON.parse(stored);
     } catch (e) {
-      console.error("Lỗi khi đọc lời chúc từ storage:", e);
+      console.error("Lỗi khi đọc lời chúc:", e);
     }
     return config.initialWishes || [];
   }
@@ -337,10 +371,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderWishes(wishes) {
-    const wishesContainer = document.getElementById("wishesContainer");
-    if (!wishesContainer) return;
+    const container = document.getElementById("wishesContainer");
+    if (!container) return;
 
-    wishesContainer.innerHTML = "";
+    container.innerHTML = "";
     wishes.forEach(item => {
       const wishEl = document.createElement("div");
       wishEl.className = "wish-item";
@@ -356,13 +390,11 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="wish-content">${escapeHTML(item.message)}</div>
         <div class="wish-time">${escapeHTML(item.time || 'Vừa xong')}</div>
       `;
-      wishesContainer.appendChild(wishEl);
+      container.appendChild(wishEl);
     });
   }
 
-  // Tải danh sách lời chúc: ưu tiên Google Sheets nếu có cài đặt
   async function loadWishes() {
-    // Trước tiên hiển thị dữ liệu cục bộ ngay lập tức để không bị trễ
     const localWishes = getLocalWishes();
     renderWishes(localWishes);
 
@@ -380,14 +412,14 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
       } catch (err) {
-        console.log("Không thể kết nối Google Sheets (hoặc mạng offline), hiển thị dữ liệu bộ nhớ đệm:", err);
+        console.log("Dùng dữ liệu lời chúc offline:", err);
       }
     }
   }
 
   loadWishes();
 
-  // 8. Xử lý gửi Form Xác nhận tham dự (RSVP) và Lưu về Google Sheets
+  // 10. Xử lý Gửi Form Xác nhận tham dự (RSVP)
   const rsvpForm = document.getElementById("rsvpForm");
   if (rsvpForm) {
     rsvpForm.addEventListener("submit", async (e) => {
@@ -402,22 +434,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const status = statusSelect.value;
       const message = messageInput.value.trim();
 
-      if (!name) {
-        showToast("Vui lòng nhập tên của bạn nhé!");
-        nameInput.focus();
+      if (!name || !message) {
+        showToast("Vui lòng nhập tên và lời chúc của bạn nhé!");
         return;
       }
-
-      if (!message) {
-        showToast("Hãy để lại một lời chúc ý nghĩa đến tân cử nhân nhé!");
-        messageInput.focus();
-        return;
-      }
-
-      // Vô hiệu hóa nút tạm thời khi đang gửi
-      const originalBtnText = submitBtn.innerHTML;
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = "⏳ Đang gửi lời chúc...";
 
       const newWish = {
         name: name,
@@ -426,43 +446,52 @@ document.addEventListener("DOMContentLoaded", () => {
         time: "Vừa xong"
       };
 
-      // 1. Cập nhật giao diện ngay lập tức (Optimistic Update)
-      const wishes = getLocalWishes();
-      wishes.unshift(newWish);
-      saveLocalWishes(wishes);
-      renderWishes(wishes);
+      // Cập nhật giao diện cục bộ ngay
+      const currentList = getLocalWishes();
+      currentList.unshift(newWish);
+      saveLocalWishes(currentList);
+      renderWishes(currentList);
 
-      // 2. Gửi dữ liệu về Google Sheets (nếu có cấu hình Web App URL)
+      const originalBtnText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = "ĐANG GỬI...";
+
+      // Gửi về Google Sheets
       if (config.googleSheetScriptUrl && config.googleSheetScriptUrl.trim()) {
         try {
           await fetch(config.googleSheetScriptUrl.trim(), {
             method: "POST",
             mode: "no-cors",
-            headers: {
-              "Content-Type": "text/plain;charset=utf-8"
-            },
-            body: JSON.stringify(newWish)
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              action: "submit_wish",
+              name: name,
+              status: status,
+              message: message,
+              timestamp: new Date().toISOString()
+            })
           });
-          console.log("Đã gửi thành công về Google Sheets!");
-        } catch (postErr) {
-          console.error("Lỗi khi gửi về Google Sheets:", postErr);
+        } catch (error) {
+          console.warn("Lỗi đồng bộ Sheets:", error);
         }
       }
 
-      // Khôi phục nút
       submitBtn.disabled = false;
       submitBtn.innerHTML = originalBtnText;
 
-      // Hiệu ứng pháo hoa chúc mừng (Confetti)
-      fireConfetti();
+      // Pháo hoa chúc mừng
+      if (typeof confetti === "function") {
+        confetti({
+          particleCount: 70,
+          spread: 70,
+          origin: { y: 0.65 },
+          colors: ['#cba248', '#851c27', '#ffd700']
+        });
+      }
 
-      // Thông báo thành công
       showToast(`Cảm ơn ${name} đã gửi lời chúc yêu thương! 🥰`);
-
-      // Reset ô nhập lời chúc
       messageInput.value = "";
 
-      // Cuộn nhẹ tới sổ lưu bút
       const wishesSec = document.getElementById("wishesSection");
       if (wishesSec) {
         wishesSec.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -470,35 +499,36 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 9. Hiệu ứng Confetti
-  function fireConfetti() {
-    if (typeof confetti === "function") {
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.65 },
-        colors: ['#ffb6c1', '#ec407a', '#ffd700', '#f48fb1', '#81d4fa']
-      });
-      setTimeout(() => {
-        confetti({
-          particleCount: 50,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0 },
-          colors: ['#ffb6c1', '#ec407a', '#ffd700']
-        });
-        confetti({
-          particleCount: 50,
-          angle: 120,
-          spread: 55,
-          origin: { x: 1 },
-          colors: ['#ffb6c1', '#ec407a', '#ffd700']
-        });
-      }, 250);
-    }
+  // 11. Modal xem ảnh phóng to (Lightbox)
+  const lightboxModal = document.getElementById("lightboxModal");
+  const lightboxImg = document.getElementById("lightboxImg");
+  const lightboxClose = document.getElementById("lightboxClose");
+
+  document.querySelectorAll(".album-grid-item").forEach(item => {
+    item.addEventListener("click", () => {
+      const fullSrc = item.getAttribute("data-full");
+      if (fullSrc && lightboxModal && lightboxImg) {
+        lightboxImg.src = fullSrc;
+        lightboxModal.classList.add("active");
+      }
+    });
+  });
+
+  if (lightboxClose) {
+    lightboxClose.addEventListener("click", () => {
+      if (lightboxModal) lightboxModal.classList.remove("active");
+    });
   }
 
-  // 10. Thông báo Toast
+  if (lightboxModal) {
+    lightboxModal.addEventListener("click", (e) => {
+      if (e.target === lightboxModal) {
+        lightboxModal.classList.remove("active");
+      }
+    });
+  }
+
+  // 12. Thông báo Toast
   function showToast(text) {
     let toast = document.getElementById("toastNotice");
     if (!toast) {
@@ -514,31 +544,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 3200);
   }
 
-  // 11. Chuyển hướng Quản trị (/admin)
-  const queryParams = new URLSearchParams(window.location.search);
-  if (queryParams.get("admin") === "true") {
-    window.location.href = "/admin";
-  }
-
-  // Mở bí mật: Nhấp 3 lần liên tiếp vào dòng "ktv © 2026" để vào trang Quản trị
+  // 13. Mở bí mật Quản trị: Nhấp 3 lần liên tiếp vào dòng "ktv © 2026"
   const footerCredits = document.querySelectorAll(".footer-credit");
   if (footerCredits.length > 0) {
     let clickCount = 0;
     let clickTimer = null;
     footerCredits.forEach(fc => {
-      fc.title = "Dành cho chủ thiệp: Nhấp 3 lần để vào trang Quản trị";
       fc.style.cursor = "pointer";
       fc.addEventListener("click", () => {
         clickCount++;
         clearTimeout(clickTimer);
-
         if (clickCount >= 3) {
           window.location.href = "/admin";
           clickCount = 0;
         } else {
-          clickTimer = setTimeout(() => {
-            clickCount = 0;
-          }, 600);
+          clickTimer = setTimeout(() => { clickCount = 0; }, 600);
         }
       });
     });
@@ -557,33 +577,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  // 10. Khởi tạo Hiệu ứng Cuộn Hiện (Scroll Reveal)
-  function initScrollReveal() {
-    const revealEls = document.querySelectorAll(".reveal-on-scroll");
-    if (!revealEls.length) return;
-
-    if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-revealed");
-            observer.unobserve(entry.target);
-          }
-        });
-      }, {
-        threshold: 0.08,
-        rootMargin: "0px 0px -30px 0px"
-      });
-
-      revealEls.forEach(el => observer.observe(el));
-    } else {
-      revealEls.forEach(el => el.classList.add("is-revealed"));
-    }
-  }
-
-  initScrollReveal();
-
-  // 11. Hiệu ứng Cánh hoa rơi và Bụi sao lấp lánh (Romantic Petals and Golden Starlight)
+  // 14. Hiệu ứng Cánh hoa và Bụi sao bay lãng mạn
   function initRomanticAtmosphere() {
     const canvas = document.getElementById("fxCanvas");
     if (!canvas) return;
@@ -593,31 +587,26 @@ document.addEventListener("DOMContentLoaded", () => {
     let width = canvas.width = window.innerWidth;
     let height = canvas.height = window.innerHeight;
 
-    let resizeTimer = null;
     window.addEventListener("resize", () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-      }, 150);
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
     }, { passive: true });
 
-    // Cánh hoa mềm mại (Petals)
     const petals = [];
     const petalColors = [
-      "rgba(255, 192, 203, 0.65)",
-      "rgba(255, 182, 193, 0.55)",
-      "rgba(255, 228, 225, 0.7)",
-      "rgba(244, 143, 177, 0.45)"
+      "rgba(215, 65, 80, 0.45)",
+      "rgba(240, 160, 170, 0.4)",
+      "rgba(255, 220, 225, 0.5)",
+      "rgba(203, 162, 72, 0.35)"
     ];
     const isMobile = window.innerWidth < 768;
-    const petalCount = isMobile ? 12 : 20;
+    const petalCount = isMobile ? 12 : 18;
 
     for (let i = 0; i < petalCount; i++) {
       petals.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        size: Math.random() * 8 + 6,
+        size: Math.random() * 7 + 5,
         speedY: Math.random() * 0.7 + 0.4,
         speedX: Math.random() * 0.6 - 0.3,
         rotation: Math.random() * Math.PI * 2,
@@ -628,14 +617,13 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Hạt bụi sao vàng lấp lánh ("A little dream of me, glowing like a star")
     const stars = [];
-    const starCount = isMobile ? 10 : 18;
+    const starCount = isMobile ? 10 : 16;
     for (let i = 0; i < starCount; i++) {
       stars.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        radius: Math.random() * 1.6 + 0.8,
+        radius: Math.random() * 1.5 + 0.6,
         alpha: Math.random(),
         alphaSpeed: (Math.random() * 0.02 + 0.008) * (Math.random() > 0.5 ? 1 : -1),
         speedY: Math.random() * 0.2 + 0.08
@@ -666,7 +654,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!isRunning) return;
       ctx.clearRect(0, 0, width, height);
 
-      // Cánh hoa
       for (let i = 0; i < petals.length; i++) {
         const p = petals[i];
         p.y += p.speedY;
@@ -684,7 +671,6 @@ document.addEventListener("DOMContentLoaded", () => {
         drawPetal(p);
       }
 
-      // Hạt sao vàng
       for (let i = 0; i < stars.length; i++) {
         const s = stars[i];
         s.y -= s.speedY;
@@ -698,9 +684,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         ctx.save();
-        ctx.fillStyle = `rgba(246, 211, 101, ${Math.max(0, Math.min(1, s.alpha))})`;
-        ctx.shadowBlur = 6;
-        ctx.shadowColor = "rgba(255, 215, 0, 0.55)";
+        ctx.fillStyle = `rgba(235, 208, 125, ${Math.max(0, Math.min(1, s.alpha))})`;
+        ctx.shadowBlur = 4;
+        ctx.shadowColor = "rgba(203, 162, 72, 0.4)";
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
         ctx.fill();
@@ -714,43 +700,4 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   initRomanticAtmosphere();
-
-  // 12. Xử lý mở phong bì thư (Interactive Luxury Envelope Opening)
-  function initEnvelopeOpening() {
-    const envelopeOverlay = document.getElementById("envelopeOverlay");
-    const envelopeCard = document.getElementById("envelopeCard");
-    if (!envelopeOverlay || !envelopeCard) return;
-
-    let isOpened = false;
-
-    const handleOpen = (e) => {
-      if (isOpened) return;
-      isOpened = true;
-
-      // Kích hoạt phát nhạc nền ngay lập tức
-      startAudio().catch(() => {});
-
-      // Bắn pháo hoa giấy rực rỡ khi mở phong bì
-      if (typeof confetti === "function") {
-        confetti({
-          particleCount: 55,
-          spread: 75,
-          origin: { y: 0.6 },
-          colors: ['#c49a38', '#dfd3c3', '#b2262b', '#fce4ec', '#191817']
-        });
-      }
-
-      // Kích hoạt hiệu ứng mở phong bì thư
-      envelopeOverlay.classList.add("opened");
-
-      // Sau khi hoàn thành chuyển động mở, ẩn hoàn toàn overlay
-      setTimeout(() => {
-        envelopeOverlay.style.display = "none";
-      }, 850);
-    };
-
-    envelopeCard.addEventListener("click", handleOpen);
-  }
-
-  initEnvelopeOpening();
 });

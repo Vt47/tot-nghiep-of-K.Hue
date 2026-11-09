@@ -1,53 +1,65 @@
 /**
  * CẤU HÌNH THIỆP MỜI TỐT NGHIỆP
- * Dễ dàng tùy chỉnh thông tin sự kiện của bạn tại đây
+ * Mẫu thiết kế chuẩn Lami Luxury Graduation (Tone Đỏ Rượu Vang và Vàng Ánh Kim)
  */
 
 function getDefaultTargetDate() {
-  const now = new Date();
-  const demoTarget = new Date(now.getTime() + (4 * 24 * 3600 * 1000) + (20 * 3600 * 1000) + (51 * 60 * 1000) + (6 * 1000));
-  return demoTarget.toISOString();
+  return "2026-11-17T10:00:00";
 }
 
 const DEFAULT_CONFIG = {
-  // Thông tin cử nhân / sự kiện
+  // Thông tin cử nhân / sự kiện (Giữ lại theo yêu cầu)
   graduateName: "PHẠM THỊ KIM HUÊ",
+  graduateShortName: "Kim Huê",
   subtitle: "LỄ TỐT NGHIỆP CỦA",
-  invitationTitle: "THƯ MỜI THAM DỰ",
-  guestPrefix: "HÂN HẠNH MỜI:",
+  invitationTitle: "THÂN MỜI",
+  guestPrefix: "HÂN HẠNH ĐÓN TIẾP:",
   defaultGuestName: "BẠN X",
 
-  // Thời gian tổ chức
+  // Thời gian tổ chức (Giữ lại ngày 17/11/2026, lúc 10h - 14h)
   targetDate: "2026-11-17T10:00:00",
   displayDateTime: "17/11/2026 | Lúc 10h - 14h",
-  
-  // Tháng và Năm hiển thị trên lịch
-  calendarMonth: 11, // Tháng 11
+  eventDayOfWeek: "THỨ BA",
+  eventDay: 17,
+  calendarMonth: 11,
   calendarYear: 2026,
-  eventDay: 17, // Ngày tổ chức có trái tim hồng (17/11/2026)
 
   // Địa điểm và Google Map
-  locationAddress: "Số 2 , Hoàng Văn Thụ, P 4, Q.Tân Bình, TP HCM",
+  locationAddress: "Số 2 Hoàng Văn Thụ, Phường 4, Quận Tân Bình, TP. HCM",
+  venueTitle: "TRUNG TÂM HỘI NGHỊ",
   googleMapsUrl: "https://maps.google.com/?q=2+Ho%C3%A0ng+V%C4%83n+Th%E1%BB%A5,+Ph%C6%B0%E1%BB%9Dng+4,+T%C3%A2n+B%C3%ACnh,+TP+HCM",
   googleMapsEmbed: "https://maps.google.com/maps?q=2%20Ho%C3%A0ng%20V%C4%83n%20Th%E1%BB%A5,%20Ph%C6%B0%E1%BB%9Dng%204,%20T%C3%A2n%20B%C3%ACnh,%20TP%20HCM&t=&z=15&ie=UTF8&iwloc=&output=embed",
 
-  // KẾT NỐI GOOGLE SHEETS
-  // Dán đường link Web App của Google Apps Script vào đây (ví dụ: https://script.google.com/macros/s/.../exec)
-  // để tự động lưu khách mời và đồng bộ lời chúc trên mọi thiết bị!
+  // Kết nối Google Sheets tự động
   googleSheetScriptUrl: "https://script.google.com/macros/s/AKfycbyTNQzwT0g5SNDnphPAEqSzdi1UGKqKXmdk4zEV9gdK_hOnwbQSDxBtofYTpqs2ngQoHA/exec",
 
-  // Hình ảnh
-  illustrationSrc: "assets/images/graduate_illustration.png",
-  topGarlandSrc: "assets/images/top_garland.png",
+  // Hình ảnh chuẩn mẫu Lami
+  heroBgSrc: "assets/images/hero_bg.jpg",
+  filmStripSrc: "assets/images/film_strip.jpg",
+  calendarPolaroidsSrc: "assets/images/calendar_polaroids.jpg",
+  footerPhotoSrc: "assets/images/footer_photo.jpg",
+  albumPhotos: [
+    "assets/images/album_1.jpg",
+    "assets/images/album_2.jpg",
+    "assets/images/album_3.jpg",
+    "assets/images/album_4.jpg"
+  ],
 
-  // Lời cảm ơn cuối trang
+  // Bức thư tâm sự
+  letterParagraphs: [
+    "Một hành trình đã khép lại bằng những ngày tháng đáng nhớ, từ những bỡ ngỡ ban đầu đến lúc trưởng thành hơn sau từng bài học, thử thách và trải nghiệm.",
+    "Có những ngày mệt mỏi, có cả những lần muốn dừng bước, nhưng nhờ sự đồng hành của gia đình, thầy cô và bạn bè, mình đã đi đến cột mốc hôm nay. Tấm bằng tốt nghiệp không chỉ là kết quả của những năm tháng nỗ lực, mà còn là dấu mốc mở ra một hành trình mới với nhiều ước mơ và cơ hội đang chờ phía trước."
+  ],
+
+  // Nhạc nền: Taylor Swift - You're On Your Own, Kid (Bridge) - Bản chuẩn TikTok mẫu Lami
+  musicSrc: "assets/audio/youre_on_your_own_kid.mp3",
+  musicFallback: "assets/audio/a_little_dream_of_me_chorus.mp3",
+
+  // Lời cảm ơn bế mạc
   thankYouTitle: "Thank you!",
-  thankYouMessage: "Những cố gắng của em/con/mình hôm nay cũng là nhờ sự đồng hành của mọi người. Mong được gặp thầy cô, bạn bè, anh chị trong ngày trọng đại này!",
+  thankYouMessage: "Sự hiện diện của bạn chính là món quà ý nghĩa nhất, và mình vô cùng trân quý trong ngày vui này.",
 
-  // Nhạc nền: A Little Dream Of Me - Cảm Ơn Người Đã Thức Cùng Tôi OST (Đoạn điệp khúc)
-  musicSrc: "assets/audio/a_little_dream_of_me_chorus.mp3",
-
-  // Lời chúc mẫu ban đầu (dùng khi chưa kết nối Google Sheets hoặc khi danh sách trống)
+  // Lời chúc mẫu ban đầu
   initialWishes: [
     {
       name: "Mai Phương 🌸",
@@ -82,7 +94,9 @@ function getSavedConfig() {
     const saved = localStorage.getItem("graduation_invitation_config");
     if (saved) {
       const parsed = JSON.parse(saved);
-      const graduateName = (parsed.graduateName && parsed.graduateName !== "LÊ MINH THƯ") ? parsed.graduateName : DEFAULT_CONFIG.graduateName;
+      const graduateName = (parsed.graduateName && parsed.graduateName !== "LÊ MINH THƯ" && parsed.graduateName !== "Nguyễn Tường Vi") 
+        ? parsed.graduateName 
+        : DEFAULT_CONFIG.graduateName;
       return {
         ...DEFAULT_CONFIG,
         ...parsed,
@@ -102,4 +116,15 @@ function getSavedConfig() {
   return { ...DEFAULT_CONFIG };
 }
 
-window.APP_CONFIG = getSavedConfig();
+// Lưu cấu hình vào localStorage
+function saveConfig(newConfig) {
+  try {
+    const current = getSavedConfig();
+    const merged = { ...current, ...newConfig };
+    localStorage.setItem("graduation_invitation_config", JSON.stringify(merged));
+    return true;
+  } catch (e) {
+    console.error("Lỗi khi lưu config:", e);
+    return false;
+  }
+}

@@ -315,9 +315,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (form) {
       form.addEventListener("submit", (e) => {
         e.preventDefault();
+        const fullName = editGrad.value.trim();
+        const nameParts = fullName.split(/\s+/);
+        const shortName = nameParts.length >= 2 ? nameParts.slice(-2).join(" ") : fullName;
+
         const updated = {
           ...cur,
-          graduateName: editGrad.value.trim(),
+          graduateName: fullName,
+          graduateShortName: shortName,
           subtitle: editSub.value.trim(),
           eventDay: parseInt(editDay.value, 10) || 17,
           calendarMonth: parseInt(editMonth.value, 10) || 11,

@@ -2,262 +2,322 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Thư mời tham dự lễ tốt nghiệp của Phạm Thị Kim Huê</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Thư Mời Tham Dự Lễ Tốt Nghiệp - Phạm Thị Kim Huê</title>
 
-  <!-- Open Graph Meta Tags (Hiển thị xem trước đẹp mắt khi gửi qua Zalo, Messenger, iMessage, Facebook) -->
+  <!-- Open Graph Meta Tags (Hiển thị xem trước sang trọng khi gửi qua Zalo, Messenger, Facebook, iMessage) -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Thư mời tham dự lễ tốt nghiệp của Phạm Thị Kim Huê">
-  <meta property="og:description" content="Trân trọng kính mời bạn trong ngày trọng đại này!">
-  <meta property="og:image" content="cover.jpg">
-  <meta name="description" content="Thư mời tham dự lễ tốt nghiệp trực tuyến - Mẫu thiệp trang nhã kèm âm nhạc, đếm ngược và sổ lưu bút">
+  <meta property="og:title" content="Thư Mời Tham Dự Lễ Tốt Nghiệp - Phạm Thị Kim Huê">
+  <meta property="og:description" content="Trân trọng kính mời bạn đến tham dự và chung vui trong ngày lễ tốt nghiệp trọng đại của mình!">
+  <meta property="og:image" content="assets/images/hero_bg.jpg">
+  <meta name="description" content="Thiệp mời lễ tốt nghiệp trực tuyến phong cách Lami tone đỏ quý phái kèm nhạc nền, đồng hồ đếm ngược và sổ lưu bút">
 
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
 
+  <!-- Google Fonts: Playfair Display, Great Vibes, Montserrat, Cinzel -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=8">
+  <link rel="stylesheet" href="css/style.css?v=9">
 </head>
 <body>
 
-  <!-- 1. Màn hình Loading -->
+  <!-- 1. MÀN HÌNH LOADING -->
   <div id="loadingScreen">
     <div class="spinner"></div>
-    <div class="loading-text">Đang tải...</div>
+    <div class="loading-text">Đang tải thiệp...</div>
   </div>
 
-  <!-- MÀN HÌNH MỞ PHONG BÌ THIỆP (INTERACTIVE ENVELOPE OPENING) -->
-  <div id="envelopeOverlay" class="envelope-overlay">
-    <div class="envelope-scene">
-      <div id="envelopeCard" class="envelope-card">
-        <!-- Hoa văn góc vintage -->
-        <div class="envelope-corner-ornament top-left"></div>
-        <div class="envelope-corner-ornament top-right"></div>
-        <div class="envelope-corner-ornament bottom-left"></div>
-        <div class="envelope-corner-ornament bottom-right"></div>
+  <!-- 2. MÀN MỞ THIỆP CỬA 2 CÁNH (GATEFOLD ENVELOPE OPENING) -->
+  <div id="envelopeOverlay" class="gatefold-overlay">
+    <!-- Cánh cửa trái -->
+    <div class="gatefold-door left-door"></div>
+    
+    <!-- Cánh cửa phải -->
+    <div class="gatefold-door right-door"></div>
 
-        <div class="envelope-inner-content">
-          <div class="envelope-subtitle">THƯ MỜI THAM DỰ LỄ TỐT NGHIỆP</div>
-          <div id="envelopeGraduateName" class="envelope-grad-name">PHẠM THỊ KIM HUÊ</div>
+    <!-- Con dấu hoàng gia niêm phong trung tâm -->
+    <div id="gatefoldSeal" class="gatefold-seal-container">
+      <div class="seal-badge">
+        <img src="assets/images/gold_mortarboard.svg" class="seal-icon-img" alt="Gold Cap" />
+      </div>
 
-          <div class="envelope-recipient-box">
-            <span class="envelope-to-tag">TRÂN TRỌNG KÍNH MỜI</span>
-            <span id="envelopeGuestName" class="envelope-guest-name">BẠN X</span>
-          </div>
+      <div class="seal-recipient-card">
+        <div class="seal-to-label">TRÂN TRỌNG KÍNH MỜI</div>
+        <div id="envelopeGuestName" class="seal-guest-name">BẠN X</div>
+      </div>
 
-          <!-- Con dấu sáp hoàng gia chạm mở thiệp -->
-          <div class="wax-seal-wrapper">
-            <div class="wax-seal-outer">
-              <div class="wax-seal-inner">
-                <span class="wax-seal-icon">🎓</span>
-              </div>
-            </div>
-            <div class="wax-seal-pulse"></div>
-            <div class="wax-seal-label">
-              <span>💌 CHẠM ĐỂ MỞ THIỆP</span>
-              <span class="wax-seal-sublabel">♫ Tự động bật nhạc</span>
-            </div>
-          </div>
-        </div>
+      <div class="seal-action-prompt">
+        🎓 CHẠM ĐỂ MỞ THIỆP ♫
       </div>
     </div>
   </div>
 
-  <!-- Nhạc nền sự kiện: A Little Dream Of Me (Cảm Ơn Người Đã Thức Cùng Tôi OST) -->
-  <audio id="bgMusic" autoplay loop preload="auto">
-    <source src="assets/audio/a_little_dream_of_me_chorus.mp3?v=4" type="audio/mpeg">
-    <source src="assets/audio/a_little_dream_of_me_full.mp3?v=4" type="audio/mpeg">
+  <!-- Nhạc nền: Taylor Swift - You're On Your Own, Kid (Bridge) -->
+  <audio id="bgMusic" preload="auto">
+    <source src="assets/audio/youre_on_your_own_kid.mp3" type="audio/mpeg">
+    <source src="assets/audio/a_little_dream_of_me_chorus.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Canvas hạt bụi sao và cánh hoa bay lãng mạn -->
+  <!-- Canvas cánh hoa bay và bụi sao lấp lánh -->
   <canvas id="fxCanvas"></canvas>
 
-  <!-- 2. Khung thiệp mời (Responsive: 1 cột trên Mobile, 2 cột sang trọng trên Desktop) -->
-  <div class="phone-wrapper">
-    <div class="paper-container">
+  <!-- 3. KHUNG THIỆP CHÍNH (MOBILE-FIRST LUXURY CONTAINER) -->
+  <div class="lami-invitation-container">
 
-      <div class="invitation-main-grid">
+    <!-- SECTION 1: HERO BANNER & RUY BĂNG ĐỎ -->
+    <section class="hero-banner-section">
+      <img id="heroBgImg" src="assets/images/hero_bg.jpg" alt="Cử nhân tốt nghiệp" class="hero-bg-photo" />
 
-        <!-- CỘT 1: Bìa thiệp, thông tin cử nhân và Lời cảm ơn (trên máy tính) -->
-        <div class="col-main-showcase">
-          <!-- Dải cờ hoa trang trí trên cùng -->
-          <div class="garland-wrapper">
-            <img id="topGarland" class="garland-img" src="assets/images/top_garland.png" alt="Trang trí viền hoa và dải cờ" />
-          </div>
-
-          <!-- Tiêu đề và Thông tin sự kiện -->
-          <div class="header-section reveal-on-scroll">
-            <div id="invitationTitle" class="title-sub">THƯ MỜI THAM DỰ</div>
-            <div id="subtitle" class="title-main-prefix">LỄ TỐT NGHIỆP CỦA</div>
-            <h1 id="graduateName" class="graduate-name">PHẠM THỊ KIM HUÊ</h1>
-
-            <div class="invitation-to">
-              <div id="guestPrefix" class="invite-prefix">HÂN HẠNH MỜI:</div>
-              <div id="guestNameDisplay" class="guest-name-pill">BẠN X</div>
-            </div>
-
-            <div class="dotted-divider"></div>
-
-            <div class="event-details">
-              <div id="eventDateTime" class="event-datetime">17/11/2026 | Lúc 10h - 14h</div>
-              <div id="eventLocation" class="event-location">Số 2 , Hoàng Văn Thụ, P 4, Q.Tân Bình, TP HCM</div>
-            </div>
-          </div>
-
-          <!-- Hình vẽ cử nhân với hoa và bằng tốt nghiệp -->
-          <div class="illustration-container reveal-on-scroll">
-            <img id="graduateIllustration" class="illustration-img floating-elem" src="assets/images/graduate_illustration.png" alt="Cử nhân tốt nghiệp" />
-          </div>
-
-          <!-- Lời cảm ơn bế mạc trên Desktop -->
-          <div class="thank-you-section desktop-only reveal-on-scroll">
-            <div class="thank-you-title">Thank you!</div>
-            <p class="thank-you-quote">
-              " Những cố gắng của em/con/mình hôm nay cũng là nhờ sự đồng hành của mọi người. Mong được gặp thầy cô, bạn bè, anh chị trong ngày trọng đại này! "
-            </p>
-            <div class="footer-credit">
-              ktv © 2026
-            </div>
-          </div>
+      <!-- Dải ruy băng đỏ rượu vang treo góc trái -->
+      <div class="hanging-ribbon">
+        <div class="ribbon-top-badge">
+          <span class="ribbon-uni">LỄ TỐT NGHIỆP</span>
+          <span class="ribbon-sub">ĐẠI HỌC</span>
         </div>
-
-        <!-- CỘT 2: Các tiện ích tương tác (Lịch, Đếm ngược, Bản đồ, RSVP, Lời chúc) -->
-        <div class="col-interactive-modules">
-
-          <!-- 3. Lịch tháng sự kiện (Calendar) -->
-          <div class="calendar-section reveal-on-scroll">
-            <div class="calendar-header-bar">
-              <span id="calMonthTitle" class="cal-month-title">THÁNG 11</span>
-              <span id="calYearTitle" class="cal-year-title">2026</span>
-            </div>
-
-            <div class="calendar-body">
-              <div id="calendarDaysGrid" class="calendar-grid">
-                <!-- Grid được render tự động bằng JS -->
-              </div>
-
-              <div class="add-calendar-btn-wrap">
-                <button id="addToCalendarBtn" class="add-calendar-btn" type="button">
-                  <span>📅</span> Thêm vào Google Calendar
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- 4. Đồng hồ đếm ngược thời gian (Countdown Timer) -->
-          <div class="countdown-section reveal-on-scroll">
-            <div class="countdown-title-wrap">
-              <div class="countdown-line"></div>
-              <div class="countdown-title">CÙNG ĐẾM NGƯỢC THỜI GIAN</div>
-              <div class="countdown-line"></div>
-            </div>
-
-            <div class="timer-boxes">
-              <div class="timer-unit">
-                <div id="timerDays" class="timer-card">00</div>
-                <div class="timer-label">Ngày</div>
-              </div>
-              <div class="timer-unit">
-                <div id="timerHours" class="timer-card">00</div>
-                <div class="timer-label">Giờ</div>
-              </div>
-              <div class="timer-unit">
-                <div id="timerMins" class="timer-card">00</div>
-                <div class="timer-label">Phút</div>
-              </div>
-              <div class="timer-unit">
-                <div id="timerSecs" class="timer-card">00</div>
-                <div class="timer-label">Giây</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 5. Bản đồ và Dẫn đường -->
-          <div class="map-section reveal-on-scroll">
-            <div class="section-heading-serif">XEM DẪN ĐƯỜNG</div>
-
-            <div class="map-container">
-              <iframe
-                id="googleMapIframe"
-                src="https://maps.google.com/maps?q=2%20Ho%C3%A0ng%20V%C4%83n%20Th%E1%BB%A5,%20Ph%C6%B0%E1%BB%9Dng%204,%20T%C3%A2n%20B%C3%ACnh,%20TP%20HCM&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                loading="lazy"
-                allowfullscreen=""
-                referrerpolicy="no-referrer-when-downgrade"
-                title="Google Maps Location">
-              </iframe>
-            </div>
-
-            <div>
-              <a id="googleMapLinkBtn" class="btn-black-pill" href="https://maps.google.com/?q=2+Ho%C3%A0ng+V%C4%83n+Th%E1%BB%A5,+Ph%C6%B0%E1%BB%9Dng+4,+T%C3%A2n+B%C3%ACnh,+TP+HCM" target="_blank" rel="noopener noreferrer">
-                ❤️ Xem Google map ❤️
-              </a>
-            </div>
-          </div>
-
-          <!-- 6. Xác nhận tham dự (RSVP Form) -->
-          <div class="rsvp-section reveal-on-scroll">
-            <h2 class="rsvp-title">Xác nhận tham dự</h2>
-
-            <form id="rsvpForm" class="rsvp-form">
-              <input
-                id="rsvpName"
-                class="input-field"
-                type="text"
-                placeholder="Nhập họ và tên của bạn..."
-                required
-                autocomplete="off"
-              />
-
-              <select id="rsvpStatus" class="input-field">
-                <option value="Chắc chắn tham dự">Bạn sẽ tham dự chứ?</option>
-                <option value="Chắc chắn tham dự">Chắc chắn rồi! Mình sẽ đến tham dự 🎉</option>
-                <option value="Gửi lời chúc">Rất tiếc, mình bận việc mất rồi 😢</option>
-                <option value="Sẽ cố gắng tham dự">Mình sẽ cố gắng sắp xếp đến chung vui ✨</option>
-              </select>
-
-              <textarea
-                id="rsvpMessage"
-                class="input-field"
-                rows="3"
-                placeholder="Gửi lời chúc đến mình nhé"
-                required
-              ></textarea>
-
-              <button class="btn-submit-rsvp" type="submit">
-                ❤️ ẤN GỬI LỜI CHÚC CỦA BẠN ❤️
-              </button>
-            </form>
-          </div>
-
-          <!-- 7. Sổ lưu bút - Xem lời chúc của mọi người -->
-          <div id="wishesSection" class="wishes-section reveal-on-scroll">
-            <h3 class="wishes-title">Xem lời chúc của mọi người</h3>
-
-            <div id="wishesContainer" class="wishes-card-container">
-              <!-- Danh sách lời chúc hiển thị ở đây -->
-            </div>
-          </div>
-
-          <!-- Lời cảm ơn bế mạc trên Mobile -->
-          <div class="thank-you-section mobile-only reveal-on-scroll">
-            <div class="thank-you-title">Thank you!</div>
-            <p class="thank-you-quote">
-              " Những cố gắng của em/con/mình hôm nay cũng là nhờ sự đồng hành của mọi người. Mong được gặp thầy cô, bạn bè, anh chị trong ngày trọng đại này! "
-            </p>
-
-            <div class="footer-credit">
-              ktv © 2026
-            </div>
-          </div>
-
-        </div>
-
+        <div class="ribbon-divider-line"></div>
+        <span id="ribbonGradName" class="ribbon-grad-name">PHẠM THỊ KIM HUÊ</span>
       </div>
 
+      <!-- Huy hiệu CLASS OF 2026 góc phải -->
+      <div class="hero-class-badge">
+        <span class="class-title">CLASS</span>
+        <span class="class-of">of</span>
+        <span class="class-year">2026</span>
+      </div>
+
+      <!-- Chữ thư pháp Graduate ceremony và Ngày tháng dưới chân ảnh -->
+      <div class="hero-bottom-overlay">
+        <div class="hero-calligraphy">Graduate ceremony</div>
+        <div id="heroDateDisplay" class="hero-date-display">17.11.2026</div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: THÂN MỜI & THÔNG TIN ĐỊA ĐIỂM -->
+    <section class="invitation-details-section">
+      <img src="assets/images/cap_line_art.svg" class="cap-line-icon" alt="Cap Ornament" />
+      
+      <div class="details-section-title">THÂN MỜI</div>
+      <div class="thin-red-divider"></div>
+      <div class="details-subtitle">ĐẾN THAM DỰ LỄ TỐT NGHIỆP CỦA</div>
+      
+      <div id="graduateCalligraphy" class="details-grad-name">Kim Huê</div>
+
+      <div class="details-recipient-pill">
+        <span class="to-prefix">HÂN HẠNH ĐÓN TIẾP:</span>
+        <strong id="guestNameDisplay">BẠN X</strong>
+      </div>
+
+      <div class="details-event-intro">
+        LỄ TỐT NGHIỆP ĐƯỢC TỔ CHỨC<br>
+        VÀO <span id="eventTimeHighlight">10:00, THỨ BA</span>
+      </div>
+
+      <!-- Dòng Ngày Tháng Năm kiểu Lami: — THÁNG 11 — ( 17 ) — NĂM 2026 — -->
+      <div class="date-badge-row">
+        <span class="date-side-text">THÁNG <span id="badgeMonth">11</span></span>
+        <span id="badgeDay" class="date-day-circle">17</span>
+        <span class="date-side-text">NĂM <span id="badgeYear">2026</span></span>
+      </div>
+
+      <div class="venue-intro">Tổ chức tại</div>
+      <div id="venueAddress" class="venue-address">
+        Số 2 Hoàng Văn Thụ, Phường 4, Quận Tân Bình, TP. HCM
+      </div>
+
+      <div class="direction-pin-wrap">
+        <span class="map-pin-icon">📍</span>
+        <span class="direction-label">CHỈ ĐƯỜNG</span>
+      </div>
+
+      <div>
+        <a id="googleMapLinkBtn" href="https://maps.google.com/?q=2+Ho%C3%A0ng+V%C4%83n+Th%E1%BB%A5,+Ph%C6%B0%E1%BB%9Dng+4,+T%C3%A2n+B%C3%ACnh,+TP+HCM" target="_blank" rel="noopener noreferrer" class="btn-burgundy-pill">
+          Hướng dẫn đường đi Lễ tốt nghiệp
+        </a>
+      </div>
+
+      <div class="map-embed-container">
+        <iframe
+          id="googleMapIframe"
+          src="https://maps.google.com/maps?q=2%20Ho%C3%A0ng%20V%C4%83n%20Th%E1%BB%A5,%20Ph%C6%B0%E1%BB%9Dng%204,%20T%C3%A2n%20B%C3%ACnh,%20TP%20HCM&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          loading="lazy"
+          allowfullscreen=""
+          title="Google Map Location">
+        </iframe>
+      </div>
+    </section>
+
+    <!-- SECTION 3: LỊCH THÁNG SỰ KIỆN & POLAROID CỬ NHÂN -->
+    <section class="calendar-section-lami">
+      <div class="polaroid-calendar-hero">
+        <img src="assets/images/calendar_polaroids.jpg" alt="Graduation Memories" class="calendar-polaroid-img" />
+      </div>
+
+      <div class="calendar-script-month">
+        Tháng <span id="calMonthScript">11</span>
+      </div>
+
+      <div id="calendarGrid" class="calendar-grid-lami">
+        <!-- Render bằng JS -->
+      </div>
+
+      <button id="addToCalendarBtn" class="btn-calendar-add" type="button">
+        <span>📅</span> Thêm vào Google Calendar
+      </button>
+    </section>
+
+    <!-- SECTION 4: THƯỚC PHIM & ĐỒNG HỒ ĐẾM NGƯỢC -->
+    <section class="film-countdown-section">
+      <div class="film-strip-card">
+        <img src="assets/images/film_strip.jpg" class="film-strip-img" alt="One journey ends, another begins" />
+      </div>
+
+      <div class="countdown-heading">COUNTDOWN</div>
+
+      <div class="lami-timer-row">
+        <div class="timer-box">
+          <span id="timerDays" class="timer-num">00</span>
+          <span class="timer-txt">Ngày</span>
+        </div>
+        <span class="timer-colon">:</span>
+        <div class="timer-box">
+          <span id="timerHours" class="timer-num">00</span>
+          <span class="timer-txt">Giờ</span>
+        </div>
+        <span class="timer-colon">:</span>
+        <div class="timer-box">
+          <span id="timerMins" class="timer-num">00</span>
+          <span class="timer-txt">Phút</span>
+        </div>
+        <span class="timer-colon">:</span>
+        <div class="timer-box">
+          <span id="timerSecs" class="timer-num">00</span>
+          <span class="timer-txt">Giây</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: BỨC THƯ TÂM SỰ (LETTER PARCHMENT) -->
+    <section class="letter-section-lami">
+      <div class="letter-card-parchment">
+        <img src="assets/images/gold_mortarboard.svg" class="letter-gold-cap" alt="Gold Cap Pin" />
+
+        <div class="letter-content-text">
+          <p>Một hành trình đã khép lại bằng những ngày tháng đáng nhớ, từ những bỡ ngỡ ban đầu đến lúc trưởng thành hơn sau từng bài học, thử thách và trải nghiệm.</p>
+          <p>Có những ngày mệt mỏi, có cả những lần muốn dừng bước, nhưng nhờ sự đồng hành của gia đình, thầy cô và bạn bè, mình đã đi đến cột mốc hôm nay. Tấm bằng tốt nghiệp không chỉ là kết quả của những năm tháng nỗ lực, mà còn là dấu mốc mở ra một hành trình mới với nhiều ước mơ và cơ hội đang chờ phía trước.</p>
+        </div>
+
+        <div class="letter-signature-wrap">
+          <div id="letterSignature" class="letter-signature-name">Phạm Thị Kim Huê</div>
+          <img src="assets/images/cap_line_art.svg" class="letter-cap-line" alt="Cap Decor" />
+        </div>
+
+        <div class="letter-polaroid-pin">
+          <img src="assets/images/footer_photo.jpg" alt="Kim Huê Graduation" />
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: ALBUM ẢNH KỶ NIỆM (26 ALBUM) -->
+    <section class="album-section-lami">
+      <div class="album-heading-wrap">
+        <div class="album-year-bg">26</div>
+        <div class="album-title-script">Album</div>
+      </div>
+
+      <div class="album-grid-collage">
+        <div class="album-grid-item" data-full="assets/images/album_1.jpg">
+          <img src="assets/images/album_1.jpg" alt="Kỷ niệm tốt nghiệp 1" />
+        </div>
+        <div class="album-grid-item" data-full="assets/images/album_2.jpg">
+          <img src="assets/images/album_2.jpg" alt="Kỷ niệm tốt nghiệp 2" />
+        </div>
+        <div class="album-grid-item" data-full="assets/images/album_3.jpg">
+          <img src="assets/images/album_3.jpg" alt="Kỷ niệm tốt nghiệp 3" />
+        </div>
+        <div class="album-grid-item" data-full="assets/images/album_4.jpg">
+          <img src="assets/images/album_4.jpg" alt="Kỷ niệm tốt nghiệp 4" />
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: XÁC NHẬN THAM DỰ (RSVP FORM) -->
+    <section class="rsvp-section-lami">
+      <div class="rsvp-card-lami">
+        <p class="rsvp-intro-note">
+          Rất mong có bạn đến chung vui cùng mình!<br>
+          Xin vui lòng xác nhận sự có mặt của bạn để mình chuẩn bị đón tiếp một cách chu đáo nhất.<br>
+          Xin cảm ơn!
+        </p>
+
+        <form id="rsvpForm" class="rsvp-form-lami">
+          <input 
+            type="text" 
+            id="rsvpName" 
+            class="lami-input" 
+            placeholder="Tên của bạn" 
+            required 
+            autocomplete="off" 
+          />
+
+          <textarea 
+            id="rsvpMessage" 
+            class="lami-input" 
+            rows="3" 
+            placeholder="Gửi lời chúc đến tân cử nhân" 
+            required
+          ></textarea>
+
+          <div class="lami-select-wrap">
+            <select id="rsvpStatus" class="lami-input lami-select">
+              <option value="Chắc chắn tham dự">Bạn sẽ đến chứ?</option>
+              <option value="Chắc chắn tham dự">Chắc chắn rồi! Mình sẽ đến tham dự 🎉</option>
+              <option value="Sẽ cố gắng tham dự">Mình sẽ cố gắng sắp xếp đến chung vui ✨</option>
+              <option value="Bận gửi lời chúc">Rất tiếc, mình bận việc mất rồi 😢</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-rsvp-confirm">
+            XÁC NHẬN
+          </button>
+        </form>
+
+        <img src="assets/images/cap_line_art.svg" class="cap-line-icon rsvp-bottom-cap" alt="Cap" />
+      </div>
+    </section>
+
+    <!-- SECTION 8: SỔ LƯU BÚT LỜI CHÚC (WISHES LIST) -->
+    <section id="wishesSection" class="wishes-section-lami">
+      <div class="wishes-section-title">LỜI CHÚC TỪ NGƯỜI THÂN VÀ BẠN BÈ</div>
+      <div id="wishesContainer" class="wishes-list-lami">
+        <!-- Render danh sách lời chúc bằng JS -->
+      </div>
+    </section>
+
+    <!-- SECTION 9: BẾ MẠC & LỜI CẢM ƠN (THANK YOU FOOTER) -->
+    <footer class="footer-photo-card">
+      <img src="assets/images/footer_photo.jpg" alt="Thank You" class="footer-photo-img" />
+      <div class="footer-photo-overlay">
+        <p class="footer-quote-text">
+          Sự hiện diện của bạn chính là món quà ý nghĩa nhất, và mình vô cùng trân quý trong ngày vui này.
+        </p>
+        <div class="footer-thankyou-script">Thank you!</div>
+      </div>
+    </footer>
+
+    <!-- Thanh bản quyền chân trang -->
+    <div class="footer-sub-bar">
+      <div class="footer-credit" title="Dành cho chủ thiệp: Nhấp 3 lần để vào trang Quản trị">
+        ktv © 2026
+      </div>
     </div>
+
   </div>
 
-  <!-- Nút bật/tắt nhạc nền nổi ở góc dưới bên phải -->
+  <!-- NÚT BẬT/TẮT NHẠC NỀN NỔI -->
   <div class="floating-actions">
     <button id="musicToggleBtn" class="music-toggle-btn" type="button" aria-label="Bật/Tắt nhạc nền" title="Bật/Tắt nhạc nền">
       <span class="music-note-icon">🎵</span>
@@ -269,12 +329,18 @@
     </button>
   </div>
 
+  <!-- MODAL XEM ẢNH PHÓNG TO (LIGHTBOX) -->
+  <div id="lightboxModal" class="lightbox-modal">
+    <button id="lightboxClose" class="lightbox-close" type="button">&times;</button>
+    <img id="lightboxImg" class="lightbox-img" src="" alt="Ảnh phóng to" />
+  </div>
+
   <!-- Thông báo Toast -->
   <div id="toastNotice" class="toast-notice"></div>
 
   <!-- Scripts -->
   <script src="js/confetti.browser.min.js"></script>
-  <script src="js/config.js?v=8"></script>
-  <script src="js/app.js?v=8"></script>
+  <script src="js/config.js?v=9"></script>
+  <script src="js/app.js?v=9"></script>
 </body>
 </html>
