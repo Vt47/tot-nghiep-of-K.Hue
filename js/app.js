@@ -1,7 +1,7 @@
 /**
  * THIỆP MỜI TỐT NGHIỆP - APPLICATION SCRIPT
  * Chuẩn phong cách Lami Luxury Red & Gold
- * Quản lý mở thiệp 2 cánh, phát nhạc tự động, lịch trái tim, đếm ngược, RSVP và Google Sheets
+ * Quản lý hiệu ứng chữ, cuộn hiện mượt mà, đồng bộ máy tính & điện thoại
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -29,15 +29,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 3. Cập nhật dữ liệu từ Cấu hình lên Giao diện
   function applyConfigToUI() {
-    // Tên cử nhân trên ruy băng đỏ
+    const gradName = config.graduateName || "PHẠM THỊ KIM HUÊ";
+    const shortName = config.graduateShortName || "Kim Huê";
+
+    // Tên cử nhân trên ruy băng đỏ và cột máy tính
     const ribbonGrad = document.getElementById("ribbonGradName");
-    if (ribbonGrad) ribbonGrad.textContent = config.graduateName || "PHẠM THỊ KIM HUÊ";
+    if (ribbonGrad) ribbonGrad.textContent = gradName;
+
+    const desktopGrad = document.getElementById("desktopGradName");
+    if (desktopGrad) desktopGrad.textContent = gradName;
 
     // Tên cử nhân thư pháp phần Thân Mời
     const gradCalligraphy = document.getElementById("graduateCalligraphy");
-    if (gradCalligraphy) {
-      gradCalligraphy.textContent = config.graduateShortName || "Kim Huê";
-    }
+    if (gradCalligraphy) gradCalligraphy.textContent = shortName;
 
     // Tên khách mời trên con dấu và thư mời
     const envGuest = document.getElementById("envelopeGuestName");
@@ -87,12 +91,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Chữ ký bức thư tâm sự
     const letterSig = document.getElementById("letterSignature");
-    if (letterSig) letterSig.textContent = config.graduateName || "Phạm Thị Kim Huê";
+    if (letterSig) letterSig.textContent = gradName;
 
     // Pre-fill tên vào form RSVP nếu đã có tên khách riêng
     const rsvpName = document.getElementById("rsvpName");
     if (rsvpName && currentGuestName !== "BẠN X") {
       rsvpName.value = currentGuestName;
+    }
+
+    // Cập nhật hình ảnh nếu có trong cấu hình (người dùng thêm sau)
+    if (config.heroBgSrc) {
+      const heroImg = document.getElementById("heroBgImg");
+      if (heroImg) heroImg.src = config.heroBgSrc;
+    }
+    if (config.filmStripSrc) {
+      const filmImg = document.getElementById("filmStripImg");
+      if (filmImg) filmImg.src = config.filmStripSrc;
+    }
+    if (config.calendarPolaroidsSrc) {
+      const calImg = document.getElementById("calendarPolaroidsImg");
+      if (calImg) calImg.src = config.calendarPolaroidsSrc;
+    }
+    if (config.footerPhotoSrc) {
+      const footerImg = document.getElementById("footerPhotoImg");
+      if (footerImg) footerImg.src = config.footerPhotoSrc;
+    }
+    if (config.albumPhotos && Array.isArray(config.albumPhotos)) {
+      config.albumPhotos.forEach((src, idx) => {
+        const albumImg = document.getElementById(`albumImg${idx + 1}`);
+        if (albumImg && src) {
+          albumImg.src = src;
+          const parentItem = albumImg.closest(".album-grid-item");
+          if (parentItem) parentItem.setAttribute("data-full", src);
+        }
+      });
+    }
+
+    // Tạo mã QR cho cột máy tính mở trên điện thoại
+    const desktopQr = document.getElementById("desktopQrImg");
+    if (desktopQr) {
+      const pageUrl = window.location.href;
+      desktopQr.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(pageUrl)}`;
     }
   }
 
@@ -108,7 +147,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!grid) return;
     grid.innerHTML = "";
 
-    // Tiêu đề các thứ tiếng Anh chuẩn mẫu Lami
     const daysOfWeek = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
     daysOfWeek.forEach(d => {
       const cell = document.createElement("div");
@@ -118,7 +156,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const firstDayIndex = new Date(year, month - 1, 1).getDay();
-    // Chuyển sang chuẩn MON = 0
     const shift = (firstDayIndex === 0) ? 6 : firstDayIndex - 1;
     const totalDaysInMonth = new Date(year, month, 0).getDate();
 
@@ -210,24 +247,48 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCountdown();
   setInterval(updateCountdown, 1000);
 
-  // 7. Nhạc nền và Bộ điều khiển âm thanh
+  // 7. Nhạc nền và Bộ điều khiển âm thanh (Đồng bộ Di động & Máy tính)
   const bgMusic = document.getElementById("bgMusic");
   const musicToggleBtn = document.getElementById("musicToggleBtn");
+  const desktopMusicBtn = document.getElementById("desktopMusicBtn");
+  const desktopVinylDisc = document.getElementById("desktopVinylDisc");
+  const desktopPlayIcon = document.getElementById("desktopPlayIcon");
+  const desktopPlayText = document.getElementById("desktopPlayText");
   let isPlaying = false;
 
   function setPlayingState(playing) {
     isPlaying = playing;
-    if (!musicToggleBtn) return;
-    if (playing) {
-      musicToggleBtn.classList.add("playing");
-      musicToggleBtn.setAttribute("aria-label", "Tạm dừng nhạc");
-      const waves = document.getElementById("soundWaves");
-      if (waves) waves.style.display = "flex";
-    } else {
-      musicToggleBtn.classList.remove("playing");
-      musicToggleBtn.setAttribute("aria-label", "Phát nhạc");
-      const waves = document.getElementById("soundWaves");
-      if (waves) waves.style.display = "none";
+
+    // Nút nổi di động
+    if (musicToggleBtn) {
+      if (playing) {
+        musicToggleBtn.classList.add("playing");
+        const waves = document.getElementById("soundWaves");
+        if (waves) waves.style.display = "flex";
+      } else {
+        musicToggleBtn.classList.remove("playing");
+        const waves = document.getElementById("soundWaves");
+        if (waves) waves.style.display = "none";
+      }
+    }
+
+    // Đĩa than & nút trên máy tính
+    if (desktopVinylDisc) {
+      if (playing) {
+        desktopVinylDisc.classList.add("playing");
+      } else {
+        desktopVinylDisc.classList.remove("playing");
+      }
+    }
+
+    if (desktopPlayIcon && desktopPlayText) {
+      if (playing) {
+        desktopPlayIcon.textContent = "⏸";
+        desktopPlayText.textContent = "TẠM DỪNG";
+      } else {
+        desktopPlayIcon.textContent = "▶";
+        desktopPlayText.textContent = "BẬT NHẠC";
+      }
     }
   }
 
@@ -249,7 +310,6 @@ document.addEventListener("DOMContentLoaded", () => {
     bgMusic.addEventListener("play", () => setPlayingState(true));
     bgMusic.addEventListener("pause", () => setPlayingState(false));
 
-    // Lặp nhạc liền mạch
     bgMusic.addEventListener("timeupdate", () => {
       if (bgMusic.duration && bgMusic.currentTime >= bgMusic.duration - 0.2) {
         bgMusic.currentTime = 0;
@@ -265,6 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Nút di động
   if (musicToggleBtn) {
     musicToggleBtn.addEventListener("click", (e) => {
       e.preventDefault();
@@ -278,8 +339,33 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Nút máy tính
+  if (desktopMusicBtn) {
+    desktopMusicBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (!bgMusic) return;
+      if (bgMusic.paused) {
+        startAudio().catch(err => console.warn("Lỗi phát nhạc:", err));
+      } else {
+        stopAudio();
+      }
+    });
+  }
+
+  // Nút cuộn nhanh tới RSVP trên máy tính
+  const desktopScrollRsvpBtn = document.getElementById("desktopScrollRsvpBtn");
+  if (desktopScrollRsvpBtn) {
+    desktopScrollRsvpBtn.addEventListener("click", () => {
+      const rsvpSec = document.getElementById("rsvpSection");
+      if (rsvpSec) {
+        rsvpSec.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+  }
+
   const onFirstUserGesture = (e) => {
     if (musicToggleBtn && (e.target === musicToggleBtn || musicToggleBtn.contains(e.target))) return;
+    if (desktopMusicBtn && (e.target === desktopMusicBtn || desktopMusicBtn.contains(e.target))) return;
     if (bgMusic && bgMusic.paused) {
       startAudio().catch(() => {});
     }
@@ -306,13 +392,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (isOpened) return;
       isOpened = true;
 
-      // Phát nhạc ngay lập tức
       startAudio().catch(() => {});
 
-      // Pháo hoa giấy rực rỡ tone Đỏ - Vàng hoàng gia
       if (typeof confetti === "function") {
         confetti({
-          particleCount: 60,
+          particleCount: 65,
           spread: 80,
           origin: { y: 0.55 },
           colors: ['#cba248', '#851c27', '#ffd700', '#fcebbb', '#ffffff']
@@ -349,7 +433,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initGatefoldOpening();
 
-  // 9. Sổ lưu bút và Kết nối Đồng bộ Google Sheets
+  // 9. Hệ thống Hiệu Ứng Chữ Khi Cuộn Trang (Scroll Reveal Engine)
+  function initTextAnimations() {
+    const revealElements = document.querySelectorAll(
+      ".reveal-text, .letter-expand-reveal, .divider-expand, .badge-pop"
+    );
+    if (!revealElements.length) return;
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px"
+      });
+
+      revealElements.forEach(el => observer.observe(el));
+    } else {
+      revealElements.forEach(el => el.classList.add("is-revealed"));
+    }
+  }
+
+  initTextAnimations();
+
+  // 10. Sổ lưu bút và Kết nối Đồng bộ Google Sheets
   const WISHES_STORAGE_KEY = "graduation_invitation_wishes_list";
 
   function getLocalWishes() {
@@ -377,7 +489,7 @@ document.addEventListener("DOMContentLoaded", () => {
     container.innerHTML = "";
     wishes.forEach(item => {
       const wishEl = document.createElement("div");
-      wishEl.className = "wish-item";
+      wishEl.className = "wish-item reveal-text is-revealed";
 
       const isDecline = item.status && (item.status.includes("tiếc") || item.status.includes("Bận"));
       const badgeClass = isDecline ? "wish-status-badge decline" : "wish-status-badge";
@@ -419,7 +531,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadWishes();
 
-  // 10. Xử lý Gửi Form Xác nhận tham dự (RSVP)
+  // 11. Xử lý Gửi Form Xác nhận tham dự (RSVP)
   const rsvpForm = document.getElementById("rsvpForm");
   if (rsvpForm) {
     rsvpForm.addEventListener("submit", async (e) => {
@@ -446,7 +558,6 @@ document.addEventListener("DOMContentLoaded", () => {
         time: "Vừa xong"
       };
 
-      // Cập nhật giao diện cục bộ ngay
       const currentList = getLocalWishes();
       currentList.unshift(newWish);
       saveLocalWishes(currentList);
@@ -456,7 +567,6 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.disabled = true;
       submitBtn.innerHTML = "ĐANG GỬI...";
 
-      // Gửi về Google Sheets
       if (config.googleSheetScriptUrl && config.googleSheetScriptUrl.trim()) {
         try {
           await fetch(config.googleSheetScriptUrl.trim(), {
@@ -479,7 +589,6 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.disabled = false;
       submitBtn.innerHTML = originalBtnText;
 
-      // Pháo hoa chúc mừng
       if (typeof confetti === "function") {
         confetti({
           particleCount: 70,
@@ -499,7 +608,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 11. Modal xem ảnh phóng to (Lightbox)
+  // 12. Modal xem ảnh phóng to (Lightbox)
   const lightboxModal = document.getElementById("lightboxModal");
   const lightboxImg = document.getElementById("lightboxImg");
   const lightboxClose = document.getElementById("lightboxClose");
@@ -528,7 +637,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 12. Thông báo Toast
+  // 13. Thông báo Toast
   function showToast(text) {
     let toast = document.getElementById("toastNotice");
     if (!toast) {
@@ -544,7 +653,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 3200);
   }
 
-  // 13. Mở bí mật Quản trị: Nhấp 3 lần liên tiếp vào dòng "ktv © 2026"
+  // 14. Mở bí mật Quản trị: Nhấp 3 lần liên tiếp vào dòng "ktv © 2026"
   const footerCredits = document.querySelectorAll(".footer-credit");
   if (footerCredits.length > 0) {
     let clickCount = 0;
@@ -577,7 +686,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  // 14. Hiệu ứng Cánh hoa và Bụi sao bay lãng mạn
+  // 15. Hiệu ứng Cánh hoa và Bụi sao bay lãng mạn
   function initRomanticAtmosphere() {
     const canvas = document.getElementById("fxCanvas");
     if (!canvas) return;

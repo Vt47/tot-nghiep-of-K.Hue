@@ -300,6 +300,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const editLocation = document.getElementById("editLocation");
     const editMaps = document.getElementById("editMapsUrl");
     const editThank = document.getElementById("editThankYou");
+    const editHeroBg = document.getElementById("editHeroBg");
+    const editFilmStrip = document.getElementById("editFilmStrip");
+    const editAlbum1 = document.getElementById("editAlbum1");
+    const editAlbum2 = document.getElementById("editAlbum2");
+    const editAlbum3 = document.getElementById("editAlbum3");
+    const editAlbum4 = document.getElementById("editAlbum4");
+    const editFooterPhoto = document.getElementById("editFooterPhoto");
     const resetBtn = document.getElementById("resetDefaultBtn");
 
     if (editGrad) editGrad.value = cur.graduateName || "PHẠM THỊ KIM HUÊ";
@@ -311,6 +318,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (editLocation) editLocation.value = cur.locationAddress || "Số 2 , Hoàng Văn Thụ, P 4, Q.Tân Bình, TP HCM";
     if (editMaps) editMaps.value = cur.googleMapsUrl || "";
     if (editThank) editThank.value = cur.thankYouMessage || "";
+    if (editHeroBg) editHeroBg.value = cur.heroBgSrc || "";
+    if (editFilmStrip) editFilmStrip.value = cur.filmStripSrc || "";
+    if (editFooterPhoto) editFooterPhoto.value = cur.footerPhotoSrc || "";
+    if (cur.albumPhotos && Array.isArray(cur.albumPhotos)) {
+      if (editAlbum1) editAlbum1.value = cur.albumPhotos[0] || "";
+      if (editAlbum2) editAlbum2.value = cur.albumPhotos[1] || "";
+      if (editAlbum3) editAlbum3.value = cur.albumPhotos[2] || "";
+      if (editAlbum4) editAlbum4.value = cur.albumPhotos[3] || "";
+    }
 
     if (form) {
       form.addEventListener("submit", (e) => {
@@ -318,6 +334,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const fullName = editGrad.value.trim();
         const nameParts = fullName.split(/\s+/);
         const shortName = nameParts.length >= 2 ? nameParts.slice(-2).join(" ") : fullName;
+
+        const albumPhotos = [
+          (editAlbum1 && editAlbum1.value.trim()) || (cur.albumPhotos && cur.albumPhotos[0]) || "assets/images/album_1.jpg",
+          (editAlbum2 && editAlbum2.value.trim()) || (cur.albumPhotos && cur.albumPhotos[1]) || "assets/images/album_2.jpg",
+          (editAlbum3 && editAlbum3.value.trim()) || (cur.albumPhotos && cur.albumPhotos[2]) || "assets/images/album_3.jpg",
+          (editAlbum4 && editAlbum4.value.trim()) || (cur.albumPhotos && cur.albumPhotos[3]) || "assets/images/album_4.jpg"
+        ];
 
         const updated = {
           ...cur,
@@ -331,7 +354,11 @@ document.addEventListener("DOMContentLoaded", () => {
           locationAddress: editLocation.value.trim(),
           googleMapsUrl: editMaps.value.trim(),
           googleMapsEmbed: `https://maps.google.com/maps?q=${encodeURIComponent(editLocation.value.trim())}&t=&z=15&ie=UTF8&iwloc=&output=embed`,
-          thankYouMessage: editThank.value.trim()
+          thankYouMessage: editThank.value.trim(),
+          heroBgSrc: (editHeroBg && editHeroBg.value.trim()) || cur.heroBgSrc || "assets/images/hero_bg.jpg",
+          filmStripSrc: (editFilmStrip && editFilmStrip.value.trim()) || cur.filmStripSrc || "assets/images/film_strip.jpg",
+          footerPhotoSrc: (editFooterPhoto && editFooterPhoto.value.trim()) || cur.footerPhotoSrc || "assets/images/footer_photo.jpg",
+          albumPhotos: albumPhotos
         };
 
         localStorage.setItem("graduation_invitation_config", JSON.stringify(updated));
