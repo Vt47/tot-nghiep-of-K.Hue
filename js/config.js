@@ -46,9 +46,9 @@ const DEFAULT_CONFIG = {
     "Có những ngày mệt mỏi, có cả những lần muốn dừng bước, nhưng nhờ sự đồng hành của gia đình, thầy cô và bạn bè, mình đã đi đến cột mốc hôm nay. Tấm bằng tốt nghiệp không chỉ là kết quả của những năm tháng nỗ lực, mà còn là dấu mốc mở ra một hành trình mới với nhiều ước mơ và cơ hội đang chờ phía trước."
   ],
 
-  // Nhạc nền: Taylor Swift - You're On Your Own, Kid (Bridge) - Bản chuẩn TikTok mẫu Lami
-  musicSrc: "assets/audio/youre_on_your_own_kid.mp3",
-  musicFallback: "assets/audio/a_little_dream_of_me_chorus.mp3",
+  // Nhạc nền: Plain White T's - Hey There Delilah
+  musicSrc: "assets/audio/hey_there_delilah.mp3",
+  musicFallback: "assets/audio/hey_there_delilah.m4a",
 
   // Lời cảm ơn bế mạc
   thankYouTitle: "Thank you!",
