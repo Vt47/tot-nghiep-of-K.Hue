@@ -6,6 +6,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   const config = (typeof getSavedConfig === "function") ? getSavedConfig() : (window.DEFAULT_CONFIG || {});
+  let sharedRevealObserver = null;
 
   // 1. Phân tích tham số URL để cá nhân hóa tên khách mời (?to=, ?guest=, ?name=, ?u=)
   function getPersonalizedGuestName() {
@@ -93,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const letterBody = document.getElementById("letterBodyContainer");
     if (letterBody && Array.isArray(config.letterParagraphs) && config.letterParagraphs.length > 0) {
       letterBody.innerHTML = config.letterParagraphs
-        .map(p => `<p>${escapeHTML(p)}</p>`)
+        .map((p, idx) => `<p class="scroll-reveal" style="transition-delay: ${Math.min(idx * 0.16, 0.48)}s">${escapeHTML(p)}</p>`)
         .join("");
     }
 
@@ -363,9 +364,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!container) return;
 
     container.innerHTML = "";
-    wishes.forEach(item => {
+    wishes.forEach((item, idx) => {
       const wishEl = document.createElement("div");
-      wishEl.className = "wish-item";
+      wishEl.className = "wish-item scroll-reveal";
+      wishEl.style.transitionDelay = `${Math.min(idx * 0.1, 0.4)}s`;
 
       wishEl.innerHTML = `
         <div class="wish-header">
@@ -377,6 +379,10 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
       container.appendChild(wishEl);
     });
+
+    if (typeof observeScrollItems === "function") {
+      observeScrollItems();
+    }
   }
 
   async function loadWishes() {
@@ -558,32 +564,44 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  // 12. Hiệu ứng xuất hiện mượt mà khi cuộn trang (Scroll Reveal an toàn)
-  function initScrollReveal() {
-    const items = document.querySelectorAll(".scroll-reveal");
+  // 12. Hiệu ứng xuất hiện mượt mà từng dòng khi cuộn trang (Scroll Reveal an toàn)
+  function observeScrollItems() {
+    if (!document.documentElement.classList.contains("anim-ready")) return;
+    const items = document.querySelectorAll(".scroll-reveal:not(.is-visible)");
     if (!items.length || !("IntersectionObserver" in window)) return;
 
-    document.documentElement.classList.add("anim-ready");
-
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          revealObserver.unobserve(entry.target);
-        }
+    if (!sharedRevealObserver) {
+      sharedRevealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            sharedRevealObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.06,
+        rootMargin: "0px 0px -15px 0px"
       });
-    }, {
-      threshold: 0.08,
-      rootMargin: "0px 0px -20px 0px"
-    });
+    }
 
     items.forEach(el => {
       const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.95) {
+      if (rect.top < window.innerHeight * 0.96) {
         el.classList.add("is-visible");
       } else {
-        revealObserver.observe(el);
+        sharedRevealObserver.observe(el);
       }
+    });
+  }
+
+  function initScrollReveal() {
+    if (!("IntersectionObserver" in window)) return;
+    document.documentElement.classList.add("anim-ready");
+    // Chờ 2 animation frame để trình duyệt vẽ trạng thái ẩn trước khi trượt hiện mượt mà
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        observeScrollItems();
+      });
     });
   }
 

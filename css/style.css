@@ -192,26 +192,94 @@ body {
   }
 }
 
-.reveal-item {
-  animation: softFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+@keyframes inkWriteReveal {
+  0% {
+    opacity: 0;
+    clip-path: inset(-20% 100% -20% 0);
+    transform: translateX(-6px);
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(-20% 0% -20% 0);
+    transform: translateX(0);
+  }
 }
 
-.delay-1 { animation-delay: 0.08s; }
-.delay-2 { animation-delay: 0.16s; }
-.delay-3 { animation-delay: 0.24s; }
-.delay-4 { animation-delay: 0.34s; }
-.delay-5 { animation-delay: 0.44s; }
-.delay-6 { animation-delay: 0.54s; }
+@keyframes trackingContract {
+  0% {
+    opacity: 0;
+    letter-spacing: 8px;
+    transform: translateY(10px);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    letter-spacing: 3px;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
 
-/* Scroll reveal an toàn (chỉ ẩn trước khi cuộn khi JS đã kích hoạt anim-ready) */
+@keyframes polaroidPop {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.reveal-item {
+  animation: softFadeUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ink-write-reveal {
+  animation: inkWriteReveal 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+}
+
+.tracking-reveal {
+  animation: trackingContract 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+}
+
+.heading-line-1 {
+  display: block;
+  animation: softFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
+}
+
+.heading-line-2 {
+  display: block;
+  animation: softFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.62s both;
+}
+
+.polaroid-entrance {
+  animation: polaroidPop 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.78s both;
+}
+
+.delay-1 { animation-delay: 0.14s; }
+.delay-2 { animation-delay: 0.28s; }
+.delay-3 { animation-delay: 0.42s; }
+.delay-4 { animation-delay: 0.56s; }
+.delay-5 { animation-delay: 0.70s; }
+.delay-6 { animation-delay: 0.84s; }
+
+/* Scroll reveal an toàn theo từng dòng nối tiếp */
 .anim-ready .scroll-reveal {
   opacity: 0;
-  transform: translateY(24px);
-  filter: blur(2px);
-  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-              filter 0.75s ease;
+  transform: translateY(22px);
+  filter: blur(2.5px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+              filter 0.8s ease;
 }
+
+.anim-ready .scroll-reveal.delay-1 { transition-delay: 0.12s; }
+.anim-ready .scroll-reveal.delay-2 { transition-delay: 0.24s; }
+.anim-ready .scroll-reveal.delay-3 { transition-delay: 0.36s; }
+.anim-ready .scroll-reveal.delay-4 { transition-delay: 0.48s; }
+.anim-ready .scroll-reveal.delay-5 { transition-delay: 0.60s; }
+.anim-ready .scroll-reveal.delay-6 { transition-delay: 0.72s; }
 
 .anim-ready .scroll-reveal.is-visible {
   opacity: 1;
@@ -219,8 +287,39 @@ body {
   filter: blur(0);
 }
 
+/* Hiệu ứng viết nét bút khi cuộn đến tên thư pháp */
+.anim-ready .ink-scroll-reveal {
+  opacity: 0;
+  clip-path: inset(-20% 100% -20% 0);
+  transform: translateX(-10px);
+  filter: none;
+  transition: clip-path 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.6s ease,
+              transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.anim-ready .ink-scroll-reveal.is-visible {
+  opacity: 1;
+  clip-path: inset(-20% 0% -20% 0);
+  transform: translateX(0);
+}
+
+/* Hiệu ứng giãn đường chia từ giữa ra 2 bên */
+.anim-ready .divider-grow {
+  opacity: 0;
+  transform: scaleX(0.15);
+  filter: none;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.6s ease;
+}
+
+.anim-ready .divider-grow.is-visible {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
 /* Chữ ánh đồng lướt nhẹ cho GRADUATION PARTY */
-.shimmer-brown {
+.shimmer-brown span {
   background: linear-gradient(
     115deg,
     #633719 0%,
@@ -233,7 +332,15 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent !important;
-  animation: softFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both,
+}
+
+.shimmer-brown .heading-line-1 {
+  animation: softFadeUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.42s both,
+             brownShimmerSweep 6s linear infinite;
+}
+
+.shimmer-brown .heading-line-2 {
+  animation: softFadeUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.58s both,
              brownShimmerSweep 6s linear infinite;
 }
 
@@ -505,8 +612,10 @@ body {
   /* Tăng độ nét nhẹ cho màn hình máy tính độ phân giải thường */
   text-shadow: 0 0 0.6px rgba(99, 55, 25, 0.55), 0 2px 8px rgba(108, 62, 31, 0.08);
   display: inline-block;
-  animation: softFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both,
-             nameBreathe 4.5s ease-in-out infinite 1s;
+}
+
+.hero-grad-script.is-visible {
+  animation: nameBreathe 4.5s ease-in-out infinite 1.2s;
 }
 
 .hero-grad-fullname {

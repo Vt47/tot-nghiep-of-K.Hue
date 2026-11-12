@@ -20,7 +20,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Great+Vibes&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=15">
+  <link rel="stylesheet" href="css/style.css?v=16">
 </head>
 <body>
 
@@ -117,25 +117,25 @@
       <!-- NỘI DUNG CHÍNH TRONG THIỆP -->
       <div class="party-hero-content">
 
-        <!-- Dòng 1: Thân mời: [Tên khách chữ viết tay có gạch đứt] -->
+        <!-- Dòng 1: Thân mời: [Tên khách chữ viết tay nét bút] -->
         <div class="hero-invite-row reveal-item">
           <span class="invite-prefix">Thân mời:</span>
-          <span id="guestNameDisplay" class="guest-script-underline">BẠN X</span>
+          <span id="guestNameDisplay" class="guest-script-underline ink-write-reveal">BẠN X</span>
         </div>
 
-        <!-- Dòng 2: YOU ARE INVITED TO -->
-        <div id="subtitleDisplay" class="hero-kicker reveal-item delay-1">
+        <!-- Dòng 2: YOU ARE INVITED TO (hiệu ứng thu giãn khoảng chữ) -->
+        <div id="subtitleDisplay" class="hero-kicker tracking-reveal">
           YOU ARE INVITED TO
         </div>
 
-        <!-- Tiêu đề lớn: GRADUATION PARTY -->
-        <h1 class="hero-party-heading shimmer-brown reveal-item delay-2">
-          <span>GRADUATION</span>
-          <span>PARTY</span>
+        <!-- Tiêu đề lớn: GRADUATION PARTY (xuất hiện từng dòng nối tiếp) -->
+        <h1 class="hero-party-heading shimmer-brown">
+          <span class="heading-line-1">GRADUATION</span>
+          <span class="heading-line-2">PARTY</span>
         </h1>
 
         <!-- Hai khung ảnh Polaroid nghiêng xếp chéo lồng nhau -->
-        <div class="hero-polaroids-stage reveal-item delay-3">
+        <div class="hero-polaroids-stage polaroid-entrance">
           <div class="polaroid-card polaroid-left album-grid-item" data-full="">
             <div class="polaroid-photo-box">
               <img id="heroBgImg" alt="Ảnh cử nhân 1" />
@@ -158,17 +158,17 @@
         </div>
 
         <!-- IN HONOR OF + Tên cử nhân -->
-        <div class="hero-honor-label reveal-item delay-4">IN HONOR OF</div>
-        <div id="graduateCalligraphy" class="hero-grad-script reveal-item delay-4">Kim Huê</div>
-        <div id="ribbonGradName" class="hero-grad-fullname reveal-item delay-4">PHẠM THỊ KIM HUÊ</div>
+        <div class="hero-honor-label scroll-reveal">IN HONOR OF</div>
+        <div id="graduateCalligraphy" class="hero-grad-script scroll-reveal ink-scroll-reveal delay-1">Kim Huê</div>
+        <div id="ribbonGradName" class="hero-grad-fullname scroll-reveal delay-2">PHẠM THỊ KIM HUÊ</div>
 
-        <!-- Thời gian, Địa điểm, Liên hệ -->
-        <div class="hero-event-details reveal-item delay-5">
-          <div id="eventTimeHighlight" class="hero-datetime">
+        <!-- Thời gian, Địa điểm, Liên hệ (từng dòng hiện nối tiếp) -->
+        <div class="hero-event-details">
+          <div id="eventTimeHighlight" class="hero-datetime scroll-reveal delay-2">
             17 NOV 2026 | AT 10:30-12:30 AM
           </div>
 
-          <div class="hero-venue-row">
+          <div class="hero-venue-row scroll-reveal delay-3">
             <svg class="venue-pin-svg" viewBox="0 0 24 24" fill="none" stroke="#4A2C18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M12 21s-7-6.5-7-11.5a7 7 0 1 1 14 0C19 14.5 12 21 12 21z"/>
               <circle cx="12" cy="9.5" r="2.5"/>
@@ -176,17 +176,17 @@
             <span id="venueTitleDisplay">NHÀ HÁT HÒA BÌNH</span>
           </div>
 
-          <div id="venueAddress" class="hero-address">
+          <div id="venueAddress" class="hero-address scroll-reveal delay-4">
             240 ĐƯỜNG 3/2, PHƯỜNG HÒA HƯNG, TP HCM
           </div>
 
-          <div class="hero-contact">
+          <div class="hero-contact scroll-reveal delay-5">
             CONTACT : <a id="contactPhoneLink" href="tel:0373791033">0373791033</a>
           </div>
         </div>
 
-        <!-- Đường chia họa tiết cổ điển -->
-        <div class="vintage-divider-wrap reveal-item delay-6" aria-hidden="true">
+        <!-- Đường chia họa tiết cổ điển giãn từ tâm -->
+        <div class="vintage-divider-wrap scroll-reveal divider-grow delay-5" aria-hidden="true">
           <svg class="vintage-divider-svg" viewBox="0 0 360 20" fill="none">
             <line x1="10" y1="10" x2="145" y2="10" stroke="#794A28" stroke-width="1"/>
             <path d="M150 10 L158 5 L164 10 L158 15 Z" fill="#794A28"/>
@@ -199,7 +199,7 @@
         </div>
 
         <!-- Lời mời kết thiệp -->
-        <p id="thankYouMsgDisplay" class="hero-closing reveal-item delay-6">
+        <p id="thankYouMsgDisplay" class="hero-closing scroll-reveal delay-6">
           MONG ĐƯỢC GẶP BẠN TRONG NGÀY ĐẶC BIỆT NÀY!
         </p>
 
@@ -285,10 +285,10 @@
       <div class="letter-box-cream scroll-reveal">
         <span class="sub-kicker">NOTE FROM GRADUATE</span>
         <div class="letter-body-cream" id="letterBodyContainer">
-          <p>Một hành trình đã khép lại bằng những ngày tháng đáng nhớ, từ những bỡ ngỡ ban đầu đến lúc trưởng thành hơn sau từng bài học, thử thách và trải nghiệm.</p>
-          <p>Có những ngày mệt mỏi, có cả những lần muốn dừng bước, nhưng nhờ sự đồng hành của gia đình, thầy cô và bạn bè, mình đã đi đến cột mốc hôm nay.</p>
+          <p class="scroll-reveal">Một hành trình đã khép lại bằng những ngày tháng đáng nhớ, từ những bỡ ngỡ ban đầu đến lúc trưởng thành hơn sau từng bài học, thử thách và trải nghiệm.</p>
+          <p class="scroll-reveal delay-1">Có những ngày mệt mỏi, có cả những lần muốn dừng bước, nhưng nhờ sự đồng hành của gia đình, thầy cô và bạn bè, mình đã đi đến cột mốc hôm nay.</p>
         </div>
-        <div class="letter-sig-cream" id="letterSignature">Phạm Thị Kim Huê</div>
+        <div class="letter-sig-cream scroll-reveal ink-scroll-reveal delay-2" id="letterSignature">Phạm Thị Kim Huê</div>
       </div>
 
       <!-- Các ảnh phụ nếu bạn thêm thêm trong /admin -->
@@ -383,7 +383,7 @@
 
   <!-- Scripts chức năng -->
   <script src="js/confetti.browser.min.js"></script>
-  <script src="js/config.js?v=15"></script>
-  <script src="js/app.js?v=15"></script>
+  <script src="js/config.js?v=16"></script>
+  <script src="js/app.js?v=16"></script>
 </body>
 </html>
