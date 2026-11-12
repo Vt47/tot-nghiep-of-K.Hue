@@ -326,42 +326,41 @@ body.invitation-pending .polaroid-entrance {
   animation: glintBlink 1.8s ease-in-out infinite;
 }
 
-/* Polaroid nhỏ góc trái dưới khi mở */
+/* Ảnh sticker cắt viền trắng phóng to góc trái dưới khi mở phong bì */
 .env-mini-polaroid {
   position: absolute;
-  left: -10px;
-  bottom: -22px;
-  width: 88px;
-  background: #ffffff;
-  padding: 5px 5px 7px;
-  box-shadow: 0 8px 20px rgba(74, 44, 24, 0.25);
-  transform: rotate(-7deg) scale(0.8);
+  left: -22px;
+  bottom: -16px;
+  width: clamp(120px, 32vw, 142px);
+  background: transparent;
+  padding: 0;
+  filter: drop-shadow(0 8px 18px rgba(74, 44, 24, 0.24));
+  transform: rotate(-4deg) scale(0.82);
   opacity: 0;
   z-index: 11;
-  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.35s,
-              opacity 0.5s ease 0.35s;
+  pointer-events: none;
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.32s,
+              opacity 0.5s ease 0.32s;
 }
 
 .envelope-overlay.opened .env-mini-polaroid {
   opacity: 1;
-  transform: rotate(-7deg) scale(1);
+  transform: rotate(-4deg) scale(1);
 }
 
 .env-mini-photo-box {
   width: 100%;
-  aspect-ratio: 4 / 4.2;
-  background: var(--bg-card-soft);
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .env-mini-photo-box img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 22%;
+  height: auto;
+  object-fit: contain;
   display: none;
 }
 
