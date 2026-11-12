@@ -1323,6 +1323,10 @@ body.invitation-pending .polaroid-entrance {
   text-align: justify;
 }
 
+.letter-body-cream p {
+  text-indent: 2em;
+}
+
 .letter-body-cream p + p {
   margin-top: 10px;
 }
@@ -1331,11 +1335,13 @@ body.invitation-pending .polaroid-entrance {
   font-weight: 600;
   color: var(--brown-primary);
   text-align: left;
+  text-indent: 0;
 }
 
 .letter-body-cream p:nth-last-child(2) {
   font-weight: 600;
   text-align: center;
+  text-indent: 0;
   margin-top: 14px;
 }
 
@@ -1343,6 +1349,7 @@ body.invitation-pending .polaroid-entrance {
   font-style: italic;
   font-weight: 600;
   text-align: center;
+  text-indent: 0;
   color: var(--brown-primary);
   margin-top: 8px;
 }
