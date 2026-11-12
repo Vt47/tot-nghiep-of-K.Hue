@@ -687,7 +687,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let clickCount = 0;
     let clickTimer = null;
     footerCredits.forEach(fc => {
-      fc.style.cursor = "pointer";
       fc.addEventListener("click", () => {
         clickCount++;
         clearTimeout(clickTimer);
