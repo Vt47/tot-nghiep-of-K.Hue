@@ -1,24 +1,12 @@
 /**
  * THIỆP MỜI TỐT NGHIỆP - APPLICATION SCRIPT (CORE LOGIC)
- * Giữ toàn bộ chức năng: cá nhân hóa khách mời, đếm ngược, lịch tháng,
- * nhạc nền Long Live, bản đồ, RSVP + Google Sheets, lưu bút & lightbox.
+ * Thiệp chung gửi mọi người: mở phong bì, nhạc nền Long Live,
+ * đếm ngược, lịch tháng, bản đồ, RSVP + Google Sheets, lưu bút & lightbox.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
   const config = (typeof getSavedConfig === "function") ? getSavedConfig() : (window.DEFAULT_CONFIG || {});
   let sharedRevealObserver = null;
-
-  // 1. Phân tích tham số URL để cá nhân hóa tên khách mời (?to=, ?guest=, ?name=, ?u=)
-  function getPersonalizedGuestName() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const guestParam = urlParams.get("to") || urlParams.get("guest") || urlParams.get("name") || urlParams.get("u");
-    if (guestParam && guestParam.trim()) {
-      return guestParam.trim();
-    }
-    return config.defaultGuestName || "BẠN X";
-  }
-
-  const currentGuestName = getPersonalizedGuestName();
 
   // Định dạng chữ viết tay chuẩn Title Case nếu chuỗi đang bị viết HOA toàn bộ
   function toTitleIfAllUpper(str) {
@@ -33,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return str;
   }
 
-  // 2. Cập nhật dữ liệu từ Cấu hình (/admin hoặc config.js) lên giao diện
+  // 1. Cập nhật dữ liệu từ cấu hình (config.js) lên giao diện
   function applyConfigToUI() {
     const gradName = config.graduateName || "PHẠM THỊ KIM HUÊ";
     const shortName = toTitleIfAllUpper(config.graduateShortName || "Kim Huê");
@@ -49,12 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const envGradName = document.getElementById("envGradName");
     if (envGradName) envGradName.textContent = shortName;
-
-    const guestDisplay = document.getElementById("guestNameDisplay");
-    if (guestDisplay) guestDisplay.textContent = toTitleIfAllUpper(currentGuestName);
-
-    const envGuest = document.getElementById("envelopeGuestName");
-    if (envGuest) envGuest.textContent = toTitleIfAllUpper(currentGuestName);
 
     const timeHighlight = document.getElementById("eventTimeHighlight");
     if (timeHighlight) {
@@ -110,12 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const thankYouMsg = document.getElementById("thankYouMsgDisplay");
     if (thankYouMsg && config.thankYouMessage) {
       thankYouMsg.textContent = config.thankYouMessage;
-    }
-
-    // Tự động điền tên khách mời vào form RSVP nếu có ?to=
-    const rsvpName = document.getElementById("rsvpName");
-    if (rsvpName && currentGuestName !== "BẠN X") {
-      rsvpName.value = currentGuestName;
     }
 
     // Cập nhật các vị trí ảnh (ẩn hoặc hiện placeholder khi chưa có URL ảnh)
@@ -607,25 +583,6 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => {
       toast.classList.remove("show");
     }, 3200);
-  }
-
-  // 11. Mở bí mật Quản trị: Nhấp 3 lần vào dòng chân trang (không hiển thị gợi ý cho khách)
-  const footerCredits = document.querySelectorAll(".footer-credit");
-  if (footerCredits.length > 0) {
-    let clickCount = 0;
-    let clickTimer = null;
-    footerCredits.forEach(fc => {
-      fc.addEventListener("click", () => {
-        clickCount++;
-        clearTimeout(clickTimer);
-        if (clickCount >= 3) {
-          window.location.href = "/admin";
-          clickCount = 0;
-        } else {
-          clickTimer = setTimeout(() => { clickCount = 0; }, 600);
-        }
-      });
-    });
   }
 
   function escapeHTML(str) {

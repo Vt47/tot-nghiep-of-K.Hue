@@ -8,13 +8,11 @@ function getDefaultTargetDate() {
 }
 
 const DEFAULT_CONFIG = {
-  // Thông tin cử nhân & sự kiện
+  // Thông tin cử nhân & sự kiện (Thiệp dùng chung cho mọi người)
   graduateName: "PHẠM THỊ KIM HUÊ",
   graduateShortName: "Kim Huê",
   subtitle: "YOU ARE INVITED TO",
   invitationTitle: "GRADUATION PARTY",
-  guestPrefix: "Thân mời:",
-  defaultGuestName: "BẠN X",
 
   // Thời gian tổ chức (17/11/2026, lúc 10:30-12:30 AM)
   targetDate: "2026-11-17T10:30:00",
@@ -84,89 +82,13 @@ const DEFAULT_CONFIG = {
   ]
 };
 
-// Đọc cấu hình từ localStorage nếu đã được người dùng chỉnh sửa
+// Trả về cấu hình thiệp dùng chung (dọn cache quản trị cũ nếu có)
 function getSavedConfig() {
   try {
-    const saved = localStorage.getItem("graduation_invitation_config");
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      const graduateName = (parsed.graduateName && parsed.graduateName !== "LÊ MINH THƯ" && parsed.graduateName !== "Nguyễn Tường Vi")
-        ? parsed.graduateName
-        : DEFAULT_CONFIG.graduateName;
-
-      // Xoá các đường dẫn ảnh mẫu cũ đã xoá khỏi hệ thống
-      const cleanImage = (url) => {
-        if (!url || typeof url !== "string") return "";
-        if (url.includes("assets/images/")) return "";
-        return url;
-      };
-
-      const cleanedAlbum = Array.isArray(parsed.albumPhotos)
-        ? parsed.albumPhotos.map(cleanImage)
-        : ["", "", "", ""];
-
-      // Nâng cấp tự động các giá trị mẫu cũ sang thông tin mới theo ảnh mẫu
-      const isOldSubtitle = !parsed.subtitle || parsed.subtitle === "LỄ TỐT NGHIỆP CỦA";
-      const isOldTime = !parsed.displayDateTime || parsed.displayDateTime === "17/11/2026 | Lúc 10h - 14h";
-      const isOldLocation = !parsed.locationAddress || parsed.locationAddress.includes("Hoàng Văn Thụ");
-      const isOldThankYou = !parsed.thankYouMessage || parsed.thankYouMessage.startsWith("Sự hiện diện của bạn chính là món quà");
-
-      // Đảm bảo tên viết tay không bị viết HOA toàn bộ (gây rời chữ khi dùng font thư pháp)
-      const toTitleIfAllUpper = (str) => {
-        if (!str || typeof str !== "string") return "";
-        if (str === str.toUpperCase()) {
-          return str.toLowerCase().split(/\s+/).map(w => w ? w.charAt(0).toUpperCase() + w.slice(1) : "").join(" ");
-        }
-        return str;
-      };
-
-      const rawShort = parsed.graduateShortName || DEFAULT_CONFIG.graduateShortName;
-      const graduateShortName = (rawShort === "Minh Thư" || rawShort === "Tường Vi")
-        ? DEFAULT_CONFIG.graduateShortName
-        : toTitleIfAllUpper(rawShort);
-
-      return {
-        ...DEFAULT_CONFIG,
-        ...parsed,
-        graduateName: graduateName,
-        graduateShortName: graduateShortName,
-        subtitle: isOldSubtitle ? DEFAULT_CONFIG.subtitle : parsed.subtitle,
-        targetDate: isOldTime ? DEFAULT_CONFIG.targetDate : (parsed.targetDate || DEFAULT_CONFIG.targetDate),
-        displayDateTime: isOldTime ? DEFAULT_CONFIG.displayDateTime : parsed.displayDateTime,
-        venueTitle: parsed.venueTitle && parsed.venueTitle !== "TRUNG TÂM HỘI NGHỊ" ? parsed.venueTitle : DEFAULT_CONFIG.venueTitle,
-        locationAddress: isOldLocation ? DEFAULT_CONFIG.locationAddress : parsed.locationAddress,
-        contactPhone: parsed.contactPhone || DEFAULT_CONFIG.contactPhone,
-        googleMapsUrl: isOldLocation ? DEFAULT_CONFIG.googleMapsUrl : (parsed.googleMapsUrl || DEFAULT_CONFIG.googleMapsUrl),
-        googleMapsEmbed: isOldLocation ? DEFAULT_CONFIG.googleMapsEmbed : (parsed.googleMapsEmbed || DEFAULT_CONFIG.googleMapsEmbed),
-        thankYouMessage: isOldThankYou ? DEFAULT_CONFIG.thankYouMessage : parsed.thankYouMessage,
-        calendarMonth: parsed.calendarMonth || DEFAULT_CONFIG.calendarMonth,
-        calendarYear: parsed.calendarYear || DEFAULT_CONFIG.calendarYear,
-        eventDay: parsed.eventDay || DEFAULT_CONFIG.eventDay,
-        musicSrc: DEFAULT_CONFIG.musicSrc,
-        musicFallback: DEFAULT_CONFIG.musicFallback,
-        googleSheetScriptUrl: parsed.googleSheetScriptUrl || DEFAULT_CONFIG.googleSheetScriptUrl,
-        heroBgSrc: cleanImage(parsed.heroBgSrc),
-        filmStripSrc: cleanImage(parsed.filmStripSrc),
-        calendarPolaroidsSrc: cleanImage(parsed.calendarPolaroidsSrc),
-        footerPhotoSrc: cleanImage(parsed.footerPhotoSrc),
-        albumPhotos: cleanedAlbum
-      };
-    }
+    localStorage.removeItem("graduation_invitation_config");
+    localStorage.removeItem("graduation_admin_password");
   } catch (e) {
-    console.error("Lỗi khi đọc config từ localStorage:", e);
+    // Bỏ qua lỗi quyền truy cập storage
   }
   return { ...DEFAULT_CONFIG };
-}
-
-// Lưu cấu hình vào localStorage
-function saveConfig(newConfig) {
-  try {
-    const current = getSavedConfig();
-    const merged = { ...current, ...newConfig };
-    localStorage.setItem("graduation_invitation_config", JSON.stringify(merged));
-    return true;
-  } catch (e) {
-    console.error("Lỗi khi lưu config:", e);
-    return false;
-  }
 }

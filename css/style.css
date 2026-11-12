@@ -228,19 +228,12 @@ body.invitation-pending .polaroid-entrance {
   padding: 2px 12px;
 }
 
-.env-letter-guest {
-  font-size: 13px;
-  color: var(--brown-dark);
-  margin-top: 2px;
-}
-
-.env-guest-name {
-  font-family: var(--font-guest);
-  font-size: 22px;
+.env-letter-date {
+  font-size: 11px;
   font-weight: 700;
-  color: var(--brown-deep);
-  border-bottom: 1.5px dashed var(--brown-primary);
-  padding: 0 6px;
+  letter-spacing: 2.5px;
+  color: var(--brown-muted);
+  margin-top: 6px;
 }
 
 /* Túi mặt trước & nắp tam giác */
@@ -609,21 +602,21 @@ body.invitation-pending .polaroid-entrance {
 }
 
 .tracking-reveal {
-  animation: trackingContract 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+  animation: trackingContract 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
 }
 
 .heading-line-1 {
   display: block;
-  animation: softFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
+  animation: softFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
 }
 
 .heading-line-2 {
   display: block;
-  animation: softFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.62s both;
+  animation: softFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.46s both;
 }
 
 .polaroid-entrance {
-  animation: polaroidPop 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.78s both;
+  animation: polaroidPop 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.62s both;
 }
 
 .delay-1 { animation-delay: 0.14s; }
@@ -703,12 +696,12 @@ body.invitation-pending .polaroid-entrance {
 }
 
 .shimmer-brown .heading-line-1 {
-  animation: softFadeUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.42s both,
+  animation: softFadeUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both,
              brownShimmerSweep 6s linear infinite;
 }
 
 .shimmer-brown .heading-line-2 {
-  animation: softFadeUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.58s both,
+  animation: softFadeUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.46s both,
              brownShimmerSweep 6s linear infinite;
 }
 
