@@ -47,6 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const gradCalligraphy = document.getElementById("graduateCalligraphy");
     if (gradCalligraphy) gradCalligraphy.textContent = shortName;
 
+    const envGradName = document.getElementById("envGradName");
+    if (envGradName) envGradName.textContent = shortName;
+
     const guestDisplay = document.getElementById("guestNameDisplay");
     if (guestDisplay) guestDisplay.textContent = toTitleIfAllUpper(currentGuestName);
 
@@ -119,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const updatePhotoSlot = (imgId, src) => {
       const img = document.getElementById(imgId);
       if (!img) return;
-      const container = img.closest(".polaroid-card, [data-photo-slot]") || img.parentElement;
+      const container = img.closest(".polaroid-card, .env-mini-polaroid, [data-photo-slot]") || img.parentElement;
       const lightboxItem = img.closest(".album-grid-item");
       if (src && typeof src === "string" && src.trim() !== "" && !src.includes("assets/images/")) {
         const cleanSrc = src.trim();
@@ -134,6 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     updatePhotoSlot("heroBgImg", config.heroBgSrc);
+    updatePhotoSlot("envMiniImg", config.heroBgSrc);
     updatePhotoSlot("filmStripImg", config.filmStripSrc);
     updatePhotoSlot("calendarPolaroidsImg", config.calendarPolaroidsSrc);
     updatePhotoSlot("letterPolaroidImg", config.footerPhotoSrc);
@@ -341,7 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   attachUnlockListeners();
 
-  // 6b. Hiệu ứng mở phong bì 2 cánh (Vintage Cream & Chocolate Brown Gatefold)
+  // 6b. Hiệu ứng mở phong bì ngang kèm con dấu hoa hồng & lá thư trồi lên theo video mẫu
   function initEnvelopeOpening() {
     const envelopeOverlay = document.getElementById("envelopeOverlay");
     if (!envelopeOverlay) {
@@ -350,38 +354,54 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     let isOpened = false;
+    let isClosed = false;
+    let closeTimer = null;
 
-    const openInvitation = () => {
-      if (isOpened) return;
-      isOpened = true;
+    const enterMainCard = () => {
+      if (isClosed) return;
+      isClosed = true;
+      clearTimeout(closeTimer);
 
-      // Mở khóa và phát nhạc nền ngay khi chạm mở thiệp
-      startAudio().catch(() => {});
-
-      // Bắt đầu hiệu ứng chữ & Polaroid chạy ngay khi 2 cánh mở ra
+      envelopeOverlay.classList.add("closing");
       document.body.classList.remove("invitation-pending");
       document.body.classList.add("invitation-opened");
+
+      setTimeout(() => {
+        observeScrollItems();
+      }, 260);
+
+      setTimeout(() => {
+        envelopeOverlay.style.display = "none";
+        observeScrollItems();
+      }, 720);
+    };
+
+    const openInvitation = () => {
+      if (isOpened) {
+        // Nếu khách chạm lần nữa khi thư đang trồi lên -> vào thiệp chính ngay
+        enterMainCard();
+        return;
+      }
+      isOpened = true;
+
+      // Phát nhạc nền ngay khi chạm con dấu hoa hồng
+      startAudio().catch(() => {});
+
+      // Mở nắp phong bì, đẩy lá thư lượn sóng kẹp ghim và Polaroid mini lên
+      envelopeOverlay.classList.add("opened");
 
       // Pháo giấy chúc mừng tone kem & nâu đồng
       if (typeof confetti === "function") {
         confetti({
           particleCount: 65,
           spread: 75,
-          origin: { y: 0.55 },
+          origin: { y: 0.48 },
           colors: ["#794a28", "#d4a373", "#cfa346", "#faf5f0", "#ffffff"]
         });
       }
 
-      envelopeOverlay.classList.add("opened");
-
-      setTimeout(() => {
-        observeScrollItems();
-      }, 320);
-
-      setTimeout(() => {
-        envelopeOverlay.style.display = "none";
-        observeScrollItems();
-      }, 1150);
+      // Giữ lá thư hiển thị 1.9 giây rồi mở vào trang thiệp Graduation Party chính
+      closeTimer = setTimeout(enterMainCard, 1900);
     };
 
     envelopeOverlay.addEventListener("click", openInvitation);

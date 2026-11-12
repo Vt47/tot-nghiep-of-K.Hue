@@ -17,36 +17,73 @@
   <!-- Google Fonts: Montserrat, Great Vibes & Dancing Script (hỗ trợ đầy đủ tiếng Việt) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Great+Vibes&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Dancing+Script:wght@500;600;700&family=Great+Vibes&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=18">
+  <link rel="stylesheet" href="css/style.css?v=19">
 </head>
 <body class="invitation-pending">
 
-  <!-- HIỆU ỨNG MỞ THIỆP 2 CÁNH PHONG BÌ VINTAGE KEM & NÂU -->
+  <!-- HIỆU ỨNG MỞ THIỆP PHONG BÌ NGANG KÈM CON DẤU HOA HỒNG & LÁ THƯ TRỒI LÊN -->
   <div id="envelopeOverlay" class="envelope-overlay" role="button" tabindex="0" aria-label="Chạm để mở thiệp mời">
-    <div class="envelope-door door-left"></div>
-    <div class="envelope-door door-right"></div>
+    <div class="env-stars-bg" aria-hidden="true">
+      <span class="env-star" style="top:8%;left:12%;">★</span>
+      <span class="env-star" style="top:14%;right:14%;">★</span>
+      <span class="env-star" style="top:28%;left:8%;">★</span>
+      <span class="env-star" style="top:34%;right:10%;">★</span>
+      <span class="env-star" style="bottom:26%;left:15%;">★</span>
+      <span class="env-star" style="bottom:18%;right:13%;">★</span>
+      <span class="env-star" style="bottom:9%;left:28%;">★</span>
+      <span class="env-star" style="top:18%;left:45%;">★</span>
+    </div>
 
-    <div id="envelopeSealCard" class="envelope-center-card">
-      <div class="envelope-wax-seal" aria-hidden="true">
-        <svg class="wax-cap-svg" viewBox="0 0 64 64" fill="none" stroke="#FAF5F0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M32 14 L56 25 L32 36 L8 25 Z"/>
-          <path d="M18 30 V42 C18 46 32 51 32 51 C32 51 46 46 46 42 V30"/>
-          <path d="M52 27 V40"/>
-          <circle cx="52" cy="42" r="2.2" fill="#FAF5F0"/>
-        </svg>
+    <div class="env-overlay-inner">
+      <div class="env-header-group">
+        <div class="env-title-script">Graduation</div>
+        <div class="env-title-serif">INVITATION</div>
       </div>
 
-      <div class="envelope-tag-box">
-        <div class="envelope-tag-label">TRÂN TRỌNG KÍNH MỜI</div>
-        <div id="envelopeGuestName" class="envelope-guest-name">Bạn X</div>
+      <div class="env-box-stage" id="envBoxStage">
+        <!-- Lá thư giấy mép lượn sóng trồi lên khi chạm mở -->
+        <div class="env-letter-card">
+          <svg class="env-paperclip" viewBox="0 0 36 74" fill="none" stroke="#B65B43" stroke-width="3.2" stroke-linecap="round" aria-hidden="true">
+            <path d="M12 20 V56 C12 65, 26 65, 26 56 V16 C26 6, 8 6, 8 16 V48 C8 54, 18 54, 18 48 V22"/>
+          </svg>
+          <div class="env-letter-top">THƯƠNG MỜI</div>
+          <div class="env-letter-sub">tham dự lễ tốt nghiệp của</div>
+          <div id="envGradName" class="env-grad-script">Kim Huê</div>
+          <div class="env-letter-guest">
+            Thân mời: <span id="envelopeGuestName" class="env-guest-name">Bạn X</span>
+          </div>
+        </div>
+
+        <!-- Khung phong bì ngang -->
+        <div class="env-pocket-back"></div>
+        <div class="env-flap-top"></div>
+        <div class="env-pocket-front"></div>
+
+        <!-- Con dấu sáp hoa hồng -->
+        <div class="env-rose-seal" aria-hidden="true">
+          <svg class="env-rose-svg" viewBox="0 0 64 64" fill="none" stroke="rgba(250,245,240,0.85)" stroke-width="1.7" stroke-linecap="round">
+            <circle cx="32" cy="32" r="24" stroke="rgba(250,245,240,0.4)" stroke-width="1.2"/>
+            <path d="M32 24 C36 22, 40 26, 36 31 C33 35, 26 33, 27 27 C28 21, 37 18, 43 24 C48 30, 44 41, 34 43 C24 45, 16 36, 19 25 C22 15, 35 11, 45 18"/>
+            <path d="M25 39 C29 45, 39 45, 44 38"/>
+            <path d="M30 28 C32 26, 35 28, 33 31 C31 33, 29 30, 30 28 Z" fill="rgba(250,245,240,0.28)"/>
+          </svg>
+          <span class="env-seal-glint"></span>
+        </div>
+
+        <!-- Ảnh Polaroid mini nghiêng góc trái dưới -->
+        <div class="env-mini-polaroid" id="envMiniPolaroid">
+          <div class="env-mini-photo-box">
+            <img id="envMiniImg" alt="Ảnh cử nhân" />
+            <span class="env-mini-ph">🎓</span>
+          </div>
+          <div class="env-mini-cap">Phạm Thị Kim Huê</div>
+        </div>
       </div>
 
-      <div class="envelope-tap-hint">
-        <span>✨ Chạm để mở thiệp</span>
-      </div>
+      <div class="env-tap-prompt">✨ Chạm vào con dấu để mở thiệp</div>
     </div>
   </div>
 
@@ -409,7 +446,7 @@
 
   <!-- Scripts chức năng -->
   <script src="js/confetti.browser.min.js"></script>
-  <script src="js/config.js?v=17"></script>
-  <script src="js/app.js?v=17"></script>
+  <script src="js/config.js?v=19"></script>
+  <script src="js/app.js?v=19"></script>
 </body>
 </html>
