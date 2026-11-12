@@ -862,13 +862,13 @@ body.invitation-pending .polaroid-entrance {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 10px auto 34px;
-  max-width: 420px;
-  padding: 6px 8px;
+  margin: 14px auto 38px;
+  max-width: 465px;
+  padding: 6px 2px;
 }
 
 .polaroid-card {
-  width: 48%;
+  width: 53%;
   background: #ffffff;
   padding: 9px 9px 26px;
   box-shadow: var(--shadow-polaroid);
@@ -885,7 +885,7 @@ body.invitation-pending .polaroid-entrance {
 
 .polaroid-right {
   transform: rotate(10.5deg) translateY(20px);
-  margin-left: -24px;
+  margin-left: -26px;
   z-index: 3;
   animation: polaroidSwayRight 6.5s ease-in-out infinite;
 }
@@ -1720,6 +1720,6 @@ body.invitation-pending .polaroid-entrance {
   }
 
   .polaroid-right {
-    margin-left: -18px;
+    margin-left: -20px;
   }
 }
