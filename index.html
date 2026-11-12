@@ -3,15 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Thư Mời Tham Dự Lễ Tốt Nghiệp - Phạm Thị Kim Huê</title>
+  <title>Thư Mời Lễ Tốt Nghiệp - Phạm Thị Kim Huê</title>
 
+  <!-- Open Graph Meta Tags -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Thư Mời Tham Dự Lễ Tốt Nghiệp - Phạm Thị Kim Huê">
-  <meta property="og:description" content="Trân trọng kính mời bạn đến tham dự và chung vui trong ngày lễ tốt nghiệp!">
-  <meta name="description" content="Thiệp mời lễ tốt nghiệp trực tuyến của Phạm Thị Kim Huê">
+  <meta property="og:title" content="Graduation Party - Phạm Thị Kim Huê">
+  <meta property="og:description" content="Thân mời bạn đến tham dự Graduation Party của Kim Huê vào 17 NOV 2026 tại Nhà hát Hòa Bình!">
+  <meta name="description" content="Thiệp mời Graduation Party của Phạm Thị Kim Huê - 17/11/2026 tại Nhà hát Hòa Bình">
 
+  <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
-  <link rel="stylesheet" href="css/style.css?v=12">
+
+  <!-- Google Fonts: Montserrat & Great Vibes (hỗ trợ đầy đủ tiếng Việt) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css?v=13">
 </head>
 <body>
 
@@ -21,165 +30,328 @@
     <source src="assets/audio/long_live.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Khung sườn chức năng sạch để bạn tự do thiết kế lại giao diện -->
-  <main class="wireframe-container" id="mainInvitationCard">
+  <!-- Khung thiệp mời trung tâm (tương thích điện thoại và máy tính) -->
+  <main class="invitation-sheet" id="mainInvitationCard">
 
-    <!-- 1. THÔNG TIN CHÍNH & KHÁCH MỜI -->
-    <section class="wf-section" id="sectionHeader">
-      <p class="wf-label" id="subtitleDisplay">LỄ TỐT NGHIỆP CỦA</p>
-      <h1 class="wf-title" id="ribbonGradName">PHẠM THỊ KIM HUÊ</h1>
-      <p class="wf-meta">Khách mời: <strong id="guestNameDisplay">BẠN X</strong></p>
+    <!-- =====================================================================
+         SECTION 1: THIỆP CHÍNH THEO MẪU GRADUATION PARTY (KEM & NÂU VINTAGE)
+         ===================================================================== -->
+    <section class="party-hero-card">
 
-      <!-- Ảnh bìa (tự động ẩn khi chưa có link ảnh trong /admin) -->
-      <div class="wf-photo-slot" data-photo-slot>
-        <img id="heroBgImg" alt="Ảnh bìa cử nhân" />
+      <!-- Họa tiết vẽ tay góc trên trái: Mũ cử nhân -->
+      <svg class="sketch-decor sketch-cap-tl" viewBox="0 0 140 130" fill="none" stroke="#794A28" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <!-- Phần mũ chóp trên nghiêng -->
+        <path d="M10 15 L120 42 L80 90 L-8 55 Z" fill="#FAF5F0" stroke-width="2.2"/>
+        <path d="M5 24 L95 47" stroke-width="1.1" stroke-dasharray="2 4"/>
+        <path d="M18 38 L85 56" stroke-width="1.1"/>
+        <!-- Phần vành đội đầu -->
+        <path d="M22 68 L22 92 C40 104, 78 102, 92 85 L92 66" fill="#FAF5F0" stroke-width="2.2"/>
+        <path d="M22 76 C45 88, 72 86, 92 73" stroke-width="1.3"/>
+        <!-- Ngôi sao nhỏ vẽ tay -->
+        <path d="M52 34 L54 39 L59 39 L55 42 L56 47 L52 44 L48 47 L49 42 L45 39 L50 39 Z" stroke-width="1.2"/>
+        <!-- Nút đỉnh & dây tua rua -->
+        <ellipse cx="56" cy="48" rx="4" ry="2.5" fill="#794A28"/>
+        <path d="M56 48 C58 72, 46 95, 32 108" stroke-width="2"/>
+        <path d="M32 108 L23 125 M32 108 L29 127 M32 108 L35 127 M32 108 L40 125" stroke-width="1.6"/>
+        <circle cx="32" cy="107" r="3.2" fill="#FAF5F0" stroke-width="2"/>
+      </svg>
+
+      <!-- Họa tiết vẽ tay góc trên phải: Cuộn bằng tốt nghiệp & nơ -->
+      <svg class="sketch-decor sketch-diploma-tr" viewBox="0 0 150 110" fill="none" stroke="#794A28" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M24 10 L145 25 C154 38, 152 58, 138 68 L18 52 C8 40, 10 20, 24 10 Z" fill="#FAF5F0" stroke-width="2.2"/>
+        <path d="M24 10 C32 22, 30 40, 18 52" stroke-width="1.8"/>
+        <path d="M20 24 C23 29, 22 36, 17 40" stroke-width="1.3"/>
+        <path d="M40 17 L130 29 M44 43 L126 54" stroke-width="1.1"/>
+        <!-- Dải ruy băng buộc giữa cuộn bằng -->
+        <path d="M84 17 C76 30, 74 44, 78 60 L88 61 C84 45, 86 31, 94 18 Z" fill="#FAF5F0" stroke-width="2"/>
+        <!-- Nơ ruy băng -->
+        <path d="M81 40 C65 32, 62 49, 79 44" stroke-width="1.8"/>
+        <path d="M84 40 C102 35, 100 52, 82 44" stroke-width="1.8"/>
+        <path d="M78 44 L66 64 M84 44 L94 67" stroke-width="1.8"/>
+      </svg>
+
+      <!-- Bóng bay vẽ tay bên trái -->
+      <svg class="sketch-decor sketch-balloon-ml" viewBox="0 0 80 150" fill="none" stroke="#794A28" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M38 12 C56 10, 68 25, 65 44 C62 63, 47 73, 39 74 C29 74, 15 62, 16 42 C17 24, 24 14, 38 12 Z" fill="#FAF5F0" stroke-width="2"/>
+        <path d="M35 20 C27 22, 23 30, 24 40" stroke-width="1.3"/>
+        <path d="M37 74 L34 79 L43 79 Z" fill="#FAF5F0" stroke-width="1.8"/>
+        <path d="M39 79 C43 96, 31 112, 37 128 C40 135, 36 142, 32 146" stroke-width="1.5"/>
+      </svg>
+
+      <!-- Bàn tay cầm cuộn bằng tốt nghiệp bên phải -->
+      <svg class="sketch-decor sketch-hand-mr" viewBox="0 0 110 170" fill="none" stroke="#794A28" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <!-- Cuộn bằng trên tay -->
+        <path d="M54 12 L84 4 L52 104 L24 98 Z" fill="#FAF5F0" stroke-width="2.5"/>
+        <ellipse cx="69" cy="8" rx="15" ry="6" transform="rotate(-14 69 8)" fill="#FAF5F0" stroke-width="2.2"/>
+        <path d="M40 52 L66 56" stroke-width="2"/>
+        <!-- Ngón tay nắm -->
+        <path d="M68 42 C52 38, 42 48, 52 56 C44 60, 42 70, 54 74 C46 78, 48 88, 60 90 C68 92, 82 90, 90 98 L108 120" fill="#FAF5F0" stroke-width="2.6"/>
+        <path d="M88 30 C76 34, 72 44, 78 52 C84 62, 92 72, 108 82" stroke-width="2.6"/>
+        <path d="M52 56 L68 58 M54 74 L70 76" stroke-width="2"/>
+      </svg>
+
+      <!-- Bàn tay cầm cuộn bằng tốt nghiệp góc dưới trái -->
+      <svg class="sketch-decor sketch-hand-bl" viewBox="0 0 110 175" fill="none" stroke="#794A28" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <!-- Cuộn bằng hướng lên -->
+        <path d="M26 10 L56 6 L72 102 L42 106 Z" fill="#FAF5F0" stroke-width="2.5"/>
+        <ellipse cx="41" cy="8" rx="15" ry="6" transform="rotate(-6 41 8)" fill="#FAF5F0" stroke-width="2.2"/>
+        <!-- Nơ ruy băng trên cuộn bằng -->
+        <path d="M35 32 L61 28 M36 37 C22 30, 22 46, 37 40" stroke-width="2"/>
+        <!-- Các ngón tay cầm -->
+        <path d="M44 48 C58 46, 68 54, 58 62 C66 66, 68 76, 56 80 C64 84, 62 94, 50 96 C40 98, 28 96, 18 106 L2 135" fill="#FAF5F0" stroke-width="2.6"/>
+        <path d="M18 42 C30 46, 36 54, 30 64 C24 74, 16 84, 2 96" stroke-width="2.6"/>
+        <path d="M58 62 L44 64 M56 80 L42 82" stroke-width="2"/>
+      </svg>
+
+      <!-- Bóng bay vẽ tay góc dưới phải -->
+      <svg class="sketch-decor sketch-balloon-br" viewBox="0 0 80 150" fill="none" stroke="#794A28" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M42 12 C60 14, 67 28, 64 46 C60 66, 46 75, 36 74 C26 73, 15 60, 18 40 C21 22, 28 11, 42 12 Z" fill="#FAF5F0" stroke-width="2"/>
+        <path d="M37 20 C29 22, 25 30, 26 40" stroke-width="1.3"/>
+        <path d="M37 74 L33 79 L42 80 Z" fill="#FAF5F0" stroke-width="1.8"/>
+        <path d="M37 80 C34 98, 46 112, 41 128 C38 136, 42 142, 46 146" stroke-width="1.5"/>
+      </svg>
+
+      <!-- NỘI DUNG CHÍNH TRONG THIỆP -->
+      <div class="party-hero-content">
+
+        <!-- Dòng 1: Thân mời: [Tên khách chữ viết tay có gạch đứt] -->
+        <div class="hero-invite-row reveal-item">
+          <span class="invite-prefix">Thân mời:</span>
+          <span id="guestNameDisplay" class="guest-script-underline">BẠN X</span>
+        </div>
+
+        <!-- Dòng 2: YOU ARE INVITED TO -->
+        <div id="subtitleDisplay" class="hero-kicker reveal-item delay-1">
+          YOU ARE INVITED TO
+        </div>
+
+        <!-- Tiêu đề lớn: GRADUATION PARTY -->
+        <h1 class="hero-party-heading reveal-item delay-2">
+          <span>GRADUATION</span>
+          <span>PARTY</span>
+        </h1>
+
+        <!-- Hai khung ảnh Polaroid nghiêng xếp chéo lồng nhau -->
+        <div class="hero-polaroids-stage reveal-item delay-3">
+          <div class="polaroid-card polaroid-left album-grid-item" data-full="">
+            <div class="polaroid-photo-box">
+              <img id="heroBgImg" alt="Ảnh cử nhân 1" />
+              <div class="polaroid-placeholder">
+                <span class="ph-icon">🎓</span>
+                <span class="ph-text">Ảnh kỷ niệm 1</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="polaroid-card polaroid-right album-grid-item" data-full="">
+            <div class="polaroid-photo-box">
+              <img id="filmStripImg" alt="Ảnh cử nhân 2" />
+              <div class="polaroid-placeholder">
+                <span class="ph-icon">📸</span>
+                <span class="ph-text">Ảnh kỷ niệm 2</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- IN HONOR OF + Tên cử nhân -->
+        <div class="hero-honor-label reveal-item delay-4">IN HONOR OF</div>
+        <div id="graduateCalligraphy" class="hero-grad-script reveal-item delay-4">Kim Huê</div>
+        <div id="ribbonGradName" class="hero-grad-fullname reveal-item delay-4">PHẠM THỊ KIM HUÊ</div>
+
+        <!-- Thời gian, Địa điểm, Liên hệ -->
+        <div class="hero-event-details reveal-item delay-5">
+          <div id="eventTimeHighlight" class="hero-datetime">
+            17 NOV 2026 | AT 10:30-12:30 AM
+          </div>
+
+          <div class="hero-venue-row">
+            <svg class="venue-pin-svg" viewBox="0 0 24 24" fill="none" stroke="#4A2C18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 21s-7-6.5-7-11.5a7 7 0 1 1 14 0C19 14.5 12 21 12 21z"/>
+              <circle cx="12" cy="9.5" r="2.5"/>
+            </svg>
+            <span id="venueTitleDisplay">NHÀ HÁT HÒA BÌNH</span>
+          </div>
+
+          <div id="venueAddress" class="hero-address">
+            240 ĐƯỜNG 3/2, PHƯỜNG HÒA HƯNG, TP HCM
+          </div>
+
+          <div class="hero-contact">
+            CONTACT : <a id="contactPhoneLink" href="tel:0373791033">0373791033</a>
+          </div>
+        </div>
+
+        <!-- Đường chia họa tiết cổ điển -->
+        <div class="vintage-divider-wrap reveal-item delay-6" aria-hidden="true">
+          <svg class="vintage-divider-svg" viewBox="0 0 360 20" fill="none">
+            <line x1="10" y1="10" x2="145" y2="10" stroke="#794A28" stroke-width="1"/>
+            <path d="M150 10 L158 5 L164 10 L158 15 Z" fill="#794A28"/>
+            <circle cx="170" cy="10" r="2.2" fill="#794A28"/>
+            <path d="M176 10 L180 6 L184 10 L180 14 Z" fill="#794A28"/>
+            <circle cx="190" cy="10" r="2.2" fill="#794A28"/>
+            <path d="M196 10 L202 5 L210 10 L202 15 Z" fill="#794A28"/>
+            <line x1="215" y1="10" x2="350" y2="10" stroke="#794A28" stroke-width="1"/>
+          </svg>
+        </div>
+
+        <!-- Lời mời kết thiệp -->
+        <p id="thankYouMsgDisplay" class="hero-closing reveal-item delay-6">
+          MONG ĐƯỢC GẶP BẠN TRONG NGÀY ĐẶC BIỆT NÀY!
+        </p>
+
       </div>
     </section>
 
-    <!-- 2. THỜI GIAN & ĐỊA ĐIỂM -->
-    <section class="wf-section" id="sectionDetails">
-      <h2 class="wf-heading">Thời gian và Địa điểm</h2>
-      <p>Thời gian: <strong id="eventTimeHighlight">17/11/2026 | Lúc 10h - 14h</strong></p>
-      <p class="wf-sub">
-        Ngày <span id="badgeDay">17</span> / Tháng <span id="badgeMonth">11</span> / Năm <span id="badgeYear">2026</span>
-      </p>
-      <p>Địa điểm: <strong id="venueAddress">Số 2 Hoàng Văn Thụ, Phường 4, Quận Tân Bình, TP. HCM</strong></p>
-
-      <div class="wf-actions">
-        <a id="googleMapLinkBtn" href="https://maps.google.com/?q=2+Ho%C3%A0ng+V%C4%83n+Th%E1%BB%A5,+Ph%C6%B0%E1%BB%9Dng+4,+T%C3%A2n+B%C3%ACnh,+TP+HCM" target="_blank" rel="noopener noreferrer" class="wf-btn">
-          Mở Google Maps
-        </a>
+    <!-- =====================================================================
+         SECTION 2: ĐẾM NGƯỢC & LỊCH THÁNG
+         ===================================================================== -->
+    <section class="party-sub-section" id="sectionCountdownCalendar">
+      <div class="sub-section-head reveal-item">
+        <span class="sub-kicker">SAVE THE DATE</span>
+        <h2 class="sub-heading">Đếm Ngược Ngày Vui</h2>
       </div>
 
-      <div class="wf-map-box">
+      <div class="cream-timer-row reveal-item">
+        <div class="cream-timer-box">
+          <span id="timerDays" class="cream-timer-num">00</span>
+          <span class="cream-timer-txt">Ngày</span>
+        </div>
+        <div class="cream-timer-box">
+          <span id="timerHours" class="cream-timer-num">00</span>
+          <span class="cream-timer-txt">Giờ</span>
+        </div>
+        <div class="cream-timer-box">
+          <span id="timerMins" class="cream-timer-num">00</span>
+          <span class="cream-timer-txt">Phút</span>
+        </div>
+        <div class="cream-timer-box">
+          <span id="timerSecs" class="cream-timer-num">00</span>
+          <span class="cream-timer-txt">Giây</span>
+        </div>
+      </div>
+
+      <div class="calendar-card-cream reveal-item">
+        <div class="calendar-month-heading">
+          Tháng <span id="calMonthScript">11</span> • <span id="badgeYear">2026</span>
+          <span class="sr-only">(<span id="badgeDay">17</span>/<span id="badgeMonth">11</span>)</span>
+        </div>
+
+        <div id="calendarGrid" class="cream-calendar-grid">
+          <!-- Render bằng JS -->
+        </div>
+
+        <div class="sub-actions-center">
+          <button id="addToCalendarBtn" class="btn-cream-outline" type="button">
+            <span>📅</span> Lưu Lịch Google Calendar
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 3: BẢN ĐỒ CHỈ ĐƯỜNG
+         ===================================================================== -->
+    <section class="party-sub-section" id="sectionLocation">
+      <div class="sub-section-head reveal-item">
+        <span class="sub-kicker">LOCATION</span>
+        <h2 class="sub-heading">Bản Đồ Chỉ Đường</h2>
+      </div>
+
+      <div class="map-frame-cream reveal-item">
         <iframe
           id="googleMapIframe"
-          src="https://maps.google.com/maps?q=2%20Ho%C3%A0ng%20V%C4%83n%20Th%E1%BB%A5,%20Ph%C6%B0%E1%BB%9Dng%204,%20T%C3%A2n%20B%C3%ACnh,%20TP%20HCM&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          src="https://maps.google.com/maps?q=Nh%C3%A0%20H%C3%A1t%20H%C3%B2a%20B%C3%ACnh,%20240%20%C4%90%C6%B0%E1%BB%9Dng%203/2,%20TP%20HCM&t=&z=15&ie=UTF8&iwloc=&output=embed"
           loading="lazy"
           allowfullscreen=""
           title="Google Map Location">
         </iframe>
       </div>
-    </section>
 
-    <!-- 3. ĐỒNG HỒ ĐẾM NGƯỢC -->
-    <section class="wf-section" id="sectionCountdown">
-      <h2 class="wf-heading">Đếm ngược</h2>
-      <div class="wf-timer-row">
-        <div class="wf-timer-box">
-          <span id="timerDays" class="wf-timer-num">00</span>
-          <span class="wf-timer-txt">Ngày</span>
-        </div>
-        <div class="wf-timer-box">
-          <span id="timerHours" class="wf-timer-num">00</span>
-          <span class="wf-timer-txt">Giờ</span>
-        </div>
-        <div class="wf-timer-box">
-          <span id="timerMins" class="wf-timer-num">00</span>
-          <span class="wf-timer-txt">Phút</span>
-        </div>
-        <div class="wf-timer-box">
-          <span id="timerSecs" class="wf-timer-num">00</span>
-          <span class="wf-timer-txt">Giây</span>
-        </div>
+      <div class="sub-actions-center reveal-item">
+        <a id="googleMapLinkBtn" href="https://maps.google.com/?q=Nh%C3%A0+H%C3%A1t+H%C3%B2a+B%C3%ACnh,+240+%C4%90%C6%B0%E1%BB%9Dng+3/2,+Qu%E1%BA%ADn+10,+TP+HCM" target="_blank" rel="noopener noreferrer" class="btn-brown-solid">
+          <span>📍</span> Chỉ Đường Đến Nhà Hát Hòa Bình
+        </a>
       </div>
     </section>
 
-    <!-- 4. LỊCH THÁNG & GOOGLE CALENDAR -->
-    <section class="wf-section" id="sectionCalendar">
-      <h2 class="wf-heading">Lịch tháng <span id="calMonthScript">11</span></h2>
-
-      <div class="wf-photo-slot" data-photo-slot>
-        <img id="calendarPolaroidsImg" alt="Ảnh lịch" />
+    <!-- =====================================================================
+         SECTION 4: LỜI NHẮN TÂM SỰ & ALBUM MỞ RỘNG (ẨN KHI CHƯA CÓ ẢNH PHỤ)
+         ===================================================================== -->
+    <section class="party-sub-section" id="sectionLetter">
+      <div class="letter-box-cream reveal-item">
+        <span class="sub-kicker">NOTE FROM GRADUATE</span>
+        <div class="letter-body-cream" id="letterBodyContainer">
+          <p>Một hành trình đã khép lại bằng những ngày tháng đáng nhớ, từ những bỡ ngỡ ban đầu đến lúc trưởng thành hơn sau từng bài học, thử thách và trải nghiệm.</p>
+          <p>Có những ngày mệt mỏi, có cả những lần muốn dừng bước, nhưng nhờ sự đồng hành của gia đình, thầy cô và bạn bè, mình đã đi đến cột mốc hôm nay.</p>
+        </div>
+        <div class="letter-sig-cream" id="letterSignature">Phạm Thị Kim Huê</div>
       </div>
 
-      <div id="calendarGrid" class="wf-calendar-grid">
-        <!-- Render bằng JS -->
-      </div>
-
-      <div class="wf-actions">
-        <button id="addToCalendarBtn" class="wf-btn" type="button">
-          Thêm vào Google Calendar
-        </button>
-      </div>
-    </section>
-
-    <!-- 5. THƯ TÂM SỰ & ALBUM ẢNH (HIỆN KHI CÓ ẢNH TỪ /ADMIN) -->
-    <section class="wf-section" id="sectionLetter">
-      <h2 class="wf-heading">Lời nhắn gửi</h2>
-
-      <div class="wf-photo-slot" data-photo-slot>
-        <img id="filmStripImg" alt="Ảnh thước phim" />
-      </div>
-
-      <div class="wf-letter-text" id="letterBodyContainer">
-        <p>Một hành trình đã khép lại bằng những ngày tháng đáng nhớ, từ những bỡ ngỡ ban đầu đến lúc trưởng thành hơn sau từng bài học, thử thách và trải nghiệm.</p>
-        <p>Có những ngày mệt mỏi, có cả những lần muốn dừng bước, nhưng nhờ sự đồng hành của gia đình, thầy cô và bạn bè, mình đã đi đến cột mốc hôm nay.</p>
-      </div>
-      <p class="wf-signature">— <strong id="letterSignature">PHẠM THỊ KIM HUÊ</strong></p>
-
-      <div class="wf-photo-slot" data-photo-slot>
-        <img id="letterPolaroidImg" alt="Ảnh chân dung" />
-      </div>
-
-      <div class="wf-album-grid" id="albumSection">
-        <div class="album-grid-item wf-photo-slot" data-photo-slot data-full="">
+      <!-- Các ảnh phụ nếu bạn thêm thêm trong /admin -->
+      <div class="extra-album-grid" id="albumSection">
+        <div class="album-grid-item extra-photo-slot" data-photo-slot data-full="">
           <img id="albumImg1" alt="Kỷ niệm 1" />
         </div>
-        <div class="album-grid-item wf-photo-slot" data-photo-slot data-full="">
+        <div class="album-grid-item extra-photo-slot" data-photo-slot data-full="">
           <img id="albumImg2" alt="Kỷ niệm 2" />
         </div>
-        <div class="album-grid-item wf-photo-slot" data-photo-slot data-full="">
+        <div class="album-grid-item extra-photo-slot" data-photo-slot data-full="">
           <img id="albumImg3" alt="Kỷ niệm 3" />
         </div>
-        <div class="album-grid-item wf-photo-slot" data-photo-slot data-full="">
+        <div class="album-grid-item extra-photo-slot" data-photo-slot data-full="">
           <img id="albumImg4" alt="Kỷ niệm 4" />
         </div>
       </div>
     </section>
 
-    <!-- 6. XÁC NHẬN THAM DỰ (RSVP) -->
-    <section class="wf-section" id="rsvpSection">
-      <h2 class="wf-heading">Xác nhận tham dự và Gửi lời chúc</h2>
-      <form id="rsvpForm" class="wf-form">
+    <!-- =====================================================================
+         SECTION 5: XÁC NHẬN THAM DỰ (RSVP) & SỔ LƯU BÚT LỜI CHÚC
+         ===================================================================== -->
+    <section class="party-sub-section" id="rsvpSection">
+      <div class="sub-section-head reveal-item">
+        <span class="sub-kicker">RSVP</span>
+        <h2 class="sub-heading">Xác Nhận Tham Dự và Gửi Lời Chúc</h2>
+      </div>
+
+      <form id="rsvpForm" class="rsvp-form-cream reveal-item">
         <input
           type="text"
           id="rsvpName"
-          class="wf-input"
+          class="cream-input"
           placeholder="Tên của bạn"
           required
           autocomplete="off"
         />
         <textarea
           id="rsvpMessage"
-          class="wf-input"
+          class="cream-input"
           rows="3"
-          placeholder="Gửi lời chúc đến tân cử nhân"
+          placeholder="Gửi lời chúc đến tân cử nhân Kim Huê..."
           required
         ></textarea>
-        <select id="rsvpStatus" class="wf-input">
-          <option value="Chắc chắn tham dự">Chắc chắn tham dự</option>
-          <option value="Sẽ cố gắng tham dự">Sẽ cố gắng tham dự</option>
-          <option value="Bận gửi lời chúc">Bận gửi lời chúc</option>
+        <select id="rsvpStatus" class="cream-input">
+          <option value="Chắc chắn tham dự">Chắc chắn rồi! Mình sẽ đến tham dự 🎉</option>
+          <option value="Sẽ cố gắng tham dự">Mình sẽ cố gắng sắp xếp đến chung vui ✨</option>
+          <option value="Bận gửi lời chúc">Mình bận việc mất rồi, xin gửi lời chúc nhé 💌</option>
         </select>
-        <button type="submit" class="wf-btn wf-btn-primary">Gửi xác nhận</button>
+        <button type="submit" class="btn-brown-solid btn-full">XÁC NHẬN THAM DỰ</button>
       </form>
     </section>
 
-    <!-- 7. SỔ LƯU BÚT LỜI CHÚC -->
-    <section class="wf-section" id="wishesSection">
-      <h2 class="wf-heading">Lời chúc từ mọi người</h2>
-      <div id="wishesContainer" class="wf-wishes-list">
+    <section class="party-sub-section" id="wishesSection">
+      <div class="sub-section-head reveal-item">
+        <span class="sub-kicker">GUESTBOOK</span>
+        <h2 class="sub-heading">Lời Chúc Yêu Thương</h2>
+      </div>
+
+      <div id="wishesContainer" class="wishes-list-cream reveal-item">
         <!-- Render danh sách lời chúc bằng JS -->
       </div>
     </section>
 
-    <!-- 8. CHÂN TRANG -->
-    <footer class="wf-footer">
-      <div class="wf-photo-slot" data-photo-slot>
-        <img id="footerPhotoImg" alt="Ảnh cảm ơn" />
-      </div>
-      <p id="thankYouMsgDisplay">Sự hiện diện của bạn chính là món quà ý nghĩa nhất, và mình vô cùng trân quý trong ngày vui này.</p>
+    <!-- Chân trang -->
+    <footer class="party-footer">
       <div class="footer-credit">ktv © 2026</div>
     </footer>
 
@@ -204,7 +376,7 @@
 
   <!-- Scripts chức năng -->
   <script src="js/confetti.browser.min.js"></script>
-  <script src="js/config.js?v=12"></script>
-  <script src="js/app.js?v=12"></script>
+  <script src="js/config.js?v=13"></script>
+  <script src="js/app.js?v=13"></script>
 </body>
 </html>

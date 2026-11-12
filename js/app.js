@@ -38,8 +38,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const timeHighlight = document.getElementById("eventTimeHighlight");
     if (timeHighlight) {
-      timeHighlight.textContent = config.displayDateTime || "17/11/2026 | Lúc 10h - 14h";
+      timeHighlight.textContent = config.displayDateTime || "17 NOV 2026 | AT 10:30-12:30 AM";
     }
+
+    const venueTitleEl = document.getElementById("venueTitleDisplay");
+    if (venueTitleEl) venueTitleEl.textContent = config.venueTitle || "NHÀ HÁT HÒA BÌNH";
 
     const badgeMonth = document.getElementById("badgeMonth");
     if (badgeMonth) badgeMonth.textContent = String(config.calendarMonth || 11).padStart(2, "0");
@@ -54,10 +57,22 @@ document.addEventListener("DOMContentLoaded", () => {
     if (calMonthScript) calMonthScript.textContent = String(config.calendarMonth || 11);
 
     const venueAddress = document.getElementById("venueAddress");
-    if (venueAddress) venueAddress.textContent = config.locationAddress || "Số 2 Hoàng Văn Thụ, Phường 4, Quận Tân Bình, TP. HCM";
+    if (venueAddress) venueAddress.textContent = config.locationAddress || "240 ĐƯỜNG 3/2, PHƯỜNG HÒA HƯNG, TP HCM";
+
+    const contactPhoneLink = document.getElementById("contactPhoneLink");
+    if (contactPhoneLink) {
+      const phone = config.contactPhone || "0373791033";
+      contactPhoneLink.textContent = phone;
+      contactPhoneLink.href = `tel:${phone.replace(/[^0-9+]/g, "")}`;
+    }
 
     const mapBtn = document.getElementById("googleMapLinkBtn");
-    if (mapBtn && config.googleMapsUrl) mapBtn.href = config.googleMapsUrl;
+    if (mapBtn && config.googleMapsUrl) {
+      mapBtn.href = config.googleMapsUrl;
+      if (config.venueTitle) {
+        mapBtn.innerHTML = `<span>📍</span> Chỉ Đường Đến ${escapeHTML(config.venueTitle)}`;
+      }
+    }
 
     const mapIframe = document.getElementById("googleMapIframe");
     if (mapIframe && config.googleMapsEmbed) mapIframe.src = config.googleMapsEmbed;
@@ -83,17 +98,21 @@ document.addEventListener("DOMContentLoaded", () => {
       rsvpName.value = currentGuestName;
     }
 
-    // Cập nhật các vị trí ảnh (ẩn slot khi chưa có URL ảnh)
+    // Cập nhật các vị trí ảnh (ẩn hoặc hiện placeholder khi chưa có URL ảnh)
     const updatePhotoSlot = (imgId, src) => {
       const img = document.getElementById(imgId);
       if (!img) return;
-      const container = img.closest("[data-photo-slot]") || img.parentElement;
+      const container = img.closest(".polaroid-card, [data-photo-slot]") || img.parentElement;
+      const lightboxItem = img.closest(".album-grid-item");
       if (src && typeof src === "string" && src.trim() !== "" && !src.includes("assets/images/")) {
-        img.src = src.trim();
+        const cleanSrc = src.trim();
+        img.src = cleanSrc;
         if (container) container.classList.add("has-image");
+        if (lightboxItem) lightboxItem.setAttribute("data-full", cleanSrc);
       } else {
         img.removeAttribute("src");
         if (container) container.classList.remove("has-image");
+        if (lightboxItem) lightboxItem.removeAttribute("data-full");
       }
     };
 
@@ -438,7 +457,8 @@ document.addEventListener("DOMContentLoaded", () => {
         confetti({
           particleCount: 70,
           spread: 70,
-          origin: { y: 0.65 }
+          origin: { y: 0.65 },
+          colors: ["#794a28", "#d4a373", "#cfa346", "#faf5f0", "#ffffff"]
         });
       }
 

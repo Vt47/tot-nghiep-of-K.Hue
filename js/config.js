@@ -1,39 +1,40 @@
 /**
  * CẤU HÌNH THIỆP MỜI TỐT NGHIỆP
- * Mẫu thiết kế chuẩn Lami Luxury Graduation (Tone Đỏ Rượu Vang và Vàng Ánh Kim)
+ * Chủ đề Vintage Cream & Chocolate Brown (Graduation Party)
  */
 
 function getDefaultTargetDate() {
-  return "2026-11-17T10:00:00";
+  return "2026-11-17T10:30:00";
 }
 
 const DEFAULT_CONFIG = {
-  // Thông tin cử nhân / sự kiện (Giữ lại theo yêu cầu)
+  // Thông tin cử nhân & sự kiện
   graduateName: "PHẠM THỊ KIM HUÊ",
   graduateShortName: "Kim Huê",
-  subtitle: "LỄ TỐT NGHIỆP CỦA",
-  invitationTitle: "THÂN MỜI",
-  guestPrefix: "HÂN HẠNH ĐÓN TIẾP:",
+  subtitle: "YOU ARE INVITED TO",
+  invitationTitle: "GRADUATION PARTY",
+  guestPrefix: "Thân mời:",
   defaultGuestName: "BẠN X",
 
-  // Thời gian tổ chức (Giữ lại ngày 17/11/2026, lúc 10h - 14h)
-  targetDate: "2026-11-17T10:00:00",
-  displayDateTime: "17/11/2026 | Lúc 10h - 14h",
+  // Thời gian tổ chức (17/11/2026, lúc 10:30-12:30 AM)
+  targetDate: "2026-11-17T10:30:00",
+  displayDateTime: "17 NOV 2026 | AT 10:30-12:30 AM",
   eventDayOfWeek: "THỨ BA",
   eventDay: 17,
   calendarMonth: 11,
   calendarYear: 2026,
 
-  // Địa điểm và Google Map
-  locationAddress: "Số 2 Hoàng Văn Thụ, Phường 4, Quận Tân Bình, TP. HCM",
-  venueTitle: "TRUNG TÂM HỘI NGHỊ",
-  googleMapsUrl: "https://maps.google.com/?q=2+Ho%C3%A0ng+V%C4%83n+Th%E1%BB%A5,+Ph%C6%B0%E1%BB%9Dng+4,+T%C3%A2n+B%C3%ACnh,+TP+HCM",
-  googleMapsEmbed: "https://maps.google.com/maps?q=2%20Ho%C3%A0ng%20V%C4%83n%20Th%E1%BB%A5,%20Ph%C6%B0%E1%BB%9Dng%204,%20T%C3%A2n%20B%C3%ACnh,%20TP%20HCM&t=&z=15&ie=UTF8&iwloc=&output=embed",
+  // Địa điểm, Liên hệ và Google Map
+  venueTitle: "NHÀ HÁT HÒA BÌNH",
+  locationAddress: "240 ĐƯỜNG 3/2, PHƯỜNG HÒA HƯNG, TP HCM",
+  contactPhone: "0373791033",
+  googleMapsUrl: "https://maps.google.com/?q=Nh%C3%A0+H%C3%A1t+H%C3%B2a+B%C3%ACnh,+240+%C4%90%C6%B0%E1%BB%9Dng+3/2,+Qu%E1%BA%ADn+10,+TP+HCM",
+  googleMapsEmbed: "https://maps.google.com/maps?q=Nh%C3%A0%20H%C3%A1t%20H%C3%B2a%20B%C3%ACnh,%20240%20%C4%90%C6%B0%E1%BB%9Dng%203/2,%20TP%20HCM&t=&z=15&ie=UTF8&iwloc=&output=embed",
 
   // Kết nối Google Sheets tự động
   googleSheetScriptUrl: "https://script.google.com/macros/s/AKfycbyTNQzwT0g5SNDnphPAEqSzdi1UGKqKXmdk4zEV9gdK_hOnwbQSDxBtofYTpqs2ngQoHA/exec",
 
-  // Hình ảnh cử nhân (Mặc định để trống để bạn tự thêm ảnh sau trong trang Quản trị)
+  // Hình ảnh Polaroid & Album (Thêm trong /admin)
   heroBgSrc: "",
   filmStripSrc: "",
   calendarPolaroidsSrc: "",
@@ -50,9 +51,9 @@ const DEFAULT_CONFIG = {
   musicSrc: "assets/audio/long_live.mp3",
   musicFallback: "assets/audio/long_live.m4a",
 
-  // Lời cảm ơn bế mạc
+  // Lời cảm ơn / kết thiệp
   thankYouTitle: "Thank you!",
-  thankYouMessage: "Sự hiện diện của bạn chính là món quà ý nghĩa nhất, và mình vô cùng trân quý trong ngày vui này.",
+  thankYouMessage: "MONG ĐƯỢC GẶP BẠN TRONG NGÀY ĐẶC BIỆT NÀY!",
 
   // Lời chúc mẫu ban đầu
   initialWishes: [
@@ -89,11 +90,11 @@ function getSavedConfig() {
     const saved = localStorage.getItem("graduation_invitation_config");
     if (saved) {
       const parsed = JSON.parse(saved);
-      const graduateName = (parsed.graduateName && parsed.graduateName !== "LÊ MINH THƯ" && parsed.graduateName !== "Nguyễn Tường Vi") 
-        ? parsed.graduateName 
+      const graduateName = (parsed.graduateName && parsed.graduateName !== "LÊ MINH THƯ" && parsed.graduateName !== "Nguyễn Tường Vi")
+        ? parsed.graduateName
         : DEFAULT_CONFIG.graduateName;
 
-      // Xoá triệt để các đường dẫn ảnh mẫu cũ đã xoá khỏi hệ thống
+      // Xoá các đường dẫn ảnh mẫu cũ đã xoá khỏi hệ thống
       const cleanImage = (url) => {
         if (!url || typeof url !== "string") return "";
         if (url.includes("assets/images/")) return "";
@@ -104,16 +105,30 @@ function getSavedConfig() {
         ? parsed.albumPhotos.map(cleanImage)
         : ["", "", "", ""];
 
+      // Nâng cấp tự động các giá trị mẫu cũ sang thông tin mới theo ảnh mẫu
+      const isOldSubtitle = !parsed.subtitle || parsed.subtitle === "LỄ TỐT NGHIỆP CỦA";
+      const isOldTime = !parsed.displayDateTime || parsed.displayDateTime === "17/11/2026 | Lúc 10h - 14h";
+      const isOldLocation = !parsed.locationAddress || parsed.locationAddress.includes("Hoàng Văn Thụ");
+      const isOldThankYou = !parsed.thankYouMessage || parsed.thankYouMessage.startsWith("Sự hiện diện của bạn chính là món quà");
+
       return {
         ...DEFAULT_CONFIG,
         ...parsed,
         graduateName: graduateName,
-        targetDate: parsed.targetDate || DEFAULT_CONFIG.targetDate,
-        displayDateTime: parsed.displayDateTime || DEFAULT_CONFIG.displayDateTime,
+        subtitle: isOldSubtitle ? DEFAULT_CONFIG.subtitle : parsed.subtitle,
+        targetDate: isOldTime ? DEFAULT_CONFIG.targetDate : (parsed.targetDate || DEFAULT_CONFIG.targetDate),
+        displayDateTime: isOldTime ? DEFAULT_CONFIG.displayDateTime : parsed.displayDateTime,
+        venueTitle: parsed.venueTitle && parsed.venueTitle !== "TRUNG TÂM HỘI NGHỊ" ? parsed.venueTitle : DEFAULT_CONFIG.venueTitle,
+        locationAddress: isOldLocation ? DEFAULT_CONFIG.locationAddress : parsed.locationAddress,
+        contactPhone: parsed.contactPhone || DEFAULT_CONFIG.contactPhone,
+        googleMapsUrl: isOldLocation ? DEFAULT_CONFIG.googleMapsUrl : (parsed.googleMapsUrl || DEFAULT_CONFIG.googleMapsUrl),
+        googleMapsEmbed: isOldLocation ? DEFAULT_CONFIG.googleMapsEmbed : (parsed.googleMapsEmbed || DEFAULT_CONFIG.googleMapsEmbed),
+        thankYouMessage: isOldThankYou ? DEFAULT_CONFIG.thankYouMessage : parsed.thankYouMessage,
         calendarMonth: parsed.calendarMonth || DEFAULT_CONFIG.calendarMonth,
         calendarYear: parsed.calendarYear || DEFAULT_CONFIG.calendarYear,
         eventDay: parsed.eventDay || DEFAULT_CONFIG.eventDay,
         musicSrc: DEFAULT_CONFIG.musicSrc,
+        musicFallback: DEFAULT_CONFIG.musicFallback,
         googleSheetScriptUrl: parsed.googleSheetScriptUrl || DEFAULT_CONFIG.googleSheetScriptUrl,
         heroBgSrc: cleanImage(parsed.heroBgSrc),
         filmStripSrc: cleanImage(parsed.filmStripSrc),

@@ -297,6 +297,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const editMonth = document.getElementById("editEventMonth");
     const editYear = document.getElementById("editEventYear");
     const editDateTime = document.getElementById("editDateTime");
+    const editVenueTitle = document.getElementById("editVenueTitle");
+    const editContactPhone = document.getElementById("editContactPhone");
     const editLocation = document.getElementById("editLocation");
     const editMaps = document.getElementById("editMapsUrl");
     const editThank = document.getElementById("editThankYou");
@@ -310,12 +312,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const resetBtn = document.getElementById("resetDefaultBtn");
 
     if (editGrad) editGrad.value = cur.graduateName || "PHẠM THỊ KIM HUÊ";
-    if (editSub) editSub.value = cur.subtitle || "LỄ TỐT NGHIỆP CỦA";
+    if (editSub) editSub.value = cur.subtitle || "YOU ARE INVITED TO";
     if (editDay) editDay.value = cur.eventDay || 17;
     if (editMonth) editMonth.value = cur.calendarMonth || 11;
     if (editYear) editYear.value = cur.calendarYear || 2026;
-    if (editDateTime) editDateTime.value = cur.displayDateTime || "17/11/2026 | Lúc 10h - 14h";
-    if (editLocation) editLocation.value = cur.locationAddress || "Số 2 , Hoàng Văn Thụ, P 4, Q.Tân Bình, TP HCM";
+    if (editDateTime) editDateTime.value = cur.displayDateTime || "17 NOV 2026 | AT 10:30-12:30 AM";
+    if (editVenueTitle) editVenueTitle.value = cur.venueTitle || "NHÀ HÁT HÒA BÌNH";
+    if (editContactPhone) editContactPhone.value = cur.contactPhone || "0373791033";
+    if (editLocation) editLocation.value = cur.locationAddress || "240 ĐƯỜNG 3/2, PHƯỜNG HÒA HƯNG, TP HCM";
     if (editMaps) editMaps.value = cur.googleMapsUrl || "";
     if (editThank) editThank.value = cur.thankYouMessage || "";
     if (editHeroBg) editHeroBg.value = cur.heroBgSrc || "";
@@ -351,9 +355,11 @@ document.addEventListener("DOMContentLoaded", () => {
           calendarMonth: parseInt(editMonth.value, 10) || 11,
           calendarYear: parseInt(editYear.value, 10) || 2026,
           displayDateTime: editDateTime.value.trim(),
+          venueTitle: editVenueTitle ? editVenueTitle.value.trim() : cur.venueTitle,
+          contactPhone: editContactPhone ? editContactPhone.value.trim() : cur.contactPhone,
           locationAddress: editLocation.value.trim(),
           googleMapsUrl: editMaps.value.trim(),
-          googleMapsEmbed: `https://maps.google.com/maps?q=${encodeURIComponent(editLocation.value.trim())}&t=&z=15&ie=UTF8&iwloc=&output=embed`,
+          googleMapsEmbed: `https://maps.google.com/maps?q=${encodeURIComponent(((editVenueTitle && editVenueTitle.value.trim()) ? editVenueTitle.value.trim() + ", " : "") + editLocation.value.trim())}&t=&z=15&ie=UTF8&iwloc=&output=embed`,
           thankYouMessage: editThank.value.trim(),
           heroBgSrc: (editHeroBg && editHeroBg.value.trim()) || "",
           filmStripSrc: (editFilmStrip && editFilmStrip.value.trim()) || "",

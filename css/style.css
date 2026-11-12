@@ -1,7 +1,23 @@
 /* ==========================================================================
-   BASE FUNCTIONAL WIREFRAME STYLESHEET
-   Giao diện tối giản trung tính, giữ toàn bộ chức năng để bạn tự thiết kế lại
+   GRADUATION PARTY - CREAM & CHOCOLATE BROWN THEME
+   Thiết kế chuẩn mẫu ảnh thiệp mời Vintage Line-Art & Dual Polaroids
+   Tương thích hoàn hảo Điện thoại & Máy tính
    ========================================================================== */
+
+:root {
+  --bg-desk: #ede4da;
+  --bg-card: #faf5f0;
+  --bg-card-soft: #f4ece3;
+  --brown-primary: #794a28;
+  --brown-dark: #4a2c18;
+  --brown-deep: #361e10;
+  --brown-muted: #8c6648;
+  --border-cream: #e4d4c3;
+  --shadow-card: 0 18px 50px rgba(74, 44, 24, 0.14);
+  --shadow-polaroid: 0 10px 24px rgba(54, 30, 16, 0.16);
+  --font-sans: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-script: "Great Vibes", cursive;
+}
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -15,180 +31,507 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background-color: #f9fafb;
-  color: #111827;
-  line-height: 1.6;
-  padding: 20px 14px 90px;
+  font-family: var(--font-sans);
+  background: var(--bg-desk);
+  color: var(--brown-dark);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-img {
-  max-width: 100%;
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+/* ==========================================================================
+   ANIMATIONS (Mượt mà, nhẹ nhàng, không che chữ)
+   ========================================================================== */
+@keyframes softFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gentleFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(1.5deg);
+  }
+}
+
+@keyframes gentleFloatReverse {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(5px) rotate(-1.5deg);
+  }
+}
+
+@keyframes musicPulse {
+  0%, 100% {
+    box-shadow: 0 6px 20px rgba(121, 74, 40, 0.3);
+  }
+  50% {
+    box-shadow: 0 6px 26px rgba(121, 74, 40, 0.55);
+  }
+}
+
+.reveal-item {
+  animation: softFadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.delay-1 { animation-delay: 0.08s; }
+.delay-2 { animation-delay: 0.16s; }
+.delay-3 { animation-delay: 0.24s; }
+.delay-4 { animation-delay: 0.32s; }
+.delay-5 { animation-delay: 0.40s; }
+.delay-6 { animation-delay: 0.48s; }
+
+/* ==========================================================================
+   KHUNG THIỆP CHÍNH (MOBILE FULL-WIDTH / DESKTOP CENTERED SHEET)
+   ========================================================================== */
+.invitation-sheet {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  background: var(--bg-card);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 84px;
+}
+
+@media (min-width: 600px) {
+  body {
+    padding: 28px 16px 60px;
+  }
+
+  .invitation-sheet {
+    border-radius: 16px;
+    border: 1px solid var(--border-cream);
+    box-shadow: var(--shadow-card);
+  }
+}
+
+/* ==========================================================================
+   SECTION 1: THIỆP CHÍNH (GRADUATION PARTY HERO CARD)
+   ========================================================================== */
+.party-hero-card {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 48px 24px 38px;
+  text-align: center;
+  background: radial-gradient(circle at 50% 35%, #fdfaf7 0%, var(--bg-card) 75%);
+}
+
+.party-hero-content {
+  position: relative;
+  z-index: 3;
+}
+
+/* Họa tiết vẽ tay line-art xung quanh viền */
+.sketch-decor {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.sketch-cap-tl {
+  top: -6px;
+  left: -10px;
+  width: clamp(78px, 21vw, 118px);
+}
+
+.sketch-diploma-tr {
+  top: -4px;
+  right: -10px;
+  width: clamp(84px, 22vw, 126px);
+}
+
+.sketch-balloon-ml {
+  top: 26%;
+  left: -10px;
+  width: clamp(44px, 12vw, 64px);
+  animation: gentleFloat 5s ease-in-out infinite;
+}
+
+.sketch-hand-mr {
+  top: 22%;
+  right: -14px;
+  width: clamp(60px, 17vw, 94px);
+}
+
+.sketch-hand-bl {
+  bottom: 13%;
+  left: -14px;
+  width: clamp(62px, 18vw, 96px);
+}
+
+.sketch-balloon-br {
+  bottom: 14%;
+  right: -8px;
+  width: clamp(42px, 12vw, 62px);
+  animation: gentleFloatReverse 5.5s ease-in-out infinite;
+}
+
+/* Dòng 1: Thân mời: [Tên khách viết tay có gạch chân nét đứt] */
+.hero-invite-row {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 0 42px;
+}
+
+.invite-prefix {
+  font-size: clamp(16px, 4.3vw, 19px);
+  font-weight: 500;
+  color: var(--brown-deep);
+}
+
+.guest-script-underline {
+  font-family: var(--font-script);
+  font-size: clamp(32px, 8.5vw, 42px);
+  font-weight: 400;
+  color: var(--brown-deep);
+  line-height: 1;
+  min-width: 135px;
+  padding: 0 12px 3px;
+  border-bottom: 2px dashed var(--brown-primary);
+  display: inline-block;
+}
+
+/* Dòng 2: YOU ARE INVITED TO */
+.hero-kicker {
+  font-size: clamp(13px, 3.6vw, 16px);
+  font-weight: 500;
+  color: var(--brown-dark);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+/* Tiêu đề chính: GRADUATION PARTY */
+.hero-party-heading {
+  font-family: var(--font-sans);
+  font-size: clamp(36px, 10.2vw, 52px);
+  font-weight: 900;
+  color: var(--brown-primary);
+  line-height: 1.03;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 26px;
+}
+
+/* ==========================================================================
+   HAI KHUNG ẢNH POLAROID NGHIÊNG XẾP CHÉO LỒNG NHAU
+   ========================================================================== */
+.hero-polaroids-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4px auto 26px;
+  max-width: 400px;
+  padding: 6px 8px;
+}
+
+.polaroid-card {
+  width: 48%;
+  background: #ffffff;
+  padding: 9px 9px 26px;
+  box-shadow: var(--shadow-polaroid);
+  border: 1px solid rgba(121, 74, 40, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.polaroid-left {
+  transform: rotate(-5.5deg);
+  z-index: 2;
+}
+
+.polaroid-right {
+  transform: rotate(6deg) translateY(10px);
+  margin-left: -14px;
+  z-index: 3;
+}
+
+.polaroid-card.has-image {
+  cursor: pointer;
+}
+
+.polaroid-card.has-image:hover {
+  transform: rotate(0deg) scale(1.03);
+  z-index: 5;
+  box-shadow: 0 14px 32px rgba(54, 30, 16, 0.24);
+}
+
+.polaroid-photo-box {
+  width: 100%;
+  aspect-ratio: 4 / 4.6;
+  background: var(--bg-card-soft);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.polaroid-photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: none;
+}
+
+.polaroid-card.has-image .polaroid-photo-box img {
+  display: block;
+}
+
+.polaroid-card.has-image .polaroid-placeholder {
+  display: none;
+}
+
+.polaroid-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--brown-muted);
+  border: 1.5px dashed var(--border-cream);
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.ph-icon {
+  font-size: 26px;
+}
+
+.ph-text {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   THÔNG TIN CỬ NHÂN & ĐỊA ĐIỂM DƯỚI POLAROID
+   ========================================================================== */
+.hero-honor-label {
+  font-size: clamp(13px, 3.6vw, 15px);
+  font-weight: 500;
+  color: var(--brown-dark);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.hero-grad-script {
+  font-family: var(--font-script);
+  font-size: clamp(50px, 13.5vw, 66px);
+  font-weight: 400;
+  color: var(--brown-primary);
+  line-height: 1.08;
+  margin-bottom: 2px;
+}
+
+.hero-grad-fullname {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--brown-muted);
+  letter-spacing: 2.8px;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.hero-event-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.hero-datetime {
+  font-size: clamp(14px, 4vw, 17px);
+  font-weight: 800;
+  color: var(--brown-primary);
+  letter-spacing: 0.5px;
+}
+
+.hero-venue-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: clamp(16px, 4.3vw, 19px);
+  font-weight: 800;
+  color: var(--brown-primary);
+  text-transform: uppercase;
+}
+
+.venue-pin-svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.hero-address {
+  font-size: clamp(13px, 3.6vw, 15px);
+  font-weight: 500;
+  color: var(--brown-deep);
+  max-width: 92%;
+  line-height: 1.45;
+}
+
+.hero-contact {
+  font-size: clamp(13.5px, 3.8vw, 15.5px);
+  font-weight: 500;
+  color: var(--brown-deep);
+  margin-top: 2px;
+}
+
+.hero-contact a {
+  color: var(--brown-deep);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.hero-contact a:hover {
+  text-decoration: underline;
+  color: var(--brown-primary);
+}
+
+/* Đường chia cổ điển */
+.vintage-divider-wrap {
+  margin: 12px auto 12px;
+  max-width: 340px;
+}
+
+.vintage-divider-svg {
+  width: 100%;
   height: auto;
   display: block;
 }
 
-/* Ẩn slot ảnh khi chưa có link ảnh */
-.wf-photo-slot {
-  display: none;
-  margin-top: 12px;
-}
-
-.wf-photo-slot.has-image {
-  display: block;
-}
-
-.wf-photo-slot img {
-  width: 100%;
-  border-radius: 6px;
-  border: 1px solid #e5e7eb;
-}
-
-/* ==========================================================================
-   CONTAINER & SECTIONS
-   ========================================================================== */
-.wireframe-container {
-  max-width: 580px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.wf-section,
-.wf-footer {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 20px;
-}
-
-.wf-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #6b7280;
+.hero-closing {
+  font-size: clamp(12.5px, 3.4vw, 14.5px);
+  font-weight: 500;
+  color: var(--brown-deep);
+  letter-spacing: 0.4px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.wf-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin: 4px 0 8px;
-}
-
-.wf-heading {
-  font-size: 17px;
-  font-weight: 700;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #f3f4f6;
-}
-
-.wf-meta,
-.wf-sub {
-  font-size: 15px;
-  color: #374151;
-}
-
-.wf-actions {
-  margin-top: 12px;
-}
-
-/* Nút & Form */
-.wf-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 16px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #111827;
-  background: #f3f4f6;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.wf-btn:hover {
-  background: #e5e7eb;
-}
-
-.wf-btn-primary {
-  background: #111827;
-  color: #ffffff;
-  border-color: #111827;
-}
-
-.wf-btn-primary:hover {
-  background: #374151;
-}
-
-.wf-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.wf-input {
-  width: 100%;
-  padding: 10px 12px;
-  font-family: inherit;
-  font-size: 16px;
-  color: #111827;
-  background: #ffffff;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-}
-
-/* Bản đồ nhúng */
-.wf-map-box {
-  margin-top: 14px;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  overflow: hidden;
-  height: 220px;
-}
-
-.wf-map-box iframe {
-  width: 100%;
-  height: 100%;
-  border: 0;
 }
 
 /* ==========================================================================
-   COUNTDOWN
+   CÁC SECTION CHỨC NĂNG BÊN DƯỚI (ĐỒNG BỘ TONE KEM & NÂU)
    ========================================================================== */
-.wf-timer-row {
+.party-sub-section {
+  padding: 28px 22px 12px;
+  border-top: 1px dashed var(--border-cream);
+}
+
+.sub-section-head {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.sub-kicker {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--brown-muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.sub-heading {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--brown-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sub-actions-center {
+  text-align: center;
+  margin-top: 16px;
+}
+
+/* Countdown */
+.cream-timer-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
+  margin-bottom: 22px;
 }
 
-.wf-timer-box {
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  padding: 10px 4px;
+.cream-timer-box {
+  background: #ffffff;
+  border: 1.5px solid var(--border-cream);
+  border-radius: 10px;
+  padding: 12px 4px;
   text-align: center;
-  background: #f9fafb;
+  box-shadow: 0 4px 12px rgba(74, 44, 24, 0.05);
 }
 
-.wf-timer-num {
+.cream-timer-num {
   display: block;
-  font-size: 22px;
+  font-size: clamp(22px, 6vw, 28px);
+  font-weight: 800;
+  color: var(--brown-primary);
+  line-height: 1.1;
+}
+
+.cream-timer-txt {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--brown-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Calendar */
+.calendar-card-cream {
+  background: #ffffff;
+  border: 1.5px solid var(--border-cream);
+  border-radius: 14px;
+  padding: 18px 14px;
+  box-shadow: 0 6px 18px rgba(74, 44, 24, 0.06);
+}
+
+.calendar-month-heading {
+  text-align: center;
+  font-size: 16px;
   font-weight: 700;
+  color: var(--brown-primary);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
 }
 
-.wf-timer-txt {
-  font-size: 12px;
-  color: #6b7280;
-}
-
-/* ==========================================================================
-   LỊCH THÁNG
-   ========================================================================== */
-.wf-calendar-grid {
+.cream-calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 4px;
@@ -196,54 +539,198 @@ img {
 }
 
 .cal-header-cell {
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
-  color: #6b7280;
+  color: var(--brown-muted);
   padding: 6px 0;
 }
 
 .cal-date-cell {
-  font-size: 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--brown-dark);
   padding: 8px 0;
-  border-radius: 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cal-date-cell.event-date {
-  background: #111827;
+  background: var(--brown-primary);
   color: #ffffff;
+  font-weight: 800;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  margin: auto;
+  box-shadow: 0 4px 10px rgba(121, 74, 40, 0.35);
+}
+
+/* Nút bấm */
+.btn-cream-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-family: var(--font-sans);
+  font-size: 13px;
   font-weight: 700;
+  color: var(--brown-primary);
+  background: var(--bg-card);
+  border: 1.5px solid var(--brown-primary);
+  border-radius: 999px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
 
-/* ==========================================================================
-   THƯ TÂM SỰ, ALBUM & LỜI CHÚC
-   ========================================================================== */
-.wf-letter-text p + p {
-  margin-top: 8px;
+.btn-cream-outline:hover {
+  background: var(--brown-primary);
+  color: #ffffff;
 }
 
-.wf-signature {
-  margin-top: 12px;
-  font-size: 15px;
+.btn-brown-solid {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #ffffff;
+  background: var(--brown-primary);
+  border: 1.5px solid var(--brown-primary);
+  border-radius: 999px;
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
 }
 
-.wf-album-grid {
+.btn-brown-solid:hover {
+  background: var(--brown-dark);
+  border-color: var(--brown-dark);
+  transform: translateY(-1px);
+}
+
+.btn-full {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* Bản đồ nhúng */
+.map-frame-cream {
+  border: 2px solid var(--border-cream);
+  border-radius: 14px;
+  overflow: hidden;
+  height: 230px;
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(74, 44, 24, 0.06);
+}
+
+.map-frame-cream iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Bức thư tâm sự & Album ảnh mở rộng */
+.letter-box-cream {
+  background: #ffffff;
+  border: 1.5px solid var(--border-cream);
+  border-radius: 14px;
+  padding: 22px 20px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(74, 44, 24, 0.05);
+}
+
+.letter-body-cream {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--brown-dark);
+  line-height: 1.75;
+  text-align: justify;
+}
+
+.letter-body-cream p + p {
+  margin-top: 10px;
+}
+
+.letter-sig-cream {
+  font-family: var(--font-script);
+  font-size: 32px;
+  color: var(--brown-primary);
+  margin-top: 14px;
+}
+
+/* Album phụ (chỉ hiện nếu có ảnh từ /admin) */
+.extra-album-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  margin-top: 12px;
+  gap: 10px;
+  margin-top: 16px;
 }
 
-.wf-wishes-list {
+.extra-photo-slot {
+  display: none;
+  background: #ffffff;
+  padding: 6px;
+  border: 1px solid var(--border-cream);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.extra-photo-slot.has-image {
+  display: block;
+}
+
+.extra-photo-slot img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+
+/* Form RSVP & Danh sách lời chúc */
+.rsvp-form-cream {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cream-input {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: var(--font-sans);
+  font-size: 16px; /* Ngăn iOS Safari tự zoom khi nhập */
+  color: var(--brown-deep);
+  background: #ffffff;
+  border: 1.5px solid var(--border-cream);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.cream-input:focus {
+  border-color: var(--brown-primary);
+}
+
+.wishes-list-cream {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
 .wish-item {
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  padding: 12px;
-  background: #f9fafb;
+  background: #ffffff;
+  border: 1px solid var(--border-cream);
+  border-radius: 12px;
+  padding: 14px 16px;
+  box-shadow: 0 3px 10px rgba(74, 44, 24, 0.04);
 }
 
 .wish-header {
@@ -252,42 +739,47 @@ img {
   align-items: center;
   gap: 8px;
   margin-bottom: 6px;
+  flex-wrap: wrap;
 }
 
 .wish-author {
   font-weight: 700;
   font-size: 14px;
+  color: var(--brown-primary);
 }
 
 .wish-status-badge {
   font-size: 11px;
-  padding: 2px 8px;
-  border-radius: 12px;
-  background: #e5e7eb;
-  color: #374151;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--bg-card-soft);
+  color: var(--brown-primary);
+  border: 1px solid var(--border-cream);
 }
 
 .wish-content {
-  font-size: 14px;
-  color: #374151;
+  font-size: 13.5px;
+  color: var(--brown-dark);
+  line-height: 1.55;
 }
 
 .wish-time {
   font-size: 11px;
-  color: #9ca3af;
+  color: var(--brown-muted);
   margin-top: 6px;
 }
 
-.wf-footer {
+/* Footer */
+.party-footer {
+  padding: 20px 16px 8px;
   text-align: center;
-  font-size: 14px;
-  color: #4b5563;
 }
 
 .footer-credit {
-  margin-top: 10px;
   font-size: 12px;
-  color: #9ca3af;
+  color: var(--brown-muted);
+  opacity: 0.7;
 }
 
 /* ==========================================================================
@@ -305,26 +797,31 @@ img {
   align-items: center;
   gap: 8px;
   padding: 10px 16px;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 600;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
   color: #ffffff;
-  background: #111827;
-  border: 1px solid #374151;
+  background: var(--brown-primary);
+  border: 1.5px solid #fdf9f3;
   border-radius: 999px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 20px rgba(74, 44, 24, 0.3);
   cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.music-toggle-btn:hover {
+  transform: scale(1.04);
+  background: var(--brown-dark);
 }
 
 .music-toggle-btn.playing {
-  background: #047857;
-  border-color: #065f46;
+  animation: musicPulse 2s ease-in-out infinite;
 }
 
 .lightbox-modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(34, 18, 10, 0.88);
   display: none;
   align-items: center;
   justify-content: center;
@@ -337,41 +834,73 @@ img {
 }
 
 .lightbox-img {
-  max-height: 90vh;
-  max-width: 95vw;
-  border-radius: 6px;
+  max-height: 88vh;
+  max-width: 94vw;
+  border-radius: 8px;
+  border: 6px solid #ffffff;
 }
 
 .lightbox-close {
   position: absolute;
   top: 16px;
-  right: 20px;
+  right: 22px;
   background: none;
   border: none;
   color: #ffffff;
-  font-size: 32px;
+  font-size: 34px;
   cursor: pointer;
 }
 
 .toast-notice {
   position: fixed;
   left: 50%;
-  bottom: 76px;
+  bottom: 74px;
   transform: translateX(-50%) translateY(16px);
-  background: #111827;
-  color: #ffffff;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-size: 14px;
+  background: var(--brown-deep);
+  color: #faf5f0;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 600;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s ease, transform 0.25s ease;
   z-index: 3000;
   max-width: 90vw;
   text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .toast-notice.show {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
+}
+
+/* ==========================================================================
+   TỐI ƯU ĐIỆN THOẠI MÀN HÌNH NHỎ (< 390px)
+   ========================================================================== */
+@media (max-width: 390px) {
+  .party-hero-card {
+    padding: 48px 16px 30px;
+  }
+
+  .sketch-balloon-ml,
+  .sketch-balloon-br {
+    opacity: 0.7;
+    width: 40px;
+  }
+
+  .sketch-hand-mr,
+  .sketch-hand-bl {
+    width: 56px;
+    opacity: 0.85;
+  }
+
+  .polaroid-card {
+    padding: 6px 6px 20px;
+  }
+
+  .polaroid-right {
+    margin-left: -10px;
+  }
 }
