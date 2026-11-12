@@ -49,6 +49,171 @@ body {
   clip: rect(0, 0, 0, 0);
 }
 
+/* ==========================================================================
+   HIỆU ỨNG MỞ THIỆP 2 CÁNH PHONG BÌ VINTAGE KEM & NÂU
+   ========================================================================== */
+body.invitation-pending {
+  overflow: hidden;
+}
+
+body.invitation-pending .reveal-item,
+body.invitation-pending .ink-write-reveal,
+body.invitation-pending .tracking-reveal,
+body.invitation-pending .heading-line-1,
+body.invitation-pending .heading-line-2,
+body.invitation-pending .polaroid-entrance {
+  animation-play-state: paused !important;
+}
+
+.envelope-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1400px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.envelope-door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.5%;
+  background: linear-gradient(145deg, #fbf6f0 0%, #f1e6d8 100%);
+  transition: transform 1.15s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.9s ease;
+  backface-visibility: hidden;
+}
+
+.envelope-door::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1.5px solid rgba(121, 74, 40, 0.25);
+  pointer-events: none;
+}
+
+.door-left {
+  left: 0;
+  transform-origin: left center;
+  box-shadow: inset -14px 0 32px rgba(74, 44, 24, 0.08);
+  border-right: 1px solid rgba(121, 74, 40, 0.22);
+}
+
+.door-right {
+  right: 0;
+  transform-origin: right center;
+  box-shadow: inset 14px 0 32px rgba(74, 44, 24, 0.08);
+  border-left: 1px solid rgba(121, 74, 40, 0.22);
+}
+
+.envelope-overlay.opened {
+  pointer-events: none;
+}
+
+.envelope-overlay.opened .door-left {
+  transform: translateX(-104%) rotateY(14deg);
+  opacity: 0.4;
+}
+
+.envelope-overlay.opened .door-right {
+  transform: translateX(104%) rotateY(-14deg);
+  opacity: 0.4;
+}
+
+.envelope-center-card {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+  padding: 20px;
+  max-width: 340px;
+  width: 88%;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease;
+}
+
+.envelope-overlay.opened .envelope-center-card {
+  transform: scale(1.1);
+  opacity: 0;
+}
+
+@keyframes waxSealFloat {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+    box-shadow: 0 10px 28px rgba(74, 44, 24, 0.36), inset 0 0 0 4px rgba(250, 245, 240, 0.22);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 14px 34px rgba(74, 44, 24, 0.48), inset 0 0 0 4px rgba(250, 245, 240, 0.35);
+  }
+}
+
+.envelope-wax-seal {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #8f5732 0%, #6c3e1f 65%, #4a2c18 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: waxSealFloat 2.6s ease-in-out infinite;
+}
+
+.wax-cap-svg {
+  width: 44px;
+  height: 44px;
+}
+
+.envelope-tag-box {
+  background: #faf5f0;
+  border: 1.5px dashed var(--brown-primary);
+  border-radius: 12px;
+  padding: 14px 24px;
+  width: 100%;
+  box-shadow: 0 8px 24px rgba(74, 44, 24, 0.12);
+}
+
+.envelope-tag-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: var(--brown-muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.envelope-guest-name {
+  font-family: var(--font-guest);
+  font-size: clamp(32px, 8.5vw, 40px);
+  font-weight: 700;
+  color: var(--brown-deep);
+  line-height: 1.15;
+}
+
+@keyframes tapPulse {
+  0%, 100% { transform: scale(1); opacity: 0.92; }
+  50% { transform: scale(1.04); opacity: 1; }
+}
+
+.envelope-tap-hint {
+  display: inline-block;
+  padding: 9px 22px;
+  background: var(--brown-primary);
+  color: #faf5f0;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  box-shadow: 0 6px 18px rgba(74, 44, 24, 0.25);
+  animation: tapPulse 1.8s ease-in-out infinite;
+}
+
 /* Canvas hiệu ứng hạt ấm áp trên nền */
 #fxCanvas {
   position: fixed;

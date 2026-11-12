@@ -20,9 +20,35 @@
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Great+Vibes&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=16">
+  <link rel="stylesheet" href="css/style.css?v=17">
 </head>
-<body>
+<body class="invitation-pending">
+
+  <!-- HIỆU ỨNG MỞ THIỆP 2 CÁNH PHONG BÌ VINTAGE KEM & NÂU -->
+  <div id="envelopeOverlay" class="envelope-overlay" role="button" tabindex="0" aria-label="Chạm để mở thiệp mời">
+    <div class="envelope-door door-left"></div>
+    <div class="envelope-door door-right"></div>
+
+    <div id="envelopeSealCard" class="envelope-center-card">
+      <div class="envelope-wax-seal" aria-hidden="true">
+        <svg class="wax-cap-svg" viewBox="0 0 64 64" fill="none" stroke="#FAF5F0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M32 14 L56 25 L32 36 L8 25 Z"/>
+          <path d="M18 30 V42 C18 46 32 51 32 51 C32 51 46 46 46 42 V30"/>
+          <path d="M52 27 V40"/>
+          <circle cx="52" cy="42" r="2.2" fill="#FAF5F0"/>
+        </svg>
+      </div>
+
+      <div class="envelope-tag-box">
+        <div class="envelope-tag-label">TRÂN TRỌNG KÍNH MỜI</div>
+        <div id="envelopeGuestName" class="envelope-guest-name">Bạn X</div>
+      </div>
+
+      <div class="envelope-tap-hint">
+        <span>✨ Chạm để mở thiệp</span>
+      </div>
+    </div>
+  </div>
 
   <!-- Nhạc nền: Taylor Swift - Long Live (Taylor's Version) -->
   <audio id="bgMusic" preload="auto">
@@ -383,7 +409,7 @@
 
   <!-- Scripts chức năng -->
   <script src="js/confetti.browser.min.js"></script>
-  <script src="js/config.js?v=16"></script>
-  <script src="js/app.js?v=16"></script>
+  <script src="js/config.js?v=17"></script>
+  <script src="js/app.js?v=17"></script>
 </body>
 </html>

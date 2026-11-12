@@ -50,6 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const guestDisplay = document.getElementById("guestNameDisplay");
     if (guestDisplay) guestDisplay.textContent = toTitleIfAllUpper(currentGuestName);
 
+    const envGuest = document.getElementById("envelopeGuestName");
+    if (envGuest) envGuest.textContent = toTitleIfAllUpper(currentGuestName);
+
     const timeHighlight = document.getElementById("eventTimeHighlight");
     if (timeHighlight) {
       timeHighlight.textContent = config.displayDateTime || "17 NOV 2026 | AT 10:30-12:30 AM";
@@ -338,6 +341,60 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   attachUnlockListeners();
 
+  // 6b. Hiệu ứng mở phong bì 2 cánh (Vintage Cream & Chocolate Brown Gatefold)
+  function initEnvelopeOpening() {
+    const envelopeOverlay = document.getElementById("envelopeOverlay");
+    if (!envelopeOverlay) {
+      document.body.classList.remove("invitation-pending");
+      return;
+    }
+
+    let isOpened = false;
+
+    const openInvitation = () => {
+      if (isOpened) return;
+      isOpened = true;
+
+      // Mở khóa và phát nhạc nền ngay khi chạm mở thiệp
+      startAudio().catch(() => {});
+
+      // Bắt đầu hiệu ứng chữ & Polaroid chạy ngay khi 2 cánh mở ra
+      document.body.classList.remove("invitation-pending");
+      document.body.classList.add("invitation-opened");
+
+      // Pháo giấy chúc mừng tone kem & nâu đồng
+      if (typeof confetti === "function") {
+        confetti({
+          particleCount: 65,
+          spread: 75,
+          origin: { y: 0.55 },
+          colors: ["#794a28", "#d4a373", "#cfa346", "#faf5f0", "#ffffff"]
+        });
+      }
+
+      envelopeOverlay.classList.add("opened");
+
+      setTimeout(() => {
+        observeScrollItems();
+      }, 320);
+
+      setTimeout(() => {
+        envelopeOverlay.style.display = "none";
+        observeScrollItems();
+      }, 1150);
+    };
+
+    envelopeOverlay.addEventListener("click", openInvitation);
+    envelopeOverlay.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openInvitation();
+      }
+    });
+  }
+
+  initEnvelopeOpening();
+
   // 7. Sổ lưu bút và Kết nối Đồng bộ Google Sheets
   const WISHES_STORAGE_KEY = "graduation_invitation_wishes_list";
 
@@ -597,6 +654,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function initScrollReveal() {
     if (!("IntersectionObserver" in window)) return;
     document.documentElement.classList.add("anim-ready");
+    if (document.body.classList.contains("invitation-pending")) return;
     // Chờ 2 animation frame để trình duyệt vẽ trạng thái ẩn trước khi trượt hiện mượt mà
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
