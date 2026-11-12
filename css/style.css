@@ -492,19 +492,19 @@ body.invitation-pending .polaroid-entrance {
 
 @keyframes polaroidSwayLeft {
   0%, 100% {
-    transform: rotate(-5.5deg) translateY(0px);
+    transform: rotate(-10deg) translateY(-8px);
   }
   50% {
-    transform: rotate(-4deg) translateY(-4px);
+    transform: rotate(-8.5deg) translateY(-12px);
   }
 }
 
 @keyframes polaroidSwayRight {
   0%, 100% {
-    transform: rotate(6deg) translateY(10px);
+    transform: rotate(10.5deg) translateY(20px);
   }
   50% {
-    transform: rotate(4.5deg) translateY(6px);
+    transform: rotate(9deg) translateY(16px);
   }
 }
 
@@ -862,7 +862,7 @@ body.invitation-pending .polaroid-entrance {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 4px auto 26px;
+  margin: 10px auto 34px;
   max-width: 420px;
   padding: 6px 8px;
 }
@@ -878,14 +878,14 @@ body.invitation-pending .polaroid-entrance {
 }
 
 .polaroid-left {
-  transform: rotate(-5.5deg);
+  transform: rotate(-10deg) translateY(-8px);
   z-index: 2;
   animation: polaroidSwayLeft 6s ease-in-out infinite;
 }
 
 .polaroid-right {
-  transform: rotate(6deg) translateY(10px);
-  margin-left: -14px;
+  transform: rotate(10.5deg) translateY(20px);
+  margin-left: -24px;
   z-index: 3;
   animation: polaroidSwayRight 6.5s ease-in-out infinite;
 }
@@ -1720,6 +1720,6 @@ body.invitation-pending .polaroid-entrance {
   }
 
   .polaroid-right {
-    margin-left: -10px;
+    margin-left: -18px;
   }
 }
