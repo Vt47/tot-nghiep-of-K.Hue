@@ -275,44 +275,45 @@ body.invitation-pending .polaroid-entrance {
   z-index: 1;
 }
 
-/* Con dấu sáp hoa hồng */
-@keyframes roseSealPulse {
+/* Con dấu sáp hình trái tim */
+@keyframes heartSealPulse {
   0%, 100% {
     transform: translate(-50%, -50%) scale(1);
-    box-shadow: 0 6px 18px rgba(74, 44, 24, 0.35), inset 0 2px 5px rgba(255, 255, 255, 0.32);
+    filter: drop-shadow(0 6px 14px rgba(74, 44, 24, 0.35));
   }
   50% {
-    transform: translate(-50%, -50%) scale(1.07);
-    box-shadow: 0 10px 26px rgba(74, 44, 24, 0.5), inset 0 2px 8px rgba(255, 255, 255, 0.45);
+    transform: translate(-50%, -50%) scale(1.08);
+    filter: drop-shadow(0 10px 22px rgba(74, 44, 24, 0.5));
   }
 }
 
-.env-rose-seal {
+.env-rose-seal,
+.env-heart-seal {
   position: absolute;
   left: 50%;
   top: 56%;
   transform: translate(-50%, -50%);
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #8f5732 0%, #6c3e1f 65%, #4a2c18 100%);
+  width: 72px;
+  height: 72px;
   z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: roseSealPulse 2.3s ease-in-out infinite;
+  animation: heartSealPulse 2.1s ease-in-out infinite;
   transition: top 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s ease;
 }
 
-.envelope-overlay.opened .env-rose-seal {
+.envelope-overlay.opened .env-rose-seal,
+.envelope-overlay.opened .env-heart-seal {
   animation: none;
   top: 76%;
   transform: translate(-50%, -50%) scale(0.95);
 }
 
-.env-rose-svg {
-  width: 50px;
-  height: 50px;
+.env-heart-svg {
+  width: 68px;
+  height: 68px;
+  display: block;
 }
 
 @keyframes glintBlink {
@@ -322,10 +323,10 @@ body.invitation-pending .polaroid-entrance {
 
 .env-seal-glint {
   position: absolute;
-  top: 12px;
+  top: 14px;
   right: 14px;
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: #fff7e6;
   box-shadow: 0 0 10px #fff7e6;

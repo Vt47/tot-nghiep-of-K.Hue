@@ -20,7 +20,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Dancing+Script:wght@500;600;700&family=Great+Vibes&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=19">
+  <link rel="stylesheet" href="css/style.css?v=20">
 </head>
 <body class="invitation-pending">
 
@@ -62,13 +62,22 @@
         <div class="env-flap-top"></div>
         <div class="env-pocket-front"></div>
 
-        <!-- Con dấu sáp hoa hồng -->
-        <div class="env-rose-seal" aria-hidden="true">
-          <svg class="env-rose-svg" viewBox="0 0 64 64" fill="none" stroke="rgba(250,245,240,0.85)" stroke-width="1.7" stroke-linecap="round">
-            <circle cx="32" cy="32" r="24" stroke="rgba(250,245,240,0.4)" stroke-width="1.2"/>
-            <path d="M32 24 C36 22, 40 26, 36 31 C33 35, 26 33, 27 27 C28 21, 37 18, 43 24 C48 30, 44 41, 34 43 C24 45, 16 36, 19 25 C22 15, 35 11, 45 18"/>
-            <path d="M25 39 C29 45, 39 45, 44 38"/>
-            <path d="M30 28 C32 26, 35 28, 33 31 C31 33, 29 30, 30 28 Z" fill="rgba(250,245,240,0.28)"/>
+        <!-- Con dấu sáp hình trái tim -->
+        <div class="env-rose-seal env-heart-seal" aria-hidden="true">
+          <svg class="env-heart-svg" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+            <defs>
+              <radialGradient id="heartWaxGrad" cx="35%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="#9A5B32"/>
+                <stop offset="65%" stop-color="#6C3E1F"/>
+                <stop offset="100%" stop-color="#45230F"/>
+              </radialGradient>
+            </defs>
+            <!-- Thân sáp hình trái tim -->
+            <path d="M32 56 C32 56, 6 39, 6 20.5 C6 11.5, 13.5 5.5, 22 5.5 C27.2 5.5, 30.8 8.6, 32 12.2 C33.2 8.6, 36.8 5.5, 42 5.5 C50.5 5.5, 58 11.5, 58 20.5 C58 39, 32 56, 32 56 Z" fill="url(#heartWaxGrad)"/>
+            <!-- Đường dập nổi trái tim bên trong -->
+            <path d="M32 48.5 C32 48.5, 12.5 35, 12.5 21 C12.5 14.5, 17.5 10.5, 23 10.5 C27.2 10.5, 30.5 13.5, 32 16.5 C33.5 13.5, 36.8 10.5, 41 10.5 C46.5 10.5, 51.5 14.5, 51.5 21 C51.5 35, 32 48.5, 32 48.5 Z" stroke="rgba(250, 245, 240, 0.55)" stroke-width="1.6" fill="none"/>
+            <!-- Vệt sáng bóng nhẹ trên sáp -->
+            <path d="M14 19 C14 14.5, 18 11.5, 22 11.5" stroke="rgba(255, 250, 240, 0.45)" stroke-width="2" stroke-linecap="round"/>
           </svg>
           <span class="env-seal-glint"></span>
         </div>
