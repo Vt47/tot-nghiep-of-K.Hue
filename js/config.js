@@ -32,9 +32,10 @@ const DEFAULT_CONFIG = {
   // Kết nối Google Sheets tự động
   googleSheetScriptUrl: "https://script.google.com/macros/s/AKfycbyTNQzwT0g5SNDnphPAEqSzdi1UGKqKXmdk4zEV9gdK_hOnwbQSDxBtofYTpqs2ngQoHA/exec",
 
-  // Hình ảnh Polaroid & Album (Thêm trong /admin)
-  heroBgSrc: "",
-  filmStripSrc: "",
+  // Hình ảnh Polaroid & Album
+  envMiniSrc: "assets/photos/photo_1.jpg",
+  heroBgSrc: "assets/photos/photo_2.jpg",
+  filmStripSrc: "assets/photos/photo_3.jpg",
   calendarPolaroidsSrc: "",
   footerPhotoSrc: "",
   albumPhotos: ["", "", "", ""],

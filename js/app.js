@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     updatePhotoSlot("heroBgImg", config.heroBgSrc);
-    updatePhotoSlot("envMiniImg", config.heroBgSrc);
+    updatePhotoSlot("envMiniImg", config.envMiniSrc || config.heroBgSrc);
     updatePhotoSlot("filmStripImg", config.filmStripSrc);
     updatePhotoSlot("calendarPolaroidsImg", config.calendarPolaroidsSrc);
     updatePhotoSlot("letterPolaroidImg", config.footerPhotoSrc);
