@@ -265,7 +265,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // 6. Nhạc nền (Long Live) và Bộ điều khiển phát/dừng
   const bgMusic = document.getElementById("bgMusic");
   const musicToggleBtn = document.getElementById("musicToggleBtn");
-  const musicStatusText = document.getElementById("musicStatusText");
   let isPlaying = false;
 
   function setPlayingState(playing) {
@@ -273,9 +272,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (musicToggleBtn) {
       musicToggleBtn.classList.toggle("playing", playing);
-    }
-    if (musicStatusText) {
-      musicStatusText.textContent = playing ? "Đang phát: Long Live" : "Bật nhạc: Long Live";
     }
   }
 

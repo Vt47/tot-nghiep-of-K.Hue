@@ -20,7 +20,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Great+Vibes&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=14">
+  <link rel="stylesheet" href="css/style.css?v=15">
 </head>
 <body>
 
@@ -360,11 +360,15 @@
 
   </main>
 
-  <!-- NÚT BẬT / TẮT NHẠC NỀN -->
+  <!-- NÚT BẬT / TẮT NHẠC NỀN (DẠNG ICON TRÒN NHỎ GỌN, KHÔNG CHỮ) -->
   <div class="floating-music-bar">
-    <button id="musicToggleBtn" class="music-toggle-btn" type="button" aria-label="Bật/Tắt nhạc nền">
-      <span class="music-icon">🎵</span>
-      <span id="musicStatusText" class="music-label">Bật nhạc: Long Live</span>
+    <button id="musicToggleBtn" class="music-toggle-btn" type="button" aria-label="Bật/Tắt nhạc nền" title="Bật/Tắt nhạc nền">
+      <svg class="music-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9 18V5l12-2v13"/>
+        <circle cx="6" cy="18" r="3"/>
+        <circle cx="18" cy="16" r="3"/>
+      </svg>
+      <span class="music-mute-slash" aria-hidden="true"></span>
     </button>
   </div>
 
@@ -379,7 +383,7 @@
 
   <!-- Scripts chức năng -->
   <script src="js/confetti.browser.min.js"></script>
-  <script src="js/config.js?v=14"></script>
-  <script src="js/app.js?v=14"></script>
+  <script src="js/config.js?v=15"></script>
+  <script src="js/app.js?v=15"></script>
 </body>
 </html>
