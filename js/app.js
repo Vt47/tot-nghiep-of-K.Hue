@@ -448,7 +448,6 @@ document.addEventListener("DOMContentLoaded", () => {
           <span class="wish-status-badge">${escapeHTML(item.status || "Gửi lời chúc")}</span>
         </div>
         <div class="wish-content">${escapeHTML(item.message)}</div>
-        <div class="wish-time">${escapeHTML(item.time || "Vừa xong")}</div>
       `;
       container.appendChild(wishEl);
     });
