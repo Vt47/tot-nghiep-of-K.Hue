@@ -480,7 +480,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  loadWishes();
+  // Đã ẩn phần hiển thị công khai "Lời Chúc Yêu Thương" trên thiệp; form RSVP vẫn gửi dữ liệu về Google Sheets.
 
   // 8. Xử lý Gửi Form Xác nhận tham dự (RSVP)
   const rsvpForm = document.getElementById("rsvpForm");
