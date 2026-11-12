@@ -360,13 +360,13 @@ body.invitation-pending .polaroid-entrance {
 @keyframes inkWriteReveal {
   0% {
     opacity: 0;
-    clip-path: inset(-20% 100% -20% 0);
-    transform: translateX(-6px);
+    transform: translateY(14px) scale(0.95);
+    filter: blur(4px);
   }
   100% {
     opacity: 1;
-    clip-path: inset(-20% 0% -20% 0);
-    transform: translateX(0);
+    transform: translateY(0) scale(1);
+    filter: blur(0);
   }
 }
 
@@ -452,21 +452,20 @@ body.invitation-pending .polaroid-entrance {
   filter: blur(0);
 }
 
-/* Hiệu ứng viết nét bút khi cuộn đến tên thư pháp */
+/* Hiệu ứng chữ thư pháp xuất hiện mềm mại (không dùng clip-path để giữ trọn nét uốn) */
 .anim-ready .ink-scroll-reveal {
   opacity: 0;
-  clip-path: inset(-20% 100% -20% 0);
-  transform: translateX(-10px);
-  filter: none;
-  transition: clip-path 1.15s cubic-bezier(0.22, 1, 0.36, 1),
-              opacity 0.6s ease,
-              transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(18px) scale(0.95);
+  filter: blur(4px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              filter 0.9s ease;
 }
 
 .anim-ready .ink-scroll-reveal.is-visible {
   opacity: 1;
-  clip-path: inset(-20% 0% -20% 0);
-  transform: translateX(0);
+  transform: translateY(0) scale(1);
+  filter: blur(0);
 }
 
 /* Hiệu ứng giãn đường chia từ giữa ra 2 bên */
@@ -772,10 +771,11 @@ body.invitation-pending .polaroid-entrance {
   font-size: clamp(50px, 13vw, 66px);
   font-weight: 400;
   color: #633719;
-  line-height: 1.12;
+  line-height: 1.32;
+  padding: 6px 28px;
   margin-bottom: 2px;
-  /* Tăng độ nét nhẹ cho màn hình máy tính độ phân giải thường */
-  text-shadow: 0 0 0.6px rgba(99, 55, 25, 0.55), 0 2px 8px rgba(108, 62, 31, 0.08);
+  overflow: visible;
+  text-shadow: 0 0 0.5px rgba(99, 55, 25, 0.5), 0 2px 8px rgba(108, 62, 31, 0.08);
   display: inline-block;
 }
 
