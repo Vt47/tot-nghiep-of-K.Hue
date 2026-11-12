@@ -35,7 +35,7 @@ const DEFAULT_CONFIG = {
   // Hình ảnh Polaroid & Album
   envMiniSrc: "assets/photos/photo_1_cutout.png",
   heroBgSrc: "assets/photos/photo_2.jpg",
-  filmStripSrc: "assets/photos/photo_3.jpg",
+  filmStripSrc: "assets/photos/photo_1.jpg",
   calendarPolaroidsSrc: "",
   footerPhotoSrc: "",
   albumPhotos: ["", "", "", ""],
