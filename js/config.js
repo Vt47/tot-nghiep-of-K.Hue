@@ -14,9 +14,9 @@ const DEFAULT_CONFIG = {
   subtitle: "YOU ARE INVITED TO",
   invitationTitle: "GRADUATION PARTY",
 
-  // Thời gian tổ chức (17/11/2026, lúc 10:30-12:30 AM)
+  // Thời gian tổ chức (17/11/2026, lúc 10:30 – 12:30)
   targetDate: "2026-11-17T10:30:00",
-  displayDateTime: "17 NOV 2026 | AT 10:30-12:30 AM",
+  displayDateTime: "10:30 – 12:30\u00A0\u00A0|\u00A0\u00A0Thứ Ba, 17/11/2026",
   eventDayOfWeek: "THỨ BA",
   eventDay: 17,
   calendarMonth: 11,

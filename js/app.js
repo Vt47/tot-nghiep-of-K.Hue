@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const timeHighlight = document.getElementById("eventTimeHighlight");
     if (timeHighlight) {
-      timeHighlight.textContent = config.displayDateTime || "17 NOV 2026 | AT 10:30-12:30 AM";
+      timeHighlight.textContent = config.displayDateTime || "10:30 – 12:30\u00A0\u00A0|\u00A0\u00A0Thứ Ba, 17/11/2026";
     }
 
     const venueTitleEl = document.getElementById("venueTitleDisplay");
