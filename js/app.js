@@ -263,7 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function startAudio() {
-    if (!bgMusic) return Promise.reject(new Error("No audio element"));
+    if (!bgMusic || document.hidden) return Promise.reject(new Error("No audio element or tab hidden"));
     return bgMusic.play().then(() => {
       setPlayingState(true);
       detachUnlockListeners();
@@ -273,8 +273,25 @@ document.addEventListener("DOMContentLoaded", () => {
   function stopAudio() {
     if (!bgMusic) return;
     bgMusic.pause();
+    if ("mediaSession" in navigator) {
+      try { navigator.mediaSession.playbackState = "paused"; } catch (e) {}
+    }
     setPlayingState(false);
   }
+
+  // Tự động tắt nhạc khi thoát trình duyệt, chuyển tab, ẩn ứng dụng hoặc khóa màn hình
+  function handleBrowserExitStopMusic() {
+    detachUnlockListeners();
+    stopAudio();
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      handleBrowserExitStopMusic();
+    }
+  });
+  window.addEventListener("pagehide", handleBrowserExitStopMusic);
+  window.addEventListener("beforeunload", handleBrowserExitStopMusic);
 
   if (bgMusic) {
     bgMusic.addEventListener("play", () => setPlayingState(true));
