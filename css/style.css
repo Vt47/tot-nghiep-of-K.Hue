@@ -1,1944 +1,334 @@
-/**
- * THIỆP MỜI TỐT NGHIỆP - LAMI LUXURY RED & GOLD THEME
- * Tone đỏ rượu vang quý phái, vàng ánh kim và giấy kem sang trọng
- * Tối ưu hóa toàn diện cho cả Máy Tính (Desktop) và Điện Thoại (Mobile)
- */
+/* ==========================================================================
+   BASE FUNCTIONAL WIREFRAME STYLESHEET
+   Giao diện tối giản trung tính, giữ toàn bộ chức năng để bạn tự thiết kế lại
+   ========================================================================== */
 
-:root {
-  --font-serif: "Playfair Display", Georgia, serif;
-  --font-sans: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-script: "Great Vibes", "Alex Brush", cursive;
-  --font-cinzel: "Cinzel", "Cormorant Garamond", serif;
-
-  /* Bảng màu chính */
-  --color-burgundy: #851c27;
-  --color-burgundy-dark: #64121b;
-  --color-burgundy-light: #a42835;
-  --color-gold: #cba248;
-  --color-gold-light: #f5df93;
-  --color-gold-dark: #987524;
-  --color-cream: #faf7f2;
-  --color-cream-card: #ffffff;
-  --color-text-dark: #29221f;
-  --color-text-muted: #6e645e;
-  --color-border-subtle: #ebdcd7;
-
-  --shadow-card: 0 10px 30px rgba(133, 28, 39, 0.08);
-  --shadow-float: 0 18px 45px rgba(0, 0, 0, 0.16);
-  --radius-card: 16px;
-  --radius-btn: 50px;
-}
-
-* {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-  background-color: #141113;
-  font-family: var(--font-sans);
-  color: var(--color-text-dark);
-  line-height: 1.6;
-  -webkit-text-size-adjust: 100%;
-  -webkit-font-smoothing: antialiased;
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
 }
 
-/* Background nền trang nhã trên Desktop */
 body {
-  background: radial-gradient(circle at 50% 15%, #2a151b 0%, #151013 70%, #0d0a0c 100%);
-  min-height: 100vh;
-}
-
-/* ==========================================================================
-   1. KEYFRAME ANIMATIONS & TEXT EFFECTS
-   ========================================================================== */
-
-/* Hiệu ứng vàng ánh kim chạy ngang chữ (Gold Foil Shimmer) */
-@keyframes goldShimmerEffect {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-.gold-shimmer-text {
-  background: linear-gradient(
-    110deg,
-    #cba248 0%,
-    #faebbd 25%,
-    #ffffff 50%,
-    #faebbd 75%,
-    #cba248 100%
-  );
-  background-size: 250% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: goldShimmerEffect 4.5s ease-in-out infinite;
-  display: inline-block;
-}
-
-/* Hiệu ứng bay bổng nhẹ nhàng cho chữ thư pháp (Calligraphy Breathing) */
-@keyframes calligraphyBreathe {
-  0%, 100% {
-    transform: translateY(0) scale(1);
-    text-shadow: 0 2px 10px rgba(133, 28, 39, 0.15);
-  }
-  50% {
-    transform: translateY(-4px) scale(1.02);
-    text-shadow: 0 6px 18px rgba(133, 28, 39, 0.25);
-  }
-}
-
-.calligraphy-float {
-  display: inline-block;
-  animation: calligraphyBreathe 4s ease-in-out infinite;
-}
-
-/* Hiệu ứng nhịp đập trái tim lịch sự kiện */
-@keyframes heartPulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); }
-  50% { transform: translate(-50%, -50%) scale(1.14); filter: drop-shadow(0 0 6px rgba(133, 28, 39, 0.4)); }
-}
-
-/* Con dấu hoàng gia đập nhẹ */
-@keyframes sealPulse {
-  0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 0 4px rgba(203, 162, 72, 0.3);
-  }
-  50% {
-    transform: scale(1.04);
-    box-shadow: 0 18px 45px rgba(203, 162, 72, 0.45), 0 0 0 8px rgba(203, 162, 72, 0.45);
-  }
-}
-
-@keyframes promptBlink {
-  0%, 100% { opacity: 0.85; }
-  50% { opacity: 1; transform: translateY(-2px); }
-}
-
-/* Đĩa than xoay tròn trên máy tính */
-@keyframes vinylRotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* ==========================================================================
-   2. HỆ THỐNG HIỆU ỨNG CHỮ KHI CUỘN TRANG (SCROLL REVEAL SYSTEM)
-   ========================================================================== */
-.reveal-text {
-  opacity: 0;
-  transform: translateY(22px);
-  filter: blur(4px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.8s ease;
-  will-change: opacity, transform, filter;
-}
-
-.reveal-text.is-revealed {
-  opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
-}
-
-/* Độ trễ xếp tầng tự nhiên */
-.delay-1 { transition-delay: 0.1s; }
-.delay-2 { transition-delay: 0.2s; }
-.delay-3 { transition-delay: 0.3s; }
-.delay-4 { transition-delay: 0.4s; }
-.delay-5 { transition-delay: 0.5s; }
-.delay-6 { transition-delay: 0.6s; }
-
-/* Giãn cách chữ mở rộng khi xuất hiện (Letter Expansion) */
-.letter-expand-reveal {
-  letter-spacing: 1px;
-  transition: letter-spacing 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
-}
-
-.letter-expand-reveal.is-revealed {
-  letter-spacing: 3.5px;
-}
-
-/* Đường kẻ phân cách bung nở từ tâm */
-.divider-expand {
-  transform: scaleX(0);
-  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
-}
-
-.divider-expand.is-revealed {
-  transform: scaleX(1);
-}
-
-/* Con số ngày sự kiện nảy lò xo */
-.badge-pop {
-  transform: scale(0.35);
-  opacity: 0;
-  transition: transform 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) 0.25s, opacity 0.5s ease 0.25s;
-}
-
-.badge-pop.is-revealed {
-  transform: scale(1);
-  opacity: 1;
-}
-
-/* ==========================================================================
-   3. HỆ THỐNG GIỮ CHỖ HÌNH ẢNH (IMAGE FALLBACK / THAY ẢNH SAU)
-   ========================================================================== */
-.image-fallback-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #2d181e 0%, #171114 100%);
-  overflow: hidden;
-}
-
-/* Ẩn ảnh lỗi hoặc ảnh rỗng */
-img.img-load-error,
-.image-fallback-container.no-image img,
-.album-grid-item.no-image img,
-img:not([src]),
-img[src=""] {
-  display: none !important;
-}
-
-/* Ẩn placeholder khi đã có ảnh */
-.image-fallback-container.has-image .hero-placeholder-art,
-.image-fallback-container.has-image .calendar-polaroid-placeholder,
-.image-fallback-container.has-image .film-strip-placeholder,
-.image-fallback-container.has-image .letter-polaroid-placeholder,
-.album-grid-item.has-image .album-item-placeholder,
-.image-fallback-container.has-image .footer-placeholder-art {
-  display: none !important;
-}
-
-/* --- PLACEHOLDER CHO HERO BANNER --- */
-.hero-empty-state {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(ellipse at 50% 45%, #46141e 0%, #2b0b13 55%, #140508 100%);
-}
-
-.hero-placeholder-art {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 40px 20px;
-  position: relative;
-  z-index: 5;
-}
-
-.hero-placeholder-crest {
-  width: 86px;
-  height: 86px;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  filter: drop-shadow(0 6px 18px rgba(223, 188, 109, 0.45));
-  animation: sealPulse 3s ease-in-out infinite;
-}
-
-.crest-svg {
-  width: 100%;
-  height: 100%;
-}
-
-.hero-placeholder-title {
-  font-family: var(--font-cinzel);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 4px;
-  margin-bottom: 6px;
-}
-
-.hero-placeholder-name {
-  font-family: var(--font-cinzel);
-  font-size: clamp(20px, 5.5vw, 26px);
-  font-weight: 700;
-  color: #fce6a8;
-  letter-spacing: 2px;
-  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9);
-  margin-bottom: 10px;
-}
-
-.hero-placeholder-note {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 13px;
-  color: rgba(223, 188, 109, 0.8);
-  letter-spacing: 1.5px;
-  border: 1px dashed rgba(223, 188, 109, 0.4);
-  padding: 5px 16px;
-  border-radius: 20px;
-  background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(4px);
-}
-
-/* --- PLACEHOLDER CHO POLAROID LỊCH THÁNG --- */
-.calendar-polaroid-frame {
-  background: #ffffff;
-  padding: 12px 12px 28px;
-  border-radius: 4px;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
-}
-
-.calendar-polaroid-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 180px;
-  background: linear-gradient(135deg, #2b1319 0%, #17090d 100%);
-  border-radius: 3px;
-  color: #dfbc6d;
-  border: 1px solid rgba(223, 188, 109, 0.2);
-}
-
-.placeholder-polaroid-icon {
-  font-size: 34px;
-  margin-bottom: 8px;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
-}
-
-.placeholder-polaroid-text {
-  font-family: var(--font-cinzel);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: #f7e2a4;
-}
-
-.placeholder-polaroid-date {
-  font-family: var(--font-cinzel);
-  font-size: 11px;
-  letter-spacing: 3px;
-  color: rgba(247, 226, 164, 0.75);
-  margin-top: 4px;
-}
-
-/* --- PLACEHOLDER CHO THƯỚC PHIM --- */
-.film-strip-container {
-  background: #141014;
-  border: 3px solid #231c23;
-  border-radius: 6px;
-}
-
-.film-strip-placeholder {
-  display: flex;
-  gap: 8px;
-  padding: 14px 10px;
-  background: #19141a;
-  width: 100%;
-}
-
-.film-frame-item {
-  flex: 1;
-  min-height: 115px;
-  background: #251b22;
-  border: 1px solid rgba(223, 188, 109, 0.25);
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 4px;
-  text-align: center;
-  transition: transform 0.2s ease;
-}
-
-.film-frame-item.highlight {
-  background: linear-gradient(135deg, #3d141e 0%, #290a12 100%);
-  border-color: rgba(223, 188, 109, 0.6);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.film-frame-icon {
-  font-size: 22px;
-  margin-bottom: 6px;
-}
-
-.film-frame-label {
-  font-family: var(--font-cinzel);
-  font-size: 10px;
-  font-weight: 700;
-  color: #f5dc9e;
-  letter-spacing: 0.5px;
-}
-
-.film-frame-sub {
-  font-size: 9px;
-  color: rgba(255, 255, 255, 0.75);
-  margin-top: 3px;
-  line-height: 1.2;
-}
-
-/* --- PLACEHOLDER CHO POLAROID THƯ TÂM SỰ --- */
-.letter-polaroid-frame {
-  background: #ffffff;
-  padding: 5px 5px 12px;
-  border-radius: 3px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
-}
-
-.letter-polaroid-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 68px;
-  background: linear-gradient(135deg, #38151e 0%, #1e090f 100%);
-  border-radius: 2px;
-}
-
-.letter-placeholder-cap {
-  font-size: 18px;
-  margin-bottom: 2px;
-}
-
-.letter-placeholder-sig {
-  font-family: var(--font-script);
-  font-size: 16px;
-  color: #f5dc9e;
-  line-height: 1;
-}
-
-/* --- PLACEHOLDER CHO ALBUM LƯỚI --- */
-.album-item-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at 50% 40%, #3a151f 0%, #1e0911 100%);
-  padding: 14px 8px;
-  text-align: center;
-  border: 1px solid rgba(223, 188, 109, 0.3);
-  border-radius: 8px;
-}
-
-.album-ph-num {
-  font-family: var(--font-cinzel);
-  font-size: 13px;
-  font-weight: 700;
-  color: #dfbc6d;
-  letter-spacing: 2px;
-  opacity: 0.75;
-  margin-bottom: 6px;
-}
-
-.album-ph-icon {
-  font-size: 26px;
-  margin-bottom: 8px;
-}
-
-.album-ph-title {
-  font-family: var(--font-serif);
-  font-size: 13px;
-  font-weight: 600;
-  color: #f9e6a2;
-  letter-spacing: 0.5px;
-}
-
-/* --- PLACEHOLDER CHO FOOTER --- */
-.footer-empty-state {
-  height: 240px;
-  background: radial-gradient(ellipse at 50% 50%, #40131d 0%, #20080f 65%, #100307 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.footer-placeholder-art {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-.footer-crest-decor {
-  font-size: 24px;
-  letter-spacing: 14px;
-  color: #dfbc6d;
-  opacity: 0.5;
-}
-
-/* ==========================================================================
-   4. MÀN HÌNH LOADING
-   ========================================================================== */
-#loadingScreen {
-  position: fixed;
-  inset: 0;
-  background: #faf7f2;
-  z-index: 1000000;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-
-#loadingScreen.hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.spinner {
-  width: 44px;
-  height: 44px;
-  border: 3px solid rgba(133, 28, 39, 0.15);
-  border-top-color: var(--color-burgundy);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.loading-text {
-  font-family: var(--font-serif);
-  font-size: 14px;
-  letter-spacing: 2px;
-  color: var(--color-burgundy);
-  text-transform: uppercase;
-  font-weight: 600;
-}
-
-/* ==========================================================================
-   5. MÀN MỞ THIỆP CỬA 2 CÁNH (GATEFOLD ENVELOPE OPENING)
-   ========================================================================== */
-.gatefold-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 999999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  pointer-events: auto;
-  transition: opacity 0.8s ease 0.4s, visibility 0.8s ease 0.4s;
-}
-
-.gatefold-overlay.opened {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.gatefold-door {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 50%;
-  background: linear-gradient(135deg, #1b2030 0%, #101420 100%);
-  background-image: 
-    radial-gradient(rgba(203, 162, 72, 0.12) 1px, transparent 1px),
-    linear-gradient(135deg, #181d2c 0%, #0d101a 100%);
-  background-size: 18px 18px, 100% 100%;
-  transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
-  will-change: transform;
-}
-
-.gatefold-door.left-door {
-  left: 0;
-  border-right: 2px solid rgba(203, 162, 72, 0.35);
-  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.6);
-}
-
-.gatefold-door.right-door {
-  right: 0;
-  border-left: 2px solid rgba(203, 162, 72, 0.35);
-  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.6);
-}
-
-.gatefold-overlay.opened .gatefold-door.left-door {
-  transform: translateX(-102%);
-}
-
-.gatefold-overlay.opened .gatefold-door.right-door {
-  transform: translateX(102%);
-}
-
-.gatefold-seal-container {
-  position: relative;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  cursor: pointer;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
-}
-
-.gatefold-overlay.opened .gatefold-seal-container {
-  transform: scale(0.6);
-  opacity: 0;
-}
-
-.seal-badge {
-  width: 140px;
-  height: 140px;
-  background: radial-gradient(circle at 35% 35%, #fff2be 0%, #e0bd61 40%, #b88f30 85%, #8a6616 100%);
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 
-    0 15px 35px rgba(0, 0, 0, 0.5),
-    inset 0 2px 4px rgba(255, 255, 255, 0.8),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.4),
-    0 0 0 4px rgba(203, 162, 72, 0.3);
-  position: relative;
-  animation: sealPulse 2.4s ease-in-out infinite;
-}
-
-.seal-icon-img {
-  width: 68px;
-  height: 68px;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-}
-
-.seal-recipient-card {
-  margin-top: 22px;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 12px 24px;
-  border-radius: 30px;
-  border: 1.5px solid var(--color-gold);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-  max-width: 85vw;
-}
-
-.seal-to-label {
-  font-family: var(--font-cinzel);
-  font-size: 11px;
-  letter-spacing: 2px;
-  color: var(--color-burgundy);
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.seal-guest-name {
-  font-family: var(--font-serif);
-  font-size: 18px;
-  font-weight: 700;
-  color: #191817;
-  letter-spacing: 0.5px;
-  margin-top: 2px;
-}
-
-.seal-action-prompt {
-  margin-top: 14px;
-  color: #ebd07d;
-  font-size: 12px;
-  letter-spacing: 1.5px;
-  font-weight: 600;
-  text-transform: uppercase;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-  animation: promptBlink 1.8s ease-in-out infinite;
-}
-
-/* ==========================================================================
-   6. BỐ CỤC TƯƠNG THÍCH MÁY TÍNH & ĐIỆN THOẠI (SHOWCASE ARCHITECTURE)
-   ========================================================================== */
-.desktop-showcase-wrapper {
-  width: 100%;
-  max-width: 1260px;
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 36px;
-  padding: 40px 20px;
-}
-
-/* Khung thiệp mời chính */
-.lami-invitation-container {
-  width: 440px;
-  max-width: 440px;
-  background: var(--color-cream);
-  min-height: 100vh;
-  position: relative;
-  box-shadow: 
-    0 25px 80px rgba(0, 0, 0, 0.7),
-    0 0 0 1.5px rgba(203, 162, 72, 0.35);
-  border-radius: 32px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  flex-shrink: 0;
-  transition: all 0.3s ease;
-}
-
-/* Hai cột phụ hiển thị sang trọng trên màn hình máy tính (> 1024px) */
-.desktop-side-panel {
-  flex: 1;
-  max-width: 320px;
-  position: sticky;
-  top: 40px;
-  display: block;
-}
-
-.desktop-companion-card {
-  background: rgba(30, 20, 24, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(203, 162, 72, 0.3);
-  border-radius: 20px;
-  padding: 30px 24px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-  color: #ffffff;
-  text-align: center;
-}
-
-.desktop-crest-icon {
-  font-size: 38px;
-  margin-bottom: 8px;
-}
-
-.desktop-crest-sub {
-  font-family: var(--font-cinzel);
-  font-size: 11px;
-  letter-spacing: 3px;
-  color: var(--color-gold);
-  font-weight: 700;
-}
-
-.desktop-crest-name {
-  font-family: var(--font-serif);
-  font-size: 20px;
-  font-weight: 700;
-  color: #fff9ea;
-  letter-spacing: 1px;
-  margin: 6px 0 12px;
-}
-
-.desktop-crest-divider {
-  width: 60px;
-  height: 1.5px;
-  background: var(--color-gold);
-  margin: 14px auto 16px;
-  opacity: 0.6;
-}
-
-.desktop-crest-quote {
-  font-size: 12.5px;
-  line-height: 1.7;
-  color: #e5d7d0;
-  font-style: italic;
-  margin-bottom: 22px;
-}
-
-.desktop-qr-box {
-  background: #ffffff;
-  padding: 16px;
-  border-radius: 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-}
-
-.desktop-qr-img {
-  width: 160px;
-  height: 160px;
-  display: block;
-  border-radius: 6px;
-}
-
-.desktop-qr-label {
-  font-size: 11.5px;
-  color: var(--color-text-dark);
-  font-weight: 600;
-  margin-top: 10px;
-}
-
-/* Đĩa than phát nhạc cổ điển trên máy tính */
-.desktop-music-player {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.vinyl-disc-wrap {
-  width: 110px;
-  height: 110px;
-  position: relative;
-  margin-bottom: 14px;
-}
-
-.vinyl-disc {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: radial-gradient(circle, #2a2a2a 20%, #111111 60%, #000000 100%);
-  border: 3px solid #333333;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: vinylRotate 8s linear infinite paused;
-}
-
-.vinyl-disc.playing {
-  animation-play-state: running;
-}
-
-.vinyl-grooves {
-  position: absolute;
-  inset: 12px;
-  border-radius: 50%;
-  border: 1px dashed rgba(255, 255, 255, 0.15);
-}
-
-.vinyl-center-label {
-  width: 38px;
-  height: 38px;
-  background: var(--color-gold);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-}
-
-.desktop-song-title {
-  font-family: var(--font-serif);
-  font-size: 14px;
-  font-weight: 700;
-  color: #fff9ea;
-}
-
-.desktop-song-artist {
-  font-size: 11.5px;
-  color: var(--color-gold-light);
-  margin-top: 2px;
-  margin-bottom: 14px;
-}
-
-.desktop-play-btn {
-  background: linear-gradient(135deg, var(--color-burgundy) 0%, var(--color-burgundy-dark) 100%);
-  color: #ffffff;
-  border: 1px solid rgba(203, 162, 72, 0.4);
-  padding: 9px 20px;
-  border-radius: 30px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s;
-}
-
-.desktop-play-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(133, 28, 39, 0.4);
-}
-
-.desktop-quick-rsvp {
-  margin-top: 6px;
-  margin-bottom: 16px;
-}
-
-.quick-rsvp-title {
-  font-family: var(--font-cinzel);
-  font-size: 11.5px;
-  letter-spacing: 2px;
-  color: var(--color-gold);
-  font-weight: 700;
-}
-
-.quick-rsvp-desc {
-  font-size: 12px;
-  color: #d8ccc7;
-  margin: 4px 0 12px;
-  line-height: 1.5;
-}
-
-.desktop-rsvp-btn {
-  width: 100%;
-  background: var(--color-gold);
-  color: #191817;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 30px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.desktop-rsvp-btn:hover {
-  background: var(--color-gold-light);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(203, 162, 72, 0.35);
-}
-
-/* Canvas hiệu ứng cánh hoa và bụi sao */
-#fxCanvas {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 50;
-}
-
-/* ==========================================================================
-   7. SECTION 1: HERO BANNER & RUY BĂNG ĐỎ
-   ========================================================================== */
-.hero-banner-section {
-  position: relative;
-  width: 100%;
-  height: 560px;
-  overflow: hidden;
-  background: #110e12;
-}
-
-.hero-bg-photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  display: block;
-}
-
-/* Dải ruy băng đỏ rượu vang treo góc trái */
-.hanging-ribbon {
-  position: absolute;
-  top: 0;
-  left: 6%;
-  width: clamp(54px, 14vw, 66px);
-  height: clamp(230px, 44vh, 275px);
-  background: linear-gradient(180deg, #9b1928 0%, #7d121f 70%, #600c16 100%);
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), 50% 100%, 0 calc(100% - 24px));
-  box-shadow: 
-    4px 8px 20px rgba(0, 0, 0, 0.5),
-    inset -1px 0 0 rgba(255, 255, 255, 0.2),
-    inset 1px 0 0 rgba(0, 0, 0, 0.3);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 14px 4px 36px;
-  z-index: 10;
-  border-top: 1.5px solid rgba(255, 255, 255, 0.2);
-}
-
-.hanging-ribbon::before,
-.hanging-ribbon::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 26px;
-  width: 1px;
-  background: rgba(203, 162, 72, 0.45);
-}
-.hanging-ribbon::before { left: 4px; }
-.hanging-ribbon::after { right: 4px; }
-
-.ribbon-top-badge {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.ribbon-uni {
-  font-family: var(--font-cinzel);
-  font-size: 9.5px;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 1.2px;
-  line-height: 1.2;
-}
-
-.ribbon-sub {
-  font-family: var(--font-sans);
-  font-size: 7.5px;
-  font-weight: 600;
-  color: var(--color-gold-light);
-  letter-spacing: 0.8px;
-  margin-top: 2px;
-}
-
-.ribbon-divider-line {
-  width: 26px;
-  height: 1px;
-  background: rgba(203, 162, 72, 0.6);
-  margin: 8px 0;
-}
-
-.ribbon-grad-name {
-  font-family: var(--font-cinzel);
-  font-size: 11px;
-  font-weight: 700;
-  color: #fff9ea;
-  letter-spacing: 2px;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  text-transform: uppercase;
-  margin-top: 4px;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-/* Huy hiệu CLASS OF 2026 góc phải */
-.hero-class-badge {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 10;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
-}
-
-.class-title {
-  font-family: var(--font-cinzel);
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  line-height: 1;
-}
-
-.class-of {
-  font-family: var(--font-script);
-  font-size: 26px;
-  color: #ffffff;
-  line-height: 0.8;
-  margin-left: 28px;
-  margin-top: -4px;
-}
-
-.class-year {
-  font-family: var(--font-serif);
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  line-height: 1;
-  margin-top: -2px;
-}
-
-/* Chữ thư pháp Graduate ceremony và Ngày ở chân ảnh */
-.hero-bottom-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 40px 16px 18px;
-  background: linear-gradient(180deg, transparent 0%, rgba(17, 14, 18, 0.85) 60%, rgba(17, 14, 18, 0.98) 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  z-index: 10;
-}
-
-.hero-calligraphy {
-  font-family: var(--font-script);
-  font-size: clamp(38px, 10vw, 48px);
-  color: #f7e096;
-  line-height: 1.1;
-  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.8);
-  letter-spacing: 0.5px;
-}
-
-.hero-date-display {
-  font-family: var(--font-serif);
-  font-size: 15px;
-  font-weight: 600;
-  color: #dfbc6d;
-  letter-spacing: 2.5px;
-  margin-top: 2px;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
-}
-
-.cap-line-icon {
-  width: 140px;
-  height: 38px;
-  margin: 14px auto 8px;
-  display: block;
-}
-
-/* ==========================================================================
-   8. SECTION 2: THÂN MỜI & THÔNG TIN ĐỊA ĐIỂM
-   ========================================================================== */
-.invitation-details-section {
-  background: #ffffff;
-  padding: 36px 20px 30px;
-  text-align: center;
-  position: relative;
-  border-bottom: 1px solid var(--color-border-subtle);
-}
-
-.details-section-title {
-  font-family: var(--font-serif);
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--color-burgundy);
-  text-transform: uppercase;
-  margin-top: 6px;
-}
-
-.thin-red-divider {
-  width: 80%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, var(--color-burgundy) 50%, transparent 100%);
-  margin: 14px auto 16px;
-  opacity: 0.6;
-}
-
-.details-subtitle {
-  font-family: var(--font-serif);
-  font-size: 13.5px;
-  letter-spacing: 1.8px;
-  color: var(--color-burgundy);
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.details-grad-name {
-  font-family: var(--font-script);
-  font-size: clamp(42px, 11vw, 54px);
-  color: var(--color-burgundy);
-  line-height: 1.15;
-  margin: 6px 0 14px;
-}
-
-.details-recipient-pill {
-  display: inline-block;
-  background: #fdf5f5;
-  border: 1px dashed rgba(133, 28, 39, 0.35);
-  padding: 7px 18px;
-  border-radius: 20px;
-  margin-bottom: 20px;
-}
-
-.to-prefix {
-  font-size: 11px;
-  color: var(--color-text-muted);
-  letter-spacing: 1px;
-  font-weight: 600;
-}
-
-.details-recipient-pill strong {
-  font-size: 13.5px;
-  color: var(--color-burgundy);
-  font-weight: 700;
-  margin-left: 4px;
-}
-
-.details-event-intro {
-  font-family: var(--font-serif);
-  font-size: 13px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #f9fafb;
+  color: #111827;
   line-height: 1.6;
-  color: var(--color-burgundy);
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-bottom: 18px;
+  padding: 20px 14px 90px;
 }
 
-.highlight-time {
-  font-weight: 700;
-}
-
-/* Dòng Ngày Tháng Năm kiểu Lami: — THÁNG 11 — ( 17 ) — NĂM 2026 — */
-.date-badge-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  margin: 20px 0 24px;
-  flex-wrap: nowrap;
-}
-
-.date-side-text {
-  font-family: var(--font-serif);
-  font-size: 13px;
-  letter-spacing: 1.5px;
-  color: var(--color-burgundy);
-  font-weight: 600;
-  text-transform: uppercase;
-  position: relative;
-  white-space: nowrap;
-}
-
-.date-side-text::before,
-.date-side-text::after {
-  content: "";
-  display: inline-block;
-  vertical-align: middle;
-  width: 14px;
-  height: 1px;
-  background: var(--color-burgundy);
-  opacity: 0.6;
-  margin: 0 4px;
-}
-
-.date-day-circle {
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  border: 2px solid var(--color-burgundy);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-serif);
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--color-burgundy);
-  box-shadow: 0 4px 14px rgba(133, 28, 39, 0.12);
-  background: #ffffff;
-  flex-shrink: 0;
-}
-
-.venue-intro {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 13.5px;
-  color: var(--color-text-muted);
-  margin-bottom: 4px;
-}
-
-.venue-address {
-  font-family: var(--font-serif);
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--color-burgundy);
-  letter-spacing: 0.5px;
-  line-height: 1.5;
-  margin-bottom: 16px;
-  padding: 0 8px;
-}
-
-.direction-pin-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  margin-bottom: 10px;
-}
-
-.map-pin-icon {
-  font-size: 16px;
-  color: var(--color-burgundy);
-}
-
-.direction-label {
-  font-family: var(--font-cinzel);
-  font-size: 11.5px;
-  letter-spacing: 2px;
-  color: var(--color-burgundy);
-  font-weight: 700;
-}
-
-.btn-burgundy-pill {
-  display: inline-block;
-  background: var(--color-burgundy);
-  color: #ffffff;
-  padding: 11px 26px;
-  border-radius: var(--radius-btn);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  text-decoration: none;
-  box-shadow: 0 6px 18px rgba(133, 28, 39, 0.28);
-  transition: all 0.25s ease;
-}
-
-.btn-burgundy-pill:hover,
-.btn-burgundy-pill:active {
-  background: var(--color-burgundy-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(133, 28, 39, 0.38);
-}
-
-.map-embed-container {
-  margin-top: 20px;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  border: 1px solid var(--color-border-subtle);
-}
-
-.map-embed-container iframe {
-  width: 100%;
-  height: 200px;
-  border: none;
-  display: block;
-}
-
-/* ==========================================================================
-   9. SECTION 3: LỊCH THÁNG SỰ KIỆN & POLAROID CỬ NHÂN
-   ========================================================================== */
-.calendar-section-lami {
-  background: var(--color-cream);
-  padding: 34px 20px;
-  text-align: center;
-}
-
-.polaroid-calendar-hero {
-  position: relative;
-  max-width: 320px;
-  margin: 0 auto 20px;
-}
-
-.calendar-polaroid-img {
-  width: 100%;
+img {
+  max-width: 100%;
   height: auto;
   display: block;
-  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.12));
 }
 
-.calendar-script-month {
-  font-family: var(--font-script);
-  font-size: 42px;
-  color: var(--color-burgundy);
-  margin-bottom: 12px;
-  line-height: 1;
+/* Ẩn slot ảnh khi chưa có link ảnh */
+.wf-photo-slot {
+  display: none;
+  margin-top: 12px;
 }
 
-.calendar-grid-lami {
-  max-width: 330px;
+.wf-photo-slot.has-image {
+  display: block;
+}
+
+.wf-photo-slot img {
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+}
+
+/* ==========================================================================
+   CONTAINER & SECTIONS
+   ========================================================================== */
+.wireframe-container {
+  max-width: 580px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wf-section,
+.wf-footer {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.wf-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.wf-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 4px 0 8px;
+}
+
+.wf-heading {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.wf-meta,
+.wf-sub {
+  font-size: 15px;
+  color: #374151;
+}
+
+.wf-actions {
+  margin-top: 12px;
+}
+
+/* Nút & Form */
+.wf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.wf-btn:hover {
+  background: #e5e7eb;
+}
+
+.wf-btn-primary {
+  background: #111827;
+  color: #ffffff;
+  border-color: #111827;
+}
+
+.wf-btn-primary:hover {
+  background: #374151;
+}
+
+.wf-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wf-input {
+  width: 100%;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 16px;
+  color: #111827;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+
+/* Bản đồ nhúng */
+.wf-map-box {
+  margin-top: 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  overflow: hidden;
+  height: 220px;
+}
+
+.wf-map-box iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ==========================================================================
+   COUNTDOWN
+   ========================================================================== */
+.wf-timer-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.wf-timer-box {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 10px 4px;
+  text-align: center;
+  background: #f9fafb;
+}
+
+.wf-timer-num {
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.wf-timer-txt {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* ==========================================================================
+   LỊCH THÁNG
+   ========================================================================== */
+.wf-calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 6px 2px;
+  gap: 4px;
+  text-align: center;
 }
 
 .cal-header-cell {
-  font-family: var(--font-cinzel);
   font-size: 11px;
   font-weight: 700;
-  color: var(--color-burgundy);
-  letter-spacing: 1px;
-  padding-bottom: 6px;
+  color: #6b7280;
+  padding: 6px 0;
 }
 
 .cal-date-cell {
-  font-family: var(--font-serif);
-  font-size: 13.5px;
-  color: #332d29;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.cal-date-cell.empty {
-  color: transparent;
+  font-size: 14px;
+  padding: 8px 0;
+  border-radius: 6px;
 }
 
 .cal-date-cell.event-date {
-  font-weight: 700;
-  color: var(--color-burgundy);
-}
-
-.heart-marker {
-  position: absolute;
-  width: 34px;
-  height: 34px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  animation: heartPulse 2.2s ease-in-out infinite;
-}
-
-.btn-calendar-add {
-  margin-top: 22px;
-  background: transparent;
-  color: var(--color-burgundy);
-  border: 1.5px solid var(--color-burgundy);
-  padding: 9px 20px;
-  border-radius: var(--radius-btn);
-  font-size: 12.5px;
-  font-weight: 600;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s ease;
-}
-
-.btn-calendar-add:hover {
-  background: var(--color-burgundy);
+  background: #111827;
   color: #ffffff;
-}
-
-/* ==========================================================================
-   10. SECTION 4: THƯỚC PHIM & ĐỒNG HỒ ĐẾM NGƯỢC
-   ========================================================================== */
-.film-countdown-section {
-  background: #ffffff;
-  padding: 34px 18px 30px;
-  text-align: center;
-}
-
-.film-strip-card {
-  max-width: 360px;
-  margin: 0 auto 26px;
-  position: relative;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.film-strip-img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.countdown-heading {
-  font-family: var(--font-cinzel);
-  font-size: 20px;
   font-weight: 700;
-  color: var(--color-burgundy);
-  margin-bottom: 16px;
-}
-
-.lami-timer-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.timer-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 52px;
-}
-
-.timer-num {
-  font-family: var(--font-serif);
-  font-size: 30px;
-  font-weight: 600;
-  color: var(--color-burgundy);
-  line-height: 1;
-}
-
-.timer-txt {
-  font-size: 11px;
-  color: var(--color-text-muted);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-top: 4px;
-}
-
-.timer-colon {
-  font-family: var(--font-serif);
-  font-size: 24px;
-  font-weight: 600;
-  color: var(--color-burgundy);
-  margin-bottom: 16px;
 }
 
 /* ==========================================================================
-   11. SECTION 5: BỨC THƯ TÂM SỰ (LETTER PARCHMENT)
+   THƯ TÂM SỰ, ALBUM & LỜI CHÚC
    ========================================================================== */
-.letter-section-lami {
-  background: var(--color-cream);
-  padding: 36px 18px 40px;
+.wf-letter-text p + p {
+  margin-top: 8px;
 }
 
-.letter-card-parchment {
-  background: #fdfbf7;
-  border: 1px solid #ebdcd7;
-  border-radius: 12px;
-  padding: 32px 22px 40px;
-  position: relative;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-  max-width: 380px;
-  margin: 0 auto;
+.wf-signature {
+  margin-top: 12px;
+  font-size: 15px;
 }
 
-.letter-gold-cap {
-  position: absolute;
-  top: -16px;
-  right: -10px;
-  width: 62px;
-  height: 62px;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.15));
-}
-
-.letter-content-text p {
-  font-family: var(--font-sans);
-  font-size: 13px;
-  line-height: 1.8;
-  color: #3f3631;
-  text-align: justify;
-  margin-bottom: 14px;
-}
-
-.letter-signature-wrap {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.letter-signature-name {
-  font-family: var(--font-script);
-  font-size: 38px;
-  color: var(--color-burgundy);
-  line-height: 1;
-}
-
-.letter-cap-line {
-  width: 90px;
-  height: 24px;
-  margin: 6px auto 0;
-  display: block;
-  opacity: 0.8;
-}
-
-.letter-polaroid-pin {
-  position: absolute;
-  bottom: -22px;
-  right: 8px;
-  width: 105px;
-  padding: 6px 6px 16px;
-  background: #ffffff;
-  border-radius: 4px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
-  transform: rotate(8deg);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.letter-polaroid-pin img {
-  width: 100%;
-  height: 85px;
-  object-fit: cover;
-  display: block;
-}
-
-/* ==========================================================================
-   12. SECTION 6: ALBUM ẢNH KỶ NIỆM (26 ALBUM)
-   ========================================================================== */
-.album-section-lami {
-  background: #ffffff;
-  padding: 44px 16px 36px;
-  text-align: center;
-}
-
-.album-heading-wrap {
-  position: relative;
-  height: 90px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 18px;
-}
-
-.album-year-bg {
-  font-family: var(--font-serif);
-  font-size: 88px;
-  font-weight: 700;
-  color: #faebc2;
-  position: absolute;
-  line-height: 1;
-  letter-spacing: -2px;
-  user-select: none;
-}
-
-.album-title-script {
-  position: relative;
-  z-index: 2;
-  font-family: var(--font-script);
-  font-size: 54px;
-  color: var(--color-burgundy);
-  line-height: 1;
-  margin-top: 10px;
-}
-
-.album-grid-collage {
+.wf-album-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.wf-wishes-list {
+  display: flex;
+  flex-direction: column;
   gap: 10px;
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-.album-grid-item {
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  aspect-ratio: 3/4;
-  position: relative;
-  background: #2a161b;
-  transition: transform 0.25s ease;
-}
-
-.album-grid-item:hover {
-  transform: scale(1.02);
-}
-
-.album-grid-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* ==========================================================================
-   13. SECTION 7: XÁC NHẬN THAM DỰ (RSVP FORM)
-   ========================================================================== */
-.rsvp-section-lami {
-  background: var(--color-cream);
-  padding: 38px 20px 30px;
-  text-align: center;
-}
-
-.rsvp-card-lami {
-  max-width: 380px;
-  margin: 0 auto;
-  background: #ffffff;
-  border-radius: var(--radius-card);
-  padding: 28px 20px;
-  box-shadow: var(--shadow-card);
-  border: 1px solid var(--color-border-subtle);
-}
-
-.rsvp-intro-note {
-  font-family: var(--font-sans);
-  font-size: 13px;
-  line-height: 1.7;
-  color: #4a3e37;
-  margin-bottom: 22px;
-}
-
-.rsvp-form-lami {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.lami-input {
-  width: 100%;
-  padding: 12px 16px;
-  border-radius: 24px;
-  border: 1.5px solid #d99ca3;
-  background: #ffffff;
-  font-family: var(--font-sans);
-  font-size: 14px;
-  color: var(--color-text-dark);
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  box-sizing: border-box;
-}
-
-.lami-input:focus {
-  border-color: var(--color-burgundy);
-  box-shadow: 0 0 0 3px rgba(133, 28, 39, 0.15);
-}
-
-textarea.lami-input {
-  border-radius: 16px;
-  resize: vertical;
-}
-
-.lami-select-wrap {
-  position: relative;
-}
-
-.lami-select {
-  appearance: none;
-  -webkit-appearance: none;
-  cursor: pointer;
-}
-
-.lami-select-wrap::after {
-  content: "▾";
-  position: absolute;
-  right: 18px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--color-burgundy);
-  font-size: 14px;
-  pointer-events: none;
-}
-
-.btn-rsvp-confirm {
-  background: var(--color-burgundy);
-  color: #ffffff;
-  border: none;
-  padding: 13px 20px;
-  border-radius: var(--radius-btn);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(133, 28, 39, 0.3);
-  transition: all 0.25s ease;
-  margin-top: 4px;
-}
-
-.btn-rsvp-confirm:hover,
-.btn-rsvp-confirm:active {
-  background: var(--color-burgundy-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(133, 28, 39, 0.4);
-}
-
-.rsvp-bottom-cap {
-  margin-top: 20px;
-}
-
-/* ==========================================================================
-   14. SECTION 8: SỔ LƯU BÚT (WISHES LIST)
-   ========================================================================== */
-.wishes-section-lami {
-  background: var(--color-cream);
-  padding: 10px 20px 36px;
-  text-align: center;
-}
-
-.wishes-section-title {
-  font-family: var(--font-cinzel);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--color-burgundy);
-  margin-bottom: 16px;
-}
-
-.wishes-list-lami {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 380px;
-  margin: 0 auto;
-  max-height: 480px;
-  overflow-y: auto;
-  padding-right: 4px;
 }
 
 .wish-item {
-  background: #ffffff;
-  padding: 14px 16px;
-  border-radius: 12px;
-  border: 1px solid var(--color-border-subtle);
-  text-align: left;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 12px;
+  background: #f9fafb;
 }
 
 .wish-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
   margin-bottom: 6px;
 }
 
 .wish-author {
   font-weight: 700;
-  font-size: 13.5px;
-  color: var(--color-burgundy);
+  font-size: 14px;
 }
 
 .wish-status-badge {
   font-size: 11px;
-  padding: 3px 8px;
+  padding: 2px 8px;
   border-radius: 12px;
-  background: #eaf8f0;
-  color: #1e7e44;
-  font-weight: 600;
-}
-
-.wish-status-badge.decline {
-  background: #fdf2f2;
-  color: #c81e1e;
+  background: #e5e7eb;
+  color: #374151;
 }
 
 .wish-content {
-  font-size: 13px;
-  color: #3b322e;
-  line-height: 1.5;
-  margin-bottom: 6px;
+  font-size: 14px;
+  color: #374151;
 }
 
 .wish-time {
   font-size: 11px;
-  color: var(--color-text-muted);
+  color: #9ca3af;
+  margin-top: 6px;
 }
 
-/* ==========================================================================
-   15. SECTION 9: BẾ MẠC & LỜI CẢM ƠN (THANK YOU FOOTER)
-   ========================================================================== */
-.footer-photo-card {
-  position: relative;
-  width: 100%;
-  height: 380px;
-  overflow: hidden;
-  background: #000000;
-}
-
-.footer-photo-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center bottom;
-  display: block;
-}
-
-.footer-photo-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.75) 60%, rgba(0, 0, 0, 0.95) 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
+.wf-footer {
   text-align: center;
-  padding: 30px 20px 28px;
-}
-
-.footer-quote-text {
-  color: #ffffff;
-  font-size: 13px;
-  line-height: 1.7;
-  max-width: 340px;
-  margin-bottom: 8px;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
-}
-
-.footer-thankyou-script {
-  font-family: var(--font-script);
-  font-size: 48px;
-  color: #fcebbb;
-  line-height: 1;
-  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.8);
-}
-
-.footer-sub-bar {
-  background: #ffffff;
-  padding: 14px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-size: 14px;
+  color: #4b5563;
 }
 
 .footer-credit {
-  font-size: 11px;
-  color: var(--color-text-muted);
-  letter-spacing: 1px;
-  user-select: none;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #9ca3af;
 }
 
 /* ==========================================================================
-   16. NÚT NHẠC NỀN NỔI (FLOATING MUSIC TOGGLE)
+   NÚT NHẠC NỔI, LIGHTBOX & TOAST
    ========================================================================== */
-.floating-actions {
+.floating-music-bar {
   position: fixed;
-  bottom: 22px;
-  right: 22px;
-  z-index: 9999;
+  right: 16px;
+  bottom: 16px;
+  z-index: 999;
 }
 
 .music-toggle-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1.5px solid var(--color-border-subtle);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-  display: flex;
-  justify-content: center;
+  display: inline-flex;
   align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  background: #111827;
+  border: 1px solid #374151;
+  border-radius: 999px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   cursor: pointer;
-  font-size: 16px;
-  transition: all 0.25s ease;
-  backdrop-filter: blur(8px);
-}
-
-.music-toggle-btn:hover {
-  transform: scale(1.08);
 }
 
 .music-toggle-btn.playing {
-  border-color: var(--color-burgundy);
-  background: #ffffff;
-  box-shadow: 0 6px 22px rgba(133, 28, 39, 0.35);
+  background: #047857;
+  border-color: #065f46;
 }
 
-.sound-waves {
-  display: flex;
-  align-items: flex-end;
-  gap: 2px;
-  height: 14px;
-}
-
-.sound-waves span {
-  width: 2.5px;
-  background: var(--color-burgundy);
-  border-radius: 2px;
-  animation: wave 1s ease-in-out infinite;
-}
-
-.sound-waves span:nth-child(1) { height: 6px; animation-delay: 0.1s; }
-.sound-waves span:nth-child(2) { height: 14px; animation-delay: 0.3s; }
-.sound-waves span:nth-child(3) { height: 9px; animation-delay: 0.2s; }
-
-@keyframes wave {
-  0%, 100% { transform: scaleY(0.4); }
-  50% { transform: scaleY(1); }
-}
-
-/* Toast */
-.toast-notice {
-  position: fixed;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%) translateY(30px);
-  background: #251e20;
-  color: #ffffff;
-  padding: 12px 22px;
-  border-radius: 30px;
-  font-size: 13px;
-  font-weight: 600;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  z-index: 100000;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.toast-notice.show {
-  transform: translateX(-50%) translateY(0);
-  opacity: 1;
-}
-
-/* Modal xem ảnh phóng to */
 .lightbox-modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.9);
-  z-index: 1000001;
+  background: rgba(0, 0, 0, 0.85);
   display: none;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  z-index: 2000;
   padding: 20px;
 }
 
@@ -1947,143 +337,41 @@ textarea.lami-input {
 }
 
 .lightbox-img {
-  max-width: 90vw;
-  max-height: 85vh;
-  object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+  max-height: 90vh;
+  max-width: 95vw;
+  border-radius: 6px;
 }
 
 .lightbox-close {
   position: absolute;
-  top: 20px;
+  top: 16px;
   right: 20px;
-  color: #ffffff;
-  font-size: 32px;
   background: none;
   border: none;
+  color: #ffffff;
+  font-size: 32px;
   cursor: pointer;
 }
 
-/* ==========================================================================
-   17. TỐI ƯU HÓA RESPONSIVE CHO CẢ MÁY TÍNH VÀ ĐIỆN THOẠI
-   ========================================================================== */
-
-/* Trên máy tính bảng và màn hình nhỏ (< 1024px) */
-@media (max-width: 1024px) {
-  .desktop-side-panel {
-    display: none !important;
-  }
-  .desktop-showcase-wrapper {
-    padding: 20px 10px;
-    gap: 0;
-  }
-  .lami-invitation-container {
-    max-width: 480px;
-    width: 100%;
-    border-radius: 24px;
-    margin: 0 auto;
-  }
+.toast-notice {
+  position: fixed;
+  left: 50%;
+  bottom: 76px;
+  transform: translateX(-50%) translateY(16px);
+  background: #111827;
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 3000;
+  max-width: 90vw;
+  text-align: center;
 }
 
-/* Trên điện thoại di động (< 768px) */
-@media (max-width: 768px) {
-  /* Chống iOS Safari tự động zoom 120% khi bấm ô nhập */
-  .lami-input,
-  input[type="text"],
-  textarea,
-  select {
-    font-size: 16px !important;
-  }
-
-  .desktop-showcase-wrapper {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .lami-invitation-container {
-    width: 100%;
-    max-width: 100%;
-    border-radius: 0;
-    border: none;
-    box-shadow: none;
-    margin: 0;
-  }
-
-  .hero-banner-section {
-    height: min(560px, 82vh);
-  }
-
-  .invitation-details-section {
-    padding: 30px 16px 26px;
-  }
-
-  .date-badge-row {
-    gap: 8px;
-  }
-
-  .date-side-text::before,
-  .date-side-text::after {
-    width: 10px;
-    margin: 0 2px;
-  }
-
-  .letter-card-parchment {
-    padding: 28px 16px 36px;
-  }
-
-  .letter-polaroid-pin {
-    width: 90px;
-    padding: 5px 5px 12px;
-    bottom: -16px;
-    right: 4px;
-  }
-
-  .letter-polaroid-pin img {
-    height: 72px;
-  }
-}
-
-/* Trên điện thoại màn hình nhỏ (< 380px) */
-@media (max-width: 380px) {
-  .hanging-ribbon {
-    width: 50px;
-    left: 4%;
-    padding: 10px 2px 28px;
-  }
-  .ribbon-uni { font-size: 8px; }
-  .ribbon-sub { font-size: 6.5px; }
-  .ribbon-grad-name { font-size: 9.5px; }
-
-  .date-badge-row {
-    gap: 4px;
-  }
-  .date-side-text {
-    font-size: 11px;
-    letter-spacing: 0.5px;
-  }
-  .date-side-text::before,
-  .date-side-text::after {
-    display: none;
-  }
-  .date-day-circle {
-    width: 48px;
-    height: 48px;
-    font-size: 24px;
-  }
-
-  .lami-timer-row {
-    gap: 4px;
-  }
-  .timer-box {
-    min-width: 44px;
-  }
-  .timer-num {
-    font-size: 24px;
-  }
-  .timer-colon {
-    font-size: 18px;
-  }
+.toast-notice.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }

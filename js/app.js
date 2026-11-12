@@ -1,21 +1,13 @@
 /**
- * THIỆP MỜI TỐT NGHIỆP - APPLICATION SCRIPT
- * Chuẩn phong cách Lami Luxury Red & Gold
- * Quản lý hiệu ứng chữ, cuộn hiện mượt mà, đồng bộ máy tính & điện thoại
+ * THIỆP MỜI TỐT NGHIỆP - APPLICATION SCRIPT (CORE LOGIC)
+ * Giữ toàn bộ chức năng: cá nhân hóa khách mời, đếm ngược, lịch tháng,
+ * nhạc nền Long Live, bản đồ, RSVP + Google Sheets, lưu bút & lightbox.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
   const config = (typeof getSavedConfig === "function") ? getSavedConfig() : (window.DEFAULT_CONFIG || {});
 
-  // 1. Quản lý Màn hình Loading
-  const loadingScreen = document.getElementById("loadingScreen");
-  setTimeout(() => {
-    if (loadingScreen) {
-      loadingScreen.classList.add("hidden");
-    }
-  }, 350);
-
-  // 2. Phân tích tham số URL để cá nhân hóa tên khách mời (?to=, ?guest=, ?name=, ?u=)
+  // 1. Phân tích tham số URL để cá nhân hóa tên khách mời (?to=, ?guest=, ?name=, ?u=)
   function getPersonalizedGuestName() {
     const urlParams = new URLSearchParams(window.location.search);
     const guestParam = urlParams.get("to") || urlParams.get("guest") || urlParams.get("name") || urlParams.get("u");
@@ -27,45 +19,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const currentGuestName = getPersonalizedGuestName();
 
-  // 3. Cập nhật dữ liệu từ Cấu hình lên Giao diện
+  // 2. Cập nhật dữ liệu từ Cấu hình (/admin hoặc config.js) lên giao diện
   function applyConfigToUI() {
     const gradName = config.graduateName || "PHẠM THỊ KIM HUÊ";
     const shortName = config.graduateShortName || "Kim Huê";
 
-    // Tên cử nhân trên ruy băng đỏ và cột máy tính
+    const subtitleEl = document.getElementById("subtitleDisplay");
+    if (subtitleEl && config.subtitle) subtitleEl.textContent = config.subtitle;
+
     const ribbonGrad = document.getElementById("ribbonGradName");
     if (ribbonGrad) ribbonGrad.textContent = gradName;
 
-    const desktopGrad = document.getElementById("desktopGradName");
-    if (desktopGrad) desktopGrad.textContent = gradName;
-
-    // Tên cử nhân thư pháp phần Thân Mời
     const gradCalligraphy = document.getElementById("graduateCalligraphy");
     if (gradCalligraphy) gradCalligraphy.textContent = shortName;
-
-    // Tên khách mời trên con dấu và thư mời
-    const envGuest = document.getElementById("envelopeGuestName");
-    if (envGuest) envGuest.textContent = currentGuestName;
 
     const guestDisplay = document.getElementById("guestNameDisplay");
     if (guestDisplay) guestDisplay.textContent = currentGuestName;
 
-    // Thời gian sự kiện
     const timeHighlight = document.getElementById("eventTimeHighlight");
     if (timeHighlight) {
-      timeHighlight.textContent = config.displayDateTime || "10:00, THỨ BA";
+      timeHighlight.textContent = config.displayDateTime || "17/11/2026 | Lúc 10h - 14h";
     }
 
-    // Ngày hiển thị dưới ảnh Hero: 17.11.2026
-    const heroDate = document.getElementById("heroDateDisplay");
-    if (heroDate) {
-      const d = String(config.eventDay || 17).padStart(2, "0");
-      const m = String(config.calendarMonth || 11).padStart(2, "0");
-      const y = config.calendarYear || 2026;
-      heroDate.textContent = `${d}.${m}.${y}`;
-    }
-
-    // Badge Ngày Tháng Năm
     const badgeMonth = document.getElementById("badgeMonth");
     if (badgeMonth) badgeMonth.textContent = String(config.calendarMonth || 11).padStart(2, "0");
 
@@ -78,47 +53,47 @@ document.addEventListener("DOMContentLoaded", () => {
     const calMonthScript = document.getElementById("calMonthScript");
     if (calMonthScript) calMonthScript.textContent = String(config.calendarMonth || 11);
 
-    // Địa điểm
     const venueAddress = document.getElementById("venueAddress");
     if (venueAddress) venueAddress.textContent = config.locationAddress || "Số 2 Hoàng Văn Thụ, Phường 4, Quận Tân Bình, TP. HCM";
 
-    // Link chỉ đường và bản đồ nhúng
     const mapBtn = document.getElementById("googleMapLinkBtn");
     if (mapBtn && config.googleMapsUrl) mapBtn.href = config.googleMapsUrl;
 
     const mapIframe = document.getElementById("googleMapIframe");
     if (mapIframe && config.googleMapsEmbed) mapIframe.src = config.googleMapsEmbed;
 
-    // Chữ ký bức thư tâm sự
+    const letterBody = document.getElementById("letterBodyContainer");
+    if (letterBody && Array.isArray(config.letterParagraphs) && config.letterParagraphs.length > 0) {
+      letterBody.innerHTML = config.letterParagraphs
+        .map(p => `<p>${escapeHTML(p)}</p>`)
+        .join("");
+    }
+
     const letterSig = document.getElementById("letterSignature");
     if (letterSig) letterSig.textContent = gradName;
 
-    // Pre-fill tên vào form RSVP nếu đã có tên khách riêng
+    const thankYouMsg = document.getElementById("thankYouMsgDisplay");
+    if (thankYouMsg && config.thankYouMessage) {
+      thankYouMsg.textContent = config.thankYouMessage;
+    }
+
+    // Tự động điền tên khách mời vào form RSVP nếu có ?to=
     const rsvpName = document.getElementById("rsvpName");
     if (rsvpName && currentGuestName !== "BẠN X") {
       rsvpName.value = currentGuestName;
     }
 
-    // Cập nhật hình ảnh (Khi người dùng thêm ảnh sau trong /admin)
+    // Cập nhật các vị trí ảnh (ẩn slot khi chưa có URL ảnh)
     const updatePhotoSlot = (imgId, src) => {
       const img = document.getElementById(imgId);
       if (!img) return;
-      const container = img.closest(".image-fallback-container") || img.parentElement;
+      const container = img.closest("[data-photo-slot]") || img.parentElement;
       if (src && typeof src === "string" && src.trim() !== "" && !src.includes("assets/images/")) {
         img.src = src.trim();
-        img.style.display = "block";
-        img.classList.remove("img-load-error");
-        if (container) {
-          container.classList.add("has-image");
-          container.classList.remove("no-image");
-        }
+        if (container) container.classList.add("has-image");
       } else {
         img.removeAttribute("src");
-        img.style.display = "none";
-        if (container) {
-          container.classList.remove("has-image");
-          container.classList.add("no-image");
-        }
+        if (container) container.classList.remove("has-image");
       }
     };
 
@@ -128,44 +103,32 @@ document.addEventListener("DOMContentLoaded", () => {
     updatePhotoSlot("letterPolaroidImg", config.footerPhotoSrc);
     updatePhotoSlot("footerPhotoImg", config.footerPhotoSrc);
 
-    if (config.albumPhotos && Array.isArray(config.albumPhotos)) {
+    if (Array.isArray(config.albumPhotos)) {
       config.albumPhotos.forEach((src, idx) => {
         const albumImg = document.getElementById(`albumImg${idx + 1}`);
         const parentItem = albumImg ? albumImg.closest(".album-grid-item") : null;
         if (albumImg) {
           if (src && typeof src === "string" && src.trim() !== "" && !src.includes("assets/images/")) {
             albumImg.src = src.trim();
-            albumImg.style.display = "block";
-            albumImg.classList.remove("img-load-error");
             if (parentItem) {
               parentItem.setAttribute("data-full", src.trim());
               parentItem.classList.add("has-image");
-              parentItem.classList.remove("no-image");
             }
           } else {
             albumImg.removeAttribute("src");
-            albumImg.style.display = "none";
             if (parentItem) {
               parentItem.removeAttribute("data-full");
               parentItem.classList.remove("has-image");
-              parentItem.classList.add("no-image");
             }
           }
         }
       });
     }
-
-    // Tạo mã QR cho cột máy tính mở trên điện thoại
-    const desktopQr = document.getElementById("desktopQrImg");
-    if (desktopQr) {
-      const pageUrl = window.location.href;
-      desktopQr.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(pageUrl)}`;
-    }
   }
 
   applyConfigToUI();
 
-  // 4. Khởi tạo Lịch tháng 11 với Trái tim viền đỏ (Calendar)
+  // 3. Khởi tạo Lịch tháng (Calendar)
   function renderCalendar() {
     const month = config.calendarMonth || 11;
     const year = config.calendarYear || 2026;
@@ -190,22 +153,15 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < shift; i++) {
       const cell = document.createElement("div");
       cell.className = "cal-date-cell empty";
-      cell.textContent = "";
       grid.appendChild(cell);
     }
 
     for (let day = 1; day <= totalDaysInMonth; day++) {
       const cell = document.createElement("div");
       cell.className = "cal-date-cell";
-
+      cell.textContent = day;
       if (day === targetDay) {
         cell.classList.add("event-date");
-        cell.innerHTML = `
-          <img src="assets/images/heart.svg" class="heart-marker" alt="Event Date Heart" />
-          <span>${day}</span>
-        `;
-      } else {
-        cell.textContent = day;
       }
       grid.appendChild(cell);
     }
@@ -215,19 +171,18 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < remaining; i++) {
       const cell = document.createElement("div");
       cell.className = "cal-date-cell empty";
-      cell.textContent = "";
       grid.appendChild(cell);
     }
   }
 
   renderCalendar();
 
-  // 5. Thêm sự kiện vào Google Calendar
+  // 4. Thêm sự kiện vào Google Calendar
   const addToCalendarBtn = document.getElementById("addToCalendarBtn");
   if (addToCalendarBtn) {
     addToCalendarBtn.addEventListener("click", () => {
       const title = encodeURIComponent(`Lễ Tốt Nghiệp của ${config.graduateName || "Phạm Thị Kim Huê"}`);
-      const details = encodeURIComponent(`Trân trọng kính mời bạn đến tham dự và chung vui trong ngày tốt nghiệp trọng đại!`);
+      const details = encodeURIComponent("Trân trọng kính mời bạn đến tham dự và chung vui trong ngày tốt nghiệp trọng đại!");
       const location = encodeURIComponent(config.locationAddress || "Số 2 Hoàng Văn Thụ, Phường 4, Quận Tân Bình, TP.HCM");
 
       const startDate = new Date(config.targetDate || "2026-11-17T10:00:00");
@@ -241,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 6. Đồng hồ Đếm ngược Thời gian thực (Real-time Countdown)
+  // 5. Đồng hồ Đếm ngược Thời gian thực (Real-time Countdown)
   const targetDateObj = new Date(config.targetDate || "2026-11-17T10:00:00").getTime();
 
   function updateCountdown() {
@@ -275,48 +230,20 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCountdown();
   setInterval(updateCountdown, 1000);
 
-  // 7. Nhạc nền và Bộ điều khiển âm thanh (Đồng bộ Di động & Máy tính)
+  // 6. Nhạc nền (Long Live) và Bộ điều khiển phát/dừng
   const bgMusic = document.getElementById("bgMusic");
   const musicToggleBtn = document.getElementById("musicToggleBtn");
-  const desktopMusicBtn = document.getElementById("desktopMusicBtn");
-  const desktopVinylDisc = document.getElementById("desktopVinylDisc");
-  const desktopPlayIcon = document.getElementById("desktopPlayIcon");
-  const desktopPlayText = document.getElementById("desktopPlayText");
+  const musicStatusText = document.getElementById("musicStatusText");
   let isPlaying = false;
 
   function setPlayingState(playing) {
     isPlaying = playing;
 
-    // Nút nổi di động
     if (musicToggleBtn) {
-      if (playing) {
-        musicToggleBtn.classList.add("playing");
-        const waves = document.getElementById("soundWaves");
-        if (waves) waves.style.display = "flex";
-      } else {
-        musicToggleBtn.classList.remove("playing");
-        const waves = document.getElementById("soundWaves");
-        if (waves) waves.style.display = "none";
-      }
+      musicToggleBtn.classList.toggle("playing", playing);
     }
-
-    // Đĩa than & nút trên máy tính
-    if (desktopVinylDisc) {
-      if (playing) {
-        desktopVinylDisc.classList.add("playing");
-      } else {
-        desktopVinylDisc.classList.remove("playing");
-      }
-    }
-
-    if (desktopPlayIcon && desktopPlayText) {
-      if (playing) {
-        desktopPlayIcon.textContent = "⏸";
-        desktopPlayText.textContent = "TẠM DỪNG";
-      } else {
-        desktopPlayIcon.textContent = "▶";
-        desktopPlayText.textContent = "BẬT NHẠC";
-      }
+    if (musicStatusText) {
+      musicStatusText.textContent = playing ? "Đang phát: Long Live" : "Bật nhạc: Long Live";
     }
   }
 
@@ -353,7 +280,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Nút di động
   if (musicToggleBtn) {
     musicToggleBtn.addEventListener("click", (e) => {
       e.preventDefault();
@@ -367,33 +293,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Nút máy tính
-  if (desktopMusicBtn) {
-    desktopMusicBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      if (!bgMusic) return;
-      if (bgMusic.paused) {
-        startAudio().catch(err => console.warn("Lỗi phát nhạc:", err));
-      } else {
-        stopAudio();
-      }
-    });
-  }
-
-  // Nút cuộn nhanh tới RSVP trên máy tính
-  const desktopScrollRsvpBtn = document.getElementById("desktopScrollRsvpBtn");
-  if (desktopScrollRsvpBtn) {
-    desktopScrollRsvpBtn.addEventListener("click", () => {
-      const rsvpSec = document.getElementById("rsvpSection");
-      if (rsvpSec) {
-        rsvpSec.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-    });
-  }
-
   const onFirstUserGesture = (e) => {
     if (musicToggleBtn && (e.target === musicToggleBtn || musicToggleBtn.contains(e.target))) return;
-    if (desktopMusicBtn && (e.target === desktopMusicBtn || desktopMusicBtn.contains(e.target))) return;
     if (bgMusic && bgMusic.paused) {
       startAudio().catch(() => {});
     }
@@ -408,88 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   attachUnlockListeners();
 
-  // 8. Xử lý mở thiệp 2 cánh kiểu cửa (Interactive Gatefold Opening)
-  function initGatefoldOpening() {
-    const envelopeOverlay = document.getElementById("envelopeOverlay");
-    const gatefoldSeal = document.getElementById("gatefoldSeal");
-    if (!envelopeOverlay) return;
-
-    let isOpened = false;
-
-    const handleOpen = () => {
-      if (isOpened) return;
-      isOpened = true;
-
-      startAudio().catch(() => {});
-
-      if (typeof confetti === "function") {
-        confetti({
-          particleCount: 65,
-          spread: 80,
-          origin: { y: 0.55 },
-          colors: ['#cba248', '#851c27', '#ffd700', '#fcebbb', '#ffffff']
-        });
-        setTimeout(() => {
-          confetti({
-            particleCount: 40,
-            angle: 60,
-            spread: 50,
-            origin: { x: 0 },
-            colors: ['#cba248', '#851c27', '#ffd700']
-          });
-          confetti({
-            particleCount: 40,
-            angle: 120,
-            spread: 50,
-            origin: { x: 1 },
-            colors: ['#cba248', '#851c27', '#ffd700']
-          });
-        }, 300);
-      }
-
-      envelopeOverlay.classList.add("opened");
-      setTimeout(() => {
-        envelopeOverlay.style.display = "none";
-      }, 1200);
-    };
-
-    if (gatefoldSeal) {
-      gatefoldSeal.addEventListener("click", handleOpen);
-    }
-    envelopeOverlay.addEventListener("click", handleOpen);
-  }
-
-  initGatefoldOpening();
-
-  // 9. Hệ thống Hiệu Ứng Chữ Khi Cuộn Trang (Scroll Reveal Engine)
-  function initTextAnimations() {
-    const revealElements = document.querySelectorAll(
-      ".reveal-text, .letter-expand-reveal, .divider-expand, .badge-pop"
-    );
-    if (!revealElements.length) return;
-
-    if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-revealed");
-            observer.unobserve(entry.target);
-          }
-        });
-      }, {
-        threshold: 0.12,
-        rootMargin: "0px 0px -40px 0px"
-      });
-
-      revealElements.forEach(el => observer.observe(el));
-    } else {
-      revealElements.forEach(el => el.classList.add("is-revealed"));
-    }
-  }
-
-  initTextAnimations();
-
-  // 10. Sổ lưu bút và Kết nối Đồng bộ Google Sheets
+  // 7. Sổ lưu bút và Kết nối Đồng bộ Google Sheets
   const WISHES_STORAGE_KEY = "graduation_invitation_wishes_list";
 
   function getLocalWishes() {
@@ -517,18 +337,15 @@ document.addEventListener("DOMContentLoaded", () => {
     container.innerHTML = "";
     wishes.forEach(item => {
       const wishEl = document.createElement("div");
-      wishEl.className = "wish-item reveal-text is-revealed";
-
-      const isDecline = item.status && (item.status.includes("tiếc") || item.status.includes("Bận"));
-      const badgeClass = isDecline ? "wish-status-badge decline" : "wish-status-badge";
+      wishEl.className = "wish-item";
 
       wishEl.innerHTML = `
         <div class="wish-header">
           <span class="wish-author">${escapeHTML(item.name)}</span>
-          <span class="${badgeClass}">${escapeHTML(item.status || 'Gửi lời chúc')}</span>
+          <span class="wish-status-badge">${escapeHTML(item.status || "Gửi lời chúc")}</span>
         </div>
         <div class="wish-content">${escapeHTML(item.message)}</div>
-        <div class="wish-time">${escapeHTML(item.time || 'Vừa xong')}</div>
+        <div class="wish-time">${escapeHTML(item.time || "Vừa xong")}</div>
       `;
       container.appendChild(wishEl);
     });
@@ -559,7 +376,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadWishes();
 
-  // 11. Xử lý Gửi Form Xác nhận tham dự (RSVP)
+  // 8. Xử lý Gửi Form Xác nhận tham dự (RSVP)
   const rsvpForm = document.getElementById("rsvpForm");
   if (rsvpForm) {
     rsvpForm.addEventListener("submit", async (e) => {
@@ -621,12 +438,11 @@ document.addEventListener("DOMContentLoaded", () => {
         confetti({
           particleCount: 70,
           spread: 70,
-          origin: { y: 0.65 },
-          colors: ['#cba248', '#851c27', '#ffd700']
+          origin: { y: 0.65 }
         });
       }
 
-      showToast(`Cảm ơn ${name} đã gửi lời chúc yêu thương! 🥰`);
+      showToast(`Cảm ơn ${name} đã gửi lời chúc!`);
       messageInput.value = "";
 
       const wishesSec = document.getElementById("wishesSection");
@@ -636,7 +452,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 12. Modal xem ảnh phóng to (Lightbox)
+  // 9. Modal xem ảnh phóng to (Lightbox)
   const lightboxModal = document.getElementById("lightboxModal");
   const lightboxImg = document.getElementById("lightboxImg");
   const lightboxClose = document.getElementById("lightboxClose");
@@ -665,7 +481,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 13. Thông báo Toast
+  // 10. Thông báo Toast
   function showToast(text) {
     let toast = document.getElementById("toastNotice");
     if (!toast) {
@@ -681,7 +497,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 3200);
   }
 
-  // 14. Mở bí mật Quản trị: Nhấp 3 lần liên tiếp vào dòng "ktv © 2026"
+  // 11. Mở bí mật Quản trị: Nhấp 3 lần vào dòng chân trang (không hiển thị gợi ý cho khách)
   const footerCredits = document.querySelectorAll(".footer-credit");
   if (footerCredits.length > 0) {
     let clickCount = 0;
@@ -702,138 +518,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function escapeHTML(str) {
     if (!str) return "";
-    return str.replace(/[&<>'"]/g, 
+    return str.replace(/[&<>'"]/g,
       tag => ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        "'": '&#39;',
-        '"': '&quot;'
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "'": "&#39;",
+        '"': "&quot;"
       }[tag] || tag)
     );
   }
-
-  // 15. Hiệu ứng Cánh hoa và Bụi sao bay lãng mạn
-  function initRomanticAtmosphere() {
-    const canvas = document.getElementById("fxCanvas");
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
-
-    window.addEventListener("resize", () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    }, { passive: true });
-
-    const petals = [];
-    const petalColors = [
-      "rgba(215, 65, 80, 0.45)",
-      "rgba(240, 160, 170, 0.4)",
-      "rgba(255, 220, 225, 0.5)",
-      "rgba(203, 162, 72, 0.35)"
-    ];
-    const isMobile = window.innerWidth < 768;
-    const petalCount = isMobile ? 12 : 18;
-
-    for (let i = 0; i < petalCount; i++) {
-      petals.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        size: Math.random() * 7 + 5,
-        speedY: Math.random() * 0.7 + 0.4,
-        speedX: Math.random() * 0.6 - 0.3,
-        rotation: Math.random() * Math.PI * 2,
-        rotationSpeed: (Math.random() - 0.5) * 0.02,
-        color: petalColors[Math.floor(Math.random() * petalColors.length)],
-        flip: Math.random() * Math.PI,
-        flipSpeed: Math.random() * 0.03 + 0.01
-      });
-    }
-
-    const stars = [];
-    const starCount = isMobile ? 10 : 16;
-    for (let i = 0; i < starCount; i++) {
-      stars.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        radius: Math.random() * 1.5 + 0.6,
-        alpha: Math.random(),
-        alphaSpeed: (Math.random() * 0.02 + 0.008) * (Math.random() > 0.5 ? 1 : -1),
-        speedY: Math.random() * 0.2 + 0.08
-      });
-    }
-
-    let isRunning = true;
-    document.addEventListener("visibilitychange", () => {
-      isRunning = !document.hidden;
-      if (isRunning) requestAnimationFrame(animate);
-    });
-
-    function drawPetal(p) {
-      ctx.save();
-      ctx.translate(p.x, p.y);
-      ctx.rotate(p.rotation);
-      ctx.scale(Math.cos(p.flip), 1);
-      ctx.fillStyle = p.color;
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.bezierCurveTo(-p.size / 2, -p.size / 2, -p.size, p.size / 3, 0, p.size);
-      ctx.bezierCurveTo(p.size, p.size / 3, p.size / 2, -p.size / 2, 0, 0);
-      ctx.fill();
-      ctx.restore();
-    }
-
-    function animate() {
-      if (!isRunning) return;
-      ctx.clearRect(0, 0, width, height);
-
-      for (let i = 0; i < petals.length; i++) {
-        const p = petals[i];
-        p.y += p.speedY;
-        p.x += Math.sin(p.y * 0.008) * 0.4 + p.speedX;
-        p.rotation += p.rotationSpeed;
-        p.flip += p.flipSpeed;
-
-        if (p.y > height + 20) {
-          p.y = -20;
-          p.x = Math.random() * width;
-        }
-        if (p.x > width + 20) p.x = -20;
-        if (p.x < -20) p.x = width + 20;
-
-        drawPetal(p);
-      }
-
-      for (let i = 0; i < stars.length; i++) {
-        const s = stars[i];
-        s.y -= s.speedY;
-        s.alpha += s.alphaSpeed;
-        if (s.alpha >= 0.85 || s.alpha <= 0.15) {
-          s.alphaSpeed = -s.alphaSpeed;
-        }
-        if (s.y < -10) {
-          s.y = height + 10;
-          s.x = Math.random() * width;
-        }
-
-        ctx.save();
-        ctx.fillStyle = `rgba(235, 208, 125, ${Math.max(0, Math.min(1, s.alpha))})`;
-        ctx.shadowBlur = 4;
-        ctx.shadowColor = "rgba(203, 162, 72, 0.4)";
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      }
-
-      requestAnimationFrame(animate);
-    }
-
-    requestAnimationFrame(animate);
-  }
-
-  initRomanticAtmosphere();
 });
