@@ -56,27 +56,27 @@ const DEFAULT_CONFIG = {
   // Lời chúc mẫu ban đầu
   initialWishes: [
     {
-      name: "Mai Phương 🌸",
+      name: "Mai Phương",
       status: "Chắc chắn tham dự",
-      message: "Chúc mừng Kim Huê xuất sắc tốt nghiệp nhé! Chúc bạn tương lai rộng mở, luôn rạng rỡ và thành công rực rỡ trên con đường sự nghiệp! 🎓💐",
+      message: "Chúc mừng Kim Huê xuất sắc tốt nghiệp nhé! Chúc bạn tương lai rộng mở, luôn rạng rỡ và thành công rực rỡ trên con đường sự nghiệp!",
       time: "Vừa xong"
     },
     {
-      name: "Anh Tuấn và Chị Hà ✨",
+      name: "Anh Tuấn và Chị Hà",
       status: "Chắc chắn tham dự",
-      message: "Tự hào về em gái lắm nha! Hẹn gặp em tại lễ tốt nghiệp để chụp thật nhiều ảnh xinh cùng cử nhân nha! 🎉📸",
+      message: "Tự hào về em gái lắm nha! Hẹn gặp em tại lễ tốt nghiệp để chụp thật nhiều ảnh xinh cùng cử nhân nha!",
       time: "15 phút trước"
     },
     {
-      name: "Hoàng Nam (C3) 🎓",
+      name: "Hoàng Nam (C3)",
       status: "Chắc chắn tham dự",
-      message: "Chúc mừng tân cử nhân xuất sắc! Chúc cậu luôn giữ vững ngọn lửa nhiệt huyết và chinh phục mọi đỉnh cao mới nhé! 💖",
+      message: "Chúc mừng tân cử nhân xuất sắc! Chúc cậu luôn giữ vững ngọn lửa nhiệt huyết và chinh phục mọi đỉnh cao mới nhé!",
       time: "1 giờ trước"
     },
     {
-      name: "Cô Thanh Mai 💐",
+      name: "Cô Thanh Mai",
       status: "Gửi lời chúc",
-      message: "Cô rất tự hào về nỗ lực và sự trưởng thành của em trong suốt những năm qua. Chúc em luôn vững bước và toả sáng trên hành trình phía trước! 🌟",
+      message: "Cô rất tự hào về nỗ lực và sự trưởng thành của em trong suốt những năm qua. Chúc em luôn vững bước và toả sáng trên hành trình phía trước!",
       time: "Hôm qua"
     }
   ]

@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (mapBtn && config.googleMapsUrl) {
       mapBtn.href = config.googleMapsUrl;
       if (config.venueTitle) {
-        mapBtn.innerHTML = `<span>📍</span> Chỉ Đường Đến ${escapeHTML(config.venueTitle)}`;
+        mapBtn.textContent = `Chỉ Đường Đến ${config.venueTitle}`;
       }
     }
 
