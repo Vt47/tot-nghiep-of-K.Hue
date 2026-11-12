@@ -39,10 +39,16 @@ const DEFAULT_CONFIG = {
   footerPhotoSrc: "",
   albumPhotos: ["", "", "", ""],
 
-  // Bức thư tâm sự
+  // Thư cảm ơn và lời mời dự lễ tốt nghiệp
+  letterTitle: "THƯ CẢM ƠN VÀ LỜI MỜI DỰ LỄ TỐT NGHIỆP 🎓",
   letterParagraphs: [
-    "Một hành trình đã khép lại bằng những ngày tháng đáng nhớ, từ những bỡ ngỡ ban đầu đến lúc trưởng thành hơn sau từng bài học, thử thách và trải nghiệm.",
-    "Có những ngày mệt mỏi, có cả những lần muốn dừng bước, nhưng nhờ sự đồng hành của gia đình, thầy cô và bạn bè, mình đã đi đến cột mốc hôm nay. Tấm bằng tốt nghiệp không chỉ là kết quả của những năm tháng nỗ lực, mà còn là dấu mốc mở ra một hành trình mới với nhiều ước mơ và cơ hội đang chờ phía trước."
+    "Gửi những người đặc biệt trong những năm tháng tuổi trẻ của mình! 💗",
+    "Vậy là cuối cùng mình cũng đã đi đến chặng cuối của những năm tháng đại học. Một hành trình tưởng chừng còn rất dài, vậy mà giờ đây đã trở thành những kỷ niệm thật đẹp.",
+    "Mình thật sự biết ơn vì đã gặp được mọi người trong quãng thời gian này. Cảm ơn vì những lần gặp gỡ, những câu chuyện sẻ chia, những kỉ niệm vui buồn và những khi mọi người đã ở bên cạnh cả những lúc chẳng cần làm gì nhiều, chỉ đơn giản là có mặt. Có lẽ, điều đáng quý nhất khi nhìn lại những năm tháng sinh viên không chỉ là tấm bằng tốt nghiệp, mà còn là những người bạn mà mình may mắn có được.",
+    "Ngày tốt nghiệp sắp tới không chỉ đánh dấu một cột mốc của riêng mình, mà còn là dịp để mình được chia sẻ niềm vui với những người mà mình trân trọng. Vì vậy, mình rất mong mọi người có thể đến tham dự và cùng mình lưu lại thêm một kỷ niệm đẹp nhé!",
+    "Cảm ơn vì đã cùng mình viết nên một phần thanh xuân thật đáng nhớ. Mong rằng dù sau này mỗi người một hành trình, chúng ta vẫn sẽ luôn nhớ về nhau bằng những tình cảm thật đẹp.",
+    "Hẹn gặp mọi người trong ngày đặc biệt của mình! 💗",
+    "Thương mến!"
   ],
 
   // Nhạc nền: Taylor Swift - Long Live (Taylor's Version)

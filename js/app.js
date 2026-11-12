@@ -79,6 +79,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const mapIframe = document.getElementById("googleMapIframe");
     if (mapIframe && config.googleMapsEmbed) mapIframe.src = config.googleMapsEmbed;
 
+    const letterTitleEl = document.getElementById("letterTitleDisplay");
+    if (letterTitleEl && config.letterTitle) letterTitleEl.textContent = config.letterTitle;
+
     const letterBody = document.getElementById("letterBodyContainer");
     if (letterBody && Array.isArray(config.letterParagraphs) && config.letterParagraphs.length > 0) {
       letterBody.innerHTML = config.letterParagraphs
