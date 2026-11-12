@@ -1,22 +1,23 @@
 /* ==========================================================================
    GRADUATION PARTY - CREAM & CHOCOLATE BROWN THEME
-   Thiết kế chuẩn mẫu ảnh thiệp mời Vintage Line-Art & Dual Polaroids
-   Tương thích hoàn hảo Điện thoại & Máy tính
+   Thiết kế chuẩn mẫu Vintage Line-Art & Dual Polaroids
+   Tương thích hoàn hảo Điện thoại & Máy tính + Hiệu ứng mượt mà
    ========================================================================== */
 
 :root {
   --bg-desk: #ede4da;
   --bg-card: #faf5f0;
   --bg-card-soft: #f4ece3;
-  --brown-primary: #794a28;
+  --brown-primary: #6c3e1f;
   --brown-dark: #4a2c18;
-  --brown-deep: #361e10;
-  --brown-muted: #8c6648;
+  --brown-deep: #301a0d;
+  --brown-muted: #7c563a;
   --border-cream: #e4d4c3;
-  --shadow-card: 0 18px 50px rgba(74, 44, 24, 0.14);
-  --shadow-polaroid: 0 10px 24px rgba(54, 30, 16, 0.16);
+  --shadow-card: 0 22px 60px rgba(74, 44, 24, 0.16);
+  --shadow-polaroid: 0 12px 28px rgba(54, 30, 16, 0.17);
   --font-sans: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-script: "Great Vibes", cursive;
+  --font-guest: "Dancing Script", cursive;
 }
 
 *, *::before, *::after {
@@ -32,10 +33,11 @@ html {
 
 body {
   font-family: var(--font-sans);
-  background: var(--bg-desk);
+  background: radial-gradient(circle at top center, #f4ece2 0%, var(--bg-desk) 100%);
   color: var(--brown-dark);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
@@ -47,17 +49,27 @@ body {
   clip: rect(0, 0, 0, 0);
 }
 
+/* Canvas hiệu ứng hạt ấm áp trên nền */
+#fxCanvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+
 /* ==========================================================================
-   ANIMATIONS (Mượt mà, nhẹ nhàng, không che chữ)
+   KEYFRAMES & HIỆU ỨNG CHUYỂN ĐỘNG
    ========================================================================== */
 @keyframes softFadeUp {
   0% {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(20px) scale(0.985);
+    filter: blur(2px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+    filter: blur(0);
   }
 }
 
@@ -66,7 +78,7 @@ body {
     transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(-6px) rotate(1.5deg);
+    transform: translateY(-7px) rotate(2deg);
   }
 }
 
@@ -75,52 +87,180 @@ body {
     transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(5px) rotate(-1.5deg);
+    transform: translateY(6px) rotate(-2deg);
+  }
+}
+
+@keyframes capWobble {
+  0%, 100% {
+    transform: rotate(0deg) translateY(0px);
+  }
+  50% {
+    transform: rotate(-3deg) translateY(-4px);
+  }
+}
+
+@keyframes diplomaFloat {
+  0%, 100% {
+    transform: rotate(0deg) translateY(0px);
+  }
+  50% {
+    transform: rotate(2.5deg) translateY(4px);
+  }
+}
+
+@keyframes handPeekRight {
+  0%, 100% {
+    transform: translateX(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateX(-4px) rotate(-1.5deg);
+  }
+}
+
+@keyframes handPeekLeft {
+  0%, 100% {
+    transform: translateX(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateX(4px) rotate(1.5deg);
+  }
+}
+
+@keyframes polaroidSwayLeft {
+  0%, 100% {
+    transform: rotate(-5.5deg) translateY(0px);
+  }
+  50% {
+    transform: rotate(-4deg) translateY(-4px);
+  }
+}
+
+@keyframes polaroidSwayRight {
+  0%, 100% {
+    transform: rotate(6deg) translateY(10px);
+  }
+  50% {
+    transform: rotate(4.5deg) translateY(6px);
+  }
+}
+
+@keyframes brownShimmerSweep {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes nameBreathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.025);
+  }
+}
+
+@keyframes calendarPulse {
+  0%, 100% {
+    box-shadow: 0 4px 10px rgba(108, 62, 31, 0.35);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 6px 18px rgba(108, 62, 31, 0.55);
+    transform: scale(1.07);
+  }
+}
+
+@keyframes btnGlowSweep {
+  0% {
+    left: -100%;
+  }
+  45%, 100% {
+    left: 160%;
   }
 }
 
 @keyframes musicPulse {
   0%, 100% {
-    box-shadow: 0 6px 20px rgba(121, 74, 40, 0.3);
+    box-shadow: 0 6px 20px rgba(108, 62, 31, 0.35);
   }
   50% {
-    box-shadow: 0 6px 26px rgba(121, 74, 40, 0.55);
+    box-shadow: 0 6px 28px rgba(108, 62, 31, 0.65);
   }
 }
 
 .reveal-item {
-  animation: softFadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: softFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .delay-1 { animation-delay: 0.08s; }
 .delay-2 { animation-delay: 0.16s; }
 .delay-3 { animation-delay: 0.24s; }
-.delay-4 { animation-delay: 0.32s; }
-.delay-5 { animation-delay: 0.40s; }
-.delay-6 { animation-delay: 0.48s; }
+.delay-4 { animation-delay: 0.34s; }
+.delay-5 { animation-delay: 0.44s; }
+.delay-6 { animation-delay: 0.54s; }
+
+/* Scroll reveal an toàn (chỉ ẩn trước khi cuộn khi JS đã kích hoạt anim-ready) */
+.anim-ready .scroll-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  filter: blur(2px);
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+              filter 0.75s ease;
+}
+
+.anim-ready .scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Chữ ánh đồng lướt nhẹ cho GRADUATION PARTY */
+.shimmer-brown {
+  background: linear-gradient(
+    115deg,
+    #633719 0%,
+    #794a28 32%,
+    #b67b45 48%,
+    #794a28 64%,
+    #633719 100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  animation: softFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both,
+             brownShimmerSweep 6s linear infinite;
+}
 
 /* ==========================================================================
    KHUNG THIỆP CHÍNH (MOBILE FULL-WIDTH / DESKTOP CENTERED SHEET)
    ========================================================================== */
 .invitation-sheet {
   width: 100%;
-  max-width: 520px;
+  max-width: 580px;
   margin: 0 auto;
   background: var(--bg-card);
   min-height: 100vh;
   position: relative;
+  z-index: 2;
   overflow: hidden;
   padding-bottom: 84px;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 640px) {
   body {
-    padding: 28px 16px 60px;
+    padding: 28px 20px 64px;
   }
 
   .invitation-sheet {
-    border-radius: 16px;
-    border: 1px solid var(--border-cream);
+    max-width: 600px;
+    border-radius: 18px;
+    border: 1.5px solid var(--border-cream);
     box-shadow: var(--shadow-card);
   }
 }
@@ -132,9 +272,9 @@ body {
   position: relative;
   width: 100%;
   overflow: hidden;
-  padding: 48px 24px 38px;
+  padding: 46px 26px 36px;
   text-align: center;
-  background: radial-gradient(circle at 50% 35%, #fdfaf7 0%, var(--bg-card) 75%);
+  background: radial-gradient(circle at 50% 35%, #fffdfa 0%, var(--bg-card) 78%);
 }
 
 .party-hero-content {
@@ -152,42 +292,46 @@ body {
 .sketch-cap-tl {
   top: -6px;
   left: -10px;
-  width: clamp(78px, 21vw, 118px);
+  width: clamp(78px, 21vw, 122px);
+  animation: capWobble 6s ease-in-out infinite;
 }
 
 .sketch-diploma-tr {
   top: -4px;
   right: -10px;
-  width: clamp(84px, 22vw, 126px);
+  width: clamp(84px, 22vw, 132px);
+  animation: diplomaFloat 6.5s ease-in-out infinite;
 }
 
 .sketch-balloon-ml {
   top: 26%;
   left: -10px;
-  width: clamp(44px, 12vw, 64px);
+  width: clamp(44px, 12vw, 66px);
   animation: gentleFloat 5s ease-in-out infinite;
 }
 
 .sketch-hand-mr {
   top: 22%;
   right: -14px;
-  width: clamp(60px, 17vw, 94px);
+  width: clamp(60px, 17vw, 96px);
+  animation: handPeekRight 5.5s ease-in-out infinite;
 }
 
 .sketch-hand-bl {
   bottom: 13%;
   left: -14px;
-  width: clamp(62px, 18vw, 96px);
+  width: clamp(62px, 18vw, 98px);
+  animation: handPeekLeft 5.8s ease-in-out infinite;
 }
 
 .sketch-balloon-br {
   bottom: 14%;
   right: -8px;
-  width: clamp(42px, 12vw, 62px);
+  width: clamp(42px, 12vw, 64px);
   animation: gentleFloatReverse 5.5s ease-in-out infinite;
 }
 
-/* Dòng 1: Thân mời: [Tên khách viết tay có gạch chân nét đứt] */
+/* Dòng 1: Thân mời: [Tên khách dùng font Dancing Script với gạch chân đứt] */
 .hero-invite-row {
   display: inline-flex;
   align-items: baseline;
@@ -205,21 +349,22 @@ body {
 }
 
 .guest-script-underline {
-  font-family: var(--font-script);
-  font-size: clamp(32px, 8.5vw, 42px);
-  font-weight: 400;
+  font-family: var(--font-guest);
+  font-size: clamp(30px, 7.6vw, 38px);
+  font-weight: 700;
   color: var(--brown-deep);
-  line-height: 1;
-  min-width: 135px;
-  padding: 0 12px 3px;
+  line-height: 1.05;
+  min-width: 140px;
+  padding: 0 14px 4px;
   border-bottom: 2px dashed var(--brown-primary);
   display: inline-block;
+  letter-spacing: 0.2px;
 }
 
 /* Dòng 2: YOU ARE INVITED TO */
 .hero-kicker {
-  font-size: clamp(13px, 3.6vw, 16px);
-  font-weight: 500;
+  font-size: clamp(13px, 3.5vw, 15.5px);
+  font-weight: 600;
   color: var(--brown-dark);
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -229,7 +374,7 @@ body {
 /* Tiêu đề chính: GRADUATION PARTY */
 .hero-party-heading {
   font-family: var(--font-sans);
-  font-size: clamp(36px, 10.2vw, 52px);
+  font-size: clamp(36px, 10vw, 54px);
   font-weight: 900;
   color: var(--brown-primary);
   line-height: 1.03;
@@ -238,7 +383,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 26px;
+  margin-bottom: 24px;
 }
 
 /* ==========================================================================
@@ -249,7 +394,7 @@ body {
   align-items: center;
   justify-content: center;
   margin: 4px auto 26px;
-  max-width: 400px;
+  max-width: 420px;
   padding: 6px 8px;
 }
 
@@ -258,30 +403,33 @@ body {
   background: #ffffff;
   padding: 9px 9px 26px;
   box-shadow: var(--shadow-polaroid);
-  border: 1px solid rgba(121, 74, 40, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(121, 74, 40, 0.1);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
   position: relative;
 }
 
 .polaroid-left {
   transform: rotate(-5.5deg);
   z-index: 2;
+  animation: polaroidSwayLeft 6s ease-in-out infinite;
 }
 
 .polaroid-right {
   transform: rotate(6deg) translateY(10px);
   margin-left: -14px;
   z-index: 3;
+  animation: polaroidSwayRight 6.5s ease-in-out infinite;
 }
 
 .polaroid-card.has-image {
   cursor: pointer;
 }
 
-.polaroid-card.has-image:hover {
-  transform: rotate(0deg) scale(1.03);
+.polaroid-card:hover {
+  animation-play-state: paused;
+  transform: rotate(0deg) scale(1.03) translateY(-2px);
   z-index: 5;
-  box-shadow: 0 14px 32px rgba(54, 30, 16, 0.24);
+  box-shadow: 0 16px 36px rgba(54, 30, 16, 0.25);
 }
 
 .polaroid-photo-box {
@@ -321,7 +469,7 @@ body {
   border: 1.5px dashed var(--border-cream);
   width: calc(100% - 12px);
   height: calc(100% - 12px);
-  background: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.55);
 }
 
 .ph-icon {
@@ -336,11 +484,11 @@ body {
 }
 
 /* ==========================================================================
-   THÔNG TIN CỬ NHÂN & ĐỊA ĐIỂM DƯỚI POLAROID
+   THÔNG TIN CỬ NHÂN & ĐỊA ĐIỂM DƯỚI POLAROID (RÕ NÉT TRÊN CẢ MÁY TÍNH)
    ========================================================================== */
 .hero-honor-label {
-  font-size: clamp(13px, 3.6vw, 15px);
-  font-weight: 500;
+  font-size: clamp(13px, 3.5vw, 15px);
+  font-weight: 600;
   color: var(--brown-dark);
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -349,16 +497,21 @@ body {
 
 .hero-grad-script {
   font-family: var(--font-script);
-  font-size: clamp(50px, 13.5vw, 66px);
+  font-size: clamp(50px, 13vw, 66px);
   font-weight: 400;
-  color: var(--brown-primary);
-  line-height: 1.08;
+  color: #633719;
+  line-height: 1.12;
   margin-bottom: 2px;
+  /* Tăng độ nét nhẹ cho màn hình máy tính độ phân giải thường */
+  text-shadow: 0 0 0.6px rgba(99, 55, 25, 0.55), 0 2px 8px rgba(108, 62, 31, 0.08);
+  display: inline-block;
+  animation: softFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both,
+             nameBreathe 4.5s ease-in-out infinite 1s;
 }
 
 .hero-grad-fullname {
-  font-size: 11.5px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
   color: var(--brown-muted);
   letter-spacing: 2.8px;
   text-transform: uppercase;
@@ -374,7 +527,7 @@ body {
 }
 
 .hero-datetime {
-  font-size: clamp(14px, 4vw, 17px);
+  font-size: clamp(14.5px, 4vw, 17.5px);
   font-weight: 800;
   color: var(--brown-primary);
   letter-spacing: 0.5px;
@@ -385,7 +538,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  font-size: clamp(16px, 4.3vw, 19px);
+  font-size: clamp(16px, 4.3vw, 19.5px);
   font-weight: 800;
   color: var(--brown-primary);
   text-transform: uppercase;
@@ -398,16 +551,16 @@ body {
 }
 
 .hero-address {
-  font-size: clamp(13px, 3.6vw, 15px);
-  font-weight: 500;
+  font-size: clamp(13.5px, 3.6vw, 15.5px);
+  font-weight: 600;
   color: var(--brown-deep);
   max-width: 92%;
   line-height: 1.45;
 }
 
 .hero-contact {
-  font-size: clamp(13.5px, 3.8vw, 15.5px);
-  font-weight: 500;
+  font-size: clamp(14px, 3.8vw, 15.5px);
+  font-weight: 600;
   color: var(--brown-deep);
   margin-top: 2px;
 }
@@ -415,7 +568,7 @@ body {
 .hero-contact a {
   color: var(--brown-deep);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .hero-contact a:hover {
@@ -437,9 +590,9 @@ body {
 
 .hero-closing {
   font-size: clamp(12.5px, 3.4vw, 14.5px);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--brown-deep);
-  letter-spacing: 0.4px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
 }
 
@@ -447,7 +600,7 @@ body {
    CÁC SECTION CHỨC NĂNG BÊN DƯỚI (ĐỒNG BỘ TONE KEM & NÂU)
    ========================================================================== */
 .party-sub-section {
-  padding: 28px 22px 12px;
+  padding: 28px 24px 12px;
   border-top: 1px dashed var(--border-cream);
 }
 
@@ -483,7 +636,7 @@ body {
 .cream-timer-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 22px;
 }
 
@@ -494,6 +647,12 @@ body {
   padding: 12px 4px;
   text-align: center;
   box-shadow: 0 4px 12px rgba(74, 44, 24, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cream-timer-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(74, 44, 24, 0.1);
 }
 
 .cream-timer-num {
@@ -564,10 +723,32 @@ body {
   width: 34px;
   height: 34px;
   margin: auto;
-  box-shadow: 0 4px 10px rgba(121, 74, 40, 0.35);
+  animation: calendarPulse 2.4s ease-in-out infinite;
 }
 
-/* Nút bấm */
+/* Nút bấm & Ánh sáng lướt */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  animation: btnGlowSweep 4s ease-in-out infinite;
+}
+
 .btn-cream-outline {
   display: inline-flex;
   align-items: center;
@@ -583,12 +764,13 @@ body {
   border-radius: 999px;
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .btn-cream-outline:hover {
   background: var(--brown-primary);
   color: #ffffff;
+  transform: translateY(-1px);
 }
 
 .btn-brown-solid {
@@ -607,13 +789,14 @@ body {
   cursor: pointer;
   text-decoration: none;
   letter-spacing: 0.5px;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .btn-brown-solid:hover {
   background: var(--brown-dark);
   border-color: var(--brown-dark);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(74, 44, 24, 0.25);
 }
 
 .btn-full {
@@ -626,7 +809,7 @@ body {
   border: 2px solid var(--border-cream);
   border-radius: 14px;
   overflow: hidden;
-  height: 230px;
+  height: 240px;
   background: #ffffff;
   box-shadow: 0 6px 18px rgba(74, 44, 24, 0.06);
 }
@@ -642,14 +825,14 @@ body {
   background: #ffffff;
   border: 1.5px solid var(--border-cream);
   border-radius: 14px;
-  padding: 22px 20px;
+  padding: 24px 22px;
   text-align: center;
   box-shadow: 0 6px 18px rgba(74, 44, 24, 0.05);
 }
 
 .letter-body-cream {
   margin-top: 10px;
-  font-size: 14px;
+  font-size: 14.5px;
   color: var(--brown-dark);
   line-height: 1.75;
   text-align: justify;
@@ -659,11 +842,14 @@ body {
   margin-top: 10px;
 }
 
+/* Chữ ký bức thư dùng Dancing Script cho gọn, thanh thoát và dễ đọc trên máy tính */
 .letter-sig-cream {
-  font-family: var(--font-script);
-  font-size: 32px;
+  font-family: var(--font-guest);
+  font-size: clamp(26px, 6.5vw, 34px);
+  font-weight: 700;
   color: var(--brown-primary);
-  margin-top: 14px;
+  margin-top: 16px;
+  line-height: 1.2;
 }
 
 /* Album phụ (chỉ hiện nếu có ảnh từ /admin) */
@@ -681,6 +867,11 @@ body {
   border: 1px solid var(--border-cream);
   border-radius: 8px;
   cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+.extra-photo-slot:hover {
+  transform: scale(1.02);
 }
 
 .extra-photo-slot.has-image {
@@ -706,17 +897,18 @@ body {
   width: 100%;
   padding: 12px 14px;
   font-family: var(--font-sans);
-  font-size: 16px; /* Ngăn iOS Safari tự zoom khi nhập */
+  font-size: 16px;
   color: var(--brown-deep);
   background: #ffffff;
   border: 1.5px solid var(--border-cream);
   border-radius: 10px;
   outline: none;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .cream-input:focus {
   border-color: var(--brown-primary);
+  box-shadow: 0 0 0 3px rgba(108, 62, 31, 0.12);
 }
 
 .wishes-list-cream {
@@ -731,6 +923,11 @@ body {
   border-radius: 12px;
   padding: 14px 16px;
   box-shadow: 0 3px 10px rgba(74, 44, 24, 0.04);
+  transition: transform 0.2s ease;
+}
+
+.wish-item:hover {
+  transform: translateY(-2px);
 }
 
 .wish-header {
@@ -759,7 +956,7 @@ body {
 }
 
 .wish-content {
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--brown-dark);
   line-height: 1.55;
 }
@@ -816,6 +1013,11 @@ body {
 
 .music-toggle-btn.playing {
   animation: musicPulse 2s ease-in-out infinite;
+}
+
+.music-toggle-btn.playing .music-icon {
+  display: inline-block;
+  animation: gentleFloat 1.4s ease-in-out infinite;
 }
 
 .lightbox-modal {
@@ -881,18 +1083,18 @@ body {
    ========================================================================== */
 @media (max-width: 390px) {
   .party-hero-card {
-    padding: 48px 16px 30px;
+    padding: 46px 16px 30px;
   }
 
   .sketch-balloon-ml,
   .sketch-balloon-br {
-    opacity: 0.7;
-    width: 40px;
+    opacity: 0.72;
+    width: 38px;
   }
 
   .sketch-hand-mr,
   .sketch-hand-bl {
-    width: 56px;
+    width: 54px;
     opacity: 0.85;
   }
 

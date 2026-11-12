@@ -337,7 +337,8 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         const fullName = editGrad.value.trim();
         const nameParts = fullName.split(/\s+/);
-        const shortName = nameParts.length >= 2 ? nameParts.slice(-2).join(" ") : fullName;
+        const rawShort = nameParts.length >= 2 ? nameParts.slice(-2).join(" ") : fullName;
+        const shortName = rawShort.toLowerCase().split(/\s+/).map(w => w ? w.charAt(0).toUpperCase() + w.slice(1) : "").join(" ");
 
         const albumPhotos = [
           (editAlbum1 && editAlbum1.value.trim()) || "",

@@ -19,10 +19,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const currentGuestName = getPersonalizedGuestName();
 
+  // Định dạng chữ viết tay chuẩn Title Case nếu chuỗi đang bị viết HOA toàn bộ
+  function toTitleIfAllUpper(str) {
+    if (!str || typeof str !== "string") return "";
+    if (str === str.toUpperCase()) {
+      return str
+        .toLowerCase()
+        .split(/\s+/)
+        .map(w => w ? w.charAt(0).toUpperCase() + w.slice(1) : "")
+        .join(" ");
+    }
+    return str;
+  }
+
   // 2. Cập nhật dữ liệu từ Cấu hình (/admin hoặc config.js) lên giao diện
   function applyConfigToUI() {
     const gradName = config.graduateName || "PHẠM THỊ KIM HUÊ";
-    const shortName = config.graduateShortName || "Kim Huê";
+    const shortName = toTitleIfAllUpper(config.graduateShortName || "Kim Huê");
 
     const subtitleEl = document.getElementById("subtitleDisplay");
     if (subtitleEl && config.subtitle) subtitleEl.textContent = config.subtitle;
@@ -34,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (gradCalligraphy) gradCalligraphy.textContent = shortName;
 
     const guestDisplay = document.getElementById("guestNameDisplay");
-    if (guestDisplay) guestDisplay.textContent = currentGuestName;
+    if (guestDisplay) guestDisplay.textContent = toTitleIfAllUpper(currentGuestName);
 
     const timeHighlight = document.getElementById("eventTimeHighlight");
     if (timeHighlight) {
@@ -85,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const letterSig = document.getElementById("letterSignature");
-    if (letterSig) letterSig.textContent = gradName;
+    if (letterSig) letterSig.textContent = toTitleIfAllUpper(gradName);
 
     const thankYouMsg = document.getElementById("thankYouMsgDisplay");
     if (thankYouMsg && config.thankYouMessage) {
@@ -548,4 +561,108 @@ document.addEventListener("DOMContentLoaded", () => {
       }[tag] || tag)
     );
   }
+
+  // 12. Hiệu ứng xuất hiện mượt mà khi cuộn trang (Scroll Reveal an toàn)
+  function initScrollReveal() {
+    const items = document.querySelectorAll(".scroll-reveal");
+    if (!items.length || !("IntersectionObserver" in window)) return;
+
+    document.documentElement.classList.add("anim-ready");
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.08,
+      rootMargin: "0px 0px -20px 0px"
+    });
+
+    items.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.95) {
+        el.classList.add("is-visible");
+      } else {
+        revealObserver.observe(el);
+      }
+    });
+  }
+
+  initScrollReveal();
+
+  // 13. Hiệu ứng hạt ánh kim nâu đồng và bụi sao bay nhẹ trên nền
+  function initWarmSparkles() {
+    const canvas = document.getElementById("fxCanvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener("resize", () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }, { passive: true });
+
+    const count = width < 640 ? 16 : 24;
+    const particles = [];
+    const tones = [
+      "rgba(182, 123, 69, 0.35)",
+      "rgba(121, 74, 40, 0.25)",
+      "rgba(218, 179, 130, 0.4)"
+    ];
+
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 2.2 + 1.0,
+        vy: Math.random() * 0.4 + 0.18,
+        vx: (Math.random() - 0.5) * 0.3,
+        alpha: Math.random() * 0.5 + 0.3,
+        phase: Math.random() * Math.PI * 2,
+        color: tones[i % tones.length]
+      });
+    }
+
+    let running = true;
+    document.addEventListener("visibilitychange", () => {
+      running = !document.hidden;
+      if (running) requestAnimationFrame(tick);
+    });
+
+    function tick() {
+      if (!running) return;
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.y += p.vy;
+        p.phase += 0.02;
+        p.x += p.vx + Math.sin(p.phase) * 0.25;
+
+        if (p.y > height + 12) {
+          p.y = -10;
+          p.x = Math.random() * width;
+        }
+        if (p.x > width + 12) p.x = -10;
+        if (p.x < -12) p.x = width + 10;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  initWarmSparkles();
 });

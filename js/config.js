@@ -111,10 +111,25 @@ function getSavedConfig() {
       const isOldLocation = !parsed.locationAddress || parsed.locationAddress.includes("Hoàng Văn Thụ");
       const isOldThankYou = !parsed.thankYouMessage || parsed.thankYouMessage.startsWith("Sự hiện diện của bạn chính là món quà");
 
+      // Đảm bảo tên viết tay không bị viết HOA toàn bộ (gây rời chữ khi dùng font thư pháp)
+      const toTitleIfAllUpper = (str) => {
+        if (!str || typeof str !== "string") return "";
+        if (str === str.toUpperCase()) {
+          return str.toLowerCase().split(/\s+/).map(w => w ? w.charAt(0).toUpperCase() + w.slice(1) : "").join(" ");
+        }
+        return str;
+      };
+
+      const rawShort = parsed.graduateShortName || DEFAULT_CONFIG.graduateShortName;
+      const graduateShortName = (rawShort === "Minh Thư" || rawShort === "Tường Vi")
+        ? DEFAULT_CONFIG.graduateShortName
+        : toTitleIfAllUpper(rawShort);
+
       return {
         ...DEFAULT_CONFIG,
         ...parsed,
         graduateName: graduateName,
+        graduateShortName: graduateShortName,
         subtitle: isOldSubtitle ? DEFAULT_CONFIG.subtitle : parsed.subtitle,
         targetDate: isOldTime ? DEFAULT_CONFIG.targetDate : (parsed.targetDate || DEFAULT_CONFIG.targetDate),
         displayDateTime: isOldTime ? DEFAULT_CONFIG.displayDateTime : parsed.displayDateTime,

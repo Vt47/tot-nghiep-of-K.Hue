@@ -14,13 +14,13 @@
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
 
-  <!-- Google Fonts: Montserrat & Great Vibes (hỗ trợ đầy đủ tiếng Việt) -->
+  <!-- Google Fonts: Montserrat, Great Vibes & Dancing Script (hỗ trợ đầy đủ tiếng Việt) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Great+Vibes&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=13">
+  <link rel="stylesheet" href="css/style.css?v=14">
 </head>
 <body>
 
@@ -29,6 +29,9 @@
     <source src="assets/audio/long_live.m4a" type="audio/mp4">
     <source src="assets/audio/long_live.mp3" type="audio/mpeg">
   </audio>
+
+  <!-- Canvas hạt ánh kim & cánh hoa bay nhẹ nhàng -->
+  <canvas id="fxCanvas"></canvas>
 
   <!-- Khung thiệp mời trung tâm (tương thích điện thoại và máy tính) -->
   <main class="invitation-sheet" id="mainInvitationCard">
@@ -126,7 +129,7 @@
         </div>
 
         <!-- Tiêu đề lớn: GRADUATION PARTY -->
-        <h1 class="hero-party-heading reveal-item delay-2">
+        <h1 class="hero-party-heading shimmer-brown reveal-item delay-2">
           <span>GRADUATION</span>
           <span>PARTY</span>
         </h1>
@@ -207,12 +210,12 @@
          SECTION 2: ĐẾM NGƯỢC & LỊCH THÁNG
          ===================================================================== -->
     <section class="party-sub-section" id="sectionCountdownCalendar">
-      <div class="sub-section-head reveal-item">
+      <div class="sub-section-head scroll-reveal">
         <span class="sub-kicker">SAVE THE DATE</span>
         <h2 class="sub-heading">Đếm Ngược Ngày Vui</h2>
       </div>
 
-      <div class="cream-timer-row reveal-item">
+      <div class="cream-timer-row scroll-reveal">
         <div class="cream-timer-box">
           <span id="timerDays" class="cream-timer-num">00</span>
           <span class="cream-timer-txt">Ngày</span>
@@ -231,7 +234,7 @@
         </div>
       </div>
 
-      <div class="calendar-card-cream reveal-item">
+      <div class="calendar-card-cream scroll-reveal">
         <div class="calendar-month-heading">
           Tháng <span id="calMonthScript">11</span> • <span id="badgeYear">2026</span>
           <span class="sr-only">(<span id="badgeDay">17</span>/<span id="badgeMonth">11</span>)</span>
@@ -242,7 +245,7 @@
         </div>
 
         <div class="sub-actions-center">
-          <button id="addToCalendarBtn" class="btn-cream-outline" type="button">
+          <button id="addToCalendarBtn" class="btn-cream-outline btn-shine" type="button">
             <span>📅</span> Lưu Lịch Google Calendar
           </button>
         </div>
@@ -253,12 +256,12 @@
          SECTION 3: BẢN ĐỒ CHỈ ĐƯỜNG
          ===================================================================== -->
     <section class="party-sub-section" id="sectionLocation">
-      <div class="sub-section-head reveal-item">
+      <div class="sub-section-head scroll-reveal">
         <span class="sub-kicker">LOCATION</span>
         <h2 class="sub-heading">Bản Đồ Chỉ Đường</h2>
       </div>
 
-      <div class="map-frame-cream reveal-item">
+      <div class="map-frame-cream scroll-reveal">
         <iframe
           id="googleMapIframe"
           src="https://maps.google.com/maps?q=Nh%C3%A0%20H%C3%A1t%20H%C3%B2a%20B%C3%ACnh,%20240%20%C4%90%C6%B0%E1%BB%9Dng%203/2,%20TP%20HCM&t=&z=15&ie=UTF8&iwloc=&output=embed"
@@ -268,8 +271,8 @@
         </iframe>
       </div>
 
-      <div class="sub-actions-center reveal-item">
-        <a id="googleMapLinkBtn" href="https://maps.google.com/?q=Nh%C3%A0+H%C3%A1t+H%C3%B2a+B%C3%ACnh,+240+%C4%90%C6%B0%E1%BB%9Dng+3/2,+Qu%E1%BA%ADn+10,+TP+HCM" target="_blank" rel="noopener noreferrer" class="btn-brown-solid">
+      <div class="sub-actions-center scroll-reveal">
+        <a id="googleMapLinkBtn" href="https://maps.google.com/?q=Nh%C3%A0+H%C3%A1t+H%C3%B2a+B%C3%ACnh,+240+%C4%90%C6%B0%E1%BB%9Dng+3/2,+Qu%E1%BA%ADn+10,+TP+HCM" target="_blank" rel="noopener noreferrer" class="btn-brown-solid btn-shine">
           <span>📍</span> Chỉ Đường Đến Nhà Hát Hòa Bình
         </a>
       </div>
@@ -279,7 +282,7 @@
          SECTION 4: LỜI NHẮN TÂM SỰ & ALBUM MỞ RỘNG (ẨN KHI CHƯA CÓ ẢNH PHỤ)
          ===================================================================== -->
     <section class="party-sub-section" id="sectionLetter">
-      <div class="letter-box-cream reveal-item">
+      <div class="letter-box-cream scroll-reveal">
         <span class="sub-kicker">NOTE FROM GRADUATE</span>
         <div class="letter-body-cream" id="letterBodyContainer">
           <p>Một hành trình đã khép lại bằng những ngày tháng đáng nhớ, từ những bỡ ngỡ ban đầu đến lúc trưởng thành hơn sau từng bài học, thử thách và trải nghiệm.</p>
@@ -289,7 +292,7 @@
       </div>
 
       <!-- Các ảnh phụ nếu bạn thêm thêm trong /admin -->
-      <div class="extra-album-grid" id="albumSection">
+      <div class="extra-album-grid scroll-reveal" id="albumSection">
         <div class="album-grid-item extra-photo-slot" data-photo-slot data-full="">
           <img id="albumImg1" alt="Kỷ niệm 1" />
         </div>
@@ -309,12 +312,12 @@
          SECTION 5: XÁC NHẬN THAM DỰ (RSVP) & SỔ LƯU BÚT LỜI CHÚC
          ===================================================================== -->
     <section class="party-sub-section" id="rsvpSection">
-      <div class="sub-section-head reveal-item">
+      <div class="sub-section-head scroll-reveal">
         <span class="sub-kicker">RSVP</span>
         <h2 class="sub-heading">Xác Nhận Tham Dự và Gửi Lời Chúc</h2>
       </div>
 
-      <form id="rsvpForm" class="rsvp-form-cream reveal-item">
+      <form id="rsvpForm" class="rsvp-form-cream scroll-reveal">
         <input
           type="text"
           id="rsvpName"
@@ -335,17 +338,17 @@
           <option value="Sẽ cố gắng tham dự">Mình sẽ cố gắng sắp xếp đến chung vui ✨</option>
           <option value="Bận gửi lời chúc">Mình bận việc mất rồi, xin gửi lời chúc nhé 💌</option>
         </select>
-        <button type="submit" class="btn-brown-solid btn-full">XÁC NHẬN THAM DỰ</button>
+        <button type="submit" class="btn-brown-solid btn-full btn-shine">XÁC NHẬN THAM DỰ</button>
       </form>
     </section>
 
     <section class="party-sub-section" id="wishesSection">
-      <div class="sub-section-head reveal-item">
+      <div class="sub-section-head scroll-reveal">
         <span class="sub-kicker">GUESTBOOK</span>
         <h2 class="sub-heading">Lời Chúc Yêu Thương</h2>
       </div>
 
-      <div id="wishesContainer" class="wishes-list-cream reveal-item">
+      <div id="wishesContainer" class="wishes-list-cream scroll-reveal">
         <!-- Render danh sách lời chúc bằng JS -->
       </div>
     </section>
@@ -376,7 +379,7 @@
 
   <!-- Scripts chức năng -->
   <script src="js/confetti.browser.min.js"></script>
-  <script src="js/config.js?v=13"></script>
-  <script src="js/app.js?v=13"></script>
+  <script src="js/config.js?v=14"></script>
+  <script src="js/app.js?v=14"></script>
 </body>
 </html>
