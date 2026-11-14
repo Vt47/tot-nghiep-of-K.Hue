@@ -1111,6 +1111,15 @@ body.invitation-pending .polaroid-entrance {
   letter-spacing: 0.5px;
 }
 
+.sub-heading.sub-heading-script {
+  font-family: var(--font-guest), "Dancing Script", cursive;
+  font-size: clamp(30px, 6vw, 36px);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  line-height: 1.25;
+}
+
 .sub-actions-center {
   text-align: center;
   margin-top: 16px;
