@@ -33,7 +33,7 @@ const DEFAULT_CONFIG = {
   googleSheetScriptUrl: "https://script.google.com/macros/s/AKfycbyTNQzwT0g5SNDnphPAEqSzdi1UGKqKXmdk4zEV9gdK_hOnwbQSDxBtofYTpqs2ngQoHA/exec",
 
   // Hình ảnh Polaroid & Album
-  envMiniSrc: "assets/photos/photo_1_cutout.png?v=2",
+  envMiniSrc: "assets/photos/photo_1_cutout.png?v=3",
   heroBgSrc: "assets/photos/photo_2.jpg",
   filmStripSrc: "assets/photos/photo_1.jpg",
   calendarPolaroidsSrc: "",

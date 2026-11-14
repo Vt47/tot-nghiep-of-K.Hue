@@ -329,14 +329,14 @@ body.invitation-pending .polaroid-entrance {
 /* Ảnh sticker cắt viền trắng phóng to góc phải dưới khi mở phong bì */
 .env-mini-polaroid {
   position: absolute;
-  right: -30px;
+  right: -32px;
   left: auto;
-  bottom: -18px;
-  width: clamp(116px, 30vw, 138px);
+  bottom: -16px;
+  width: clamp(120px, 32vw, 142px);
   background: transparent;
   padding: 0;
   filter: drop-shadow(0 10px 22px rgba(74, 44, 24, 0.28));
-  transform: rotate(6deg) scale(0.82);
+  transform: rotate(6.5deg) scale(0.82);
   opacity: 0;
   z-index: 11;
   pointer-events: none;
@@ -346,7 +346,7 @@ body.invitation-pending .polaroid-entrance {
 
 .envelope-overlay.opened .env-mini-polaroid {
   opacity: 1;
-  transform: rotate(6deg) scale(1);
+  transform: rotate(6.5deg) scale(1);
 }
 
 .env-mini-photo-box {
